@@ -4,6 +4,8 @@ interface IUser {
   email: string;
   password: string;
   role: "user" | "admin";
+  numOfComments: number;
+  averageRating: number;
   isActivated: boolean;
   activationLink: string;
 }
@@ -17,6 +19,14 @@ const userSchema = new Schema<IUser>(
     password: {
       type: String,
       required: [true, "Please provide password"],
+    },
+    numOfComments: {
+      type: Number,
+      default: 0,
+    },
+    averageRating: {
+      type: Number,
+      default: 0,
     },
     role: {
       type: String,
