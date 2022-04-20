@@ -5,7 +5,7 @@ import express from "express";
 
 import { connectDB } from "./db/connect";
 
-import { errorHandlerMiddleware } from "./middleware";
+import { errorHandlerMiddleware, notFoundMiddleware } from "./middleware";
 
 import {
   announcementRouter,
@@ -21,6 +21,7 @@ app.use("/api/v1/comment", commentRouter);
 app.use("/api/v1/announcement", announcementRouter);
 app.use("/api/v1/category", categoryRouter);
 
+app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5000;
