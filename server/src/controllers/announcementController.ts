@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 class AnnouncementController {
   async createAnnouncement(req: Request, res: Response, next: NextFunction) {
-    res.send("Create Category");
+    res.send("Create Announcement");
   }
 
   async getAllAnnouncements(req: Request, res: Response, next: NextFunction) {
