@@ -1,8 +1,11 @@
 import "dotenv/config";
+import "express-async-errors";
 
 import express from "express";
 
 import { connectDB } from "./db/connect";
+
+import { errorHandlerMiddleware } from "./middleware";
 
 import {
   announcementRouter,
@@ -17,6 +20,8 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/comment", commentRouter);
 app.use("/api/v1/announcement", announcementRouter);
 app.use("/api/v1/category", categoryRouter);
+
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5000;
 
