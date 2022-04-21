@@ -1,8 +1,11 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
+import bcrypt from "bcrypt";
 
-interface IUser {
+export interface IUser {
+  _id: Types.ObjectId;
   email: string;
   password: string;
+  name: string;
   role: "user" | "admin";
   numOfComments: number;
   averageRating: number;
@@ -19,6 +22,10 @@ const userSchema = new Schema<IUser>(
     password: {
       type: String,
       required: [true, "Please provide password"],
+    },
+    name: {
+      type: String,
+      required: [true, "Please provide name"],
     },
     numOfComments: {
       type: Number,
@@ -43,6 +50,20 @@ const userSchema = new Schema<IUser>(
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+userSchema.methods.comparePassword = async function (
+  candidatePassword: string
+) {
+  const isMatch = await bcrypt.compare(candidatePassword, this.password);
+  return isMatch;
+};
 
 const User = model<IUser>("User", userSchema);
 

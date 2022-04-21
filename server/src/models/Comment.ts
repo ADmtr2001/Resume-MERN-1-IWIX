@@ -29,6 +29,6 @@ const commentSchema = new Schema<IComment>(
   { timestamps: true }
 );
 
-const Comment = model<IComment>("Category", commentSchema);
+const Comment = model<IComment>("Comment", commentSchema);
 
 export default Comment;

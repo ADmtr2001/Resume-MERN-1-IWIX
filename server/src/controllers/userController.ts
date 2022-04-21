@@ -1,36 +1,39 @@
 import { Request, Response, NextFunction } from "express";
+import { userService } from "../services";
 
 class UserController {
   async login(req: Request, res: Response, next: NextFunction) {
-    res.send('Login')
+    res.send("Login");
   }
 
   async register(req: Request, res: Response, next: NextFunction) {
-    res.send('Register')
+    const { name, email, password } = req.body;
+    const userData = await userService.register(name, email, password);
+    return res.json(userData);
   }
 
   async logout(req: Request, res: Response, next: NextFunction) {
-    res.send('Logout')
+    res.send("Logout");
   }
 
   async getAllUsers(req: Request, res: Response, next: NextFunction) {
-    res.send('Get All Users')
+    res.send("Get All Users");
   }
 
   async getSingleUser(req: Request, res: Response, next: NextFunction) {
-    res.send('Get Single User')
+    res.send("Get Single User");
   }
 
   async activate(req: Request, res: Response, next: NextFunction) {
-    res.send('Activate')
+    res.send("Activate");
   }
 
   async refresh(req: Request, res: Response, next: NextFunction) {
-    res.send('Refresh')
+    res.send("Refresh");
   }
 
   async getAllComments(req: Request, res: Response, next: NextFunction) {
-    res.send('Get All Comments')
+    res.send("Get All Comments");
   }
 }
 

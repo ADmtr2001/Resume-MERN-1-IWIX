@@ -51,6 +51,6 @@ const announcementSchema = new Schema<IAnnouncement>(
   { timestamps: true }
 );
 
-const Announcement = model<IAnnouncement>("Category", announcementSchema);
+const Announcement = model<IAnnouncement>("Announcement", announcementSchema);
 
 export default Announcement;
