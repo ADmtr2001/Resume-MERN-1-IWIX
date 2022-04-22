@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { BadRequestError } from "../errors";
+import { BadRequestError, NotFoundError } from "../errors";
 import { User } from "../models";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
@@ -8,6 +8,7 @@ import tokenService from "./tokenService";
 import mailService from "./mailService";
 import { getApiUrl } from "../utils/getApiUrl";
 import { comparePassword } from "../utils/comparePasswords";
+import { Types } from "mongoose";
 
 class UserService {
   async register(req: Request, name: string, email: string, password: string) {
@@ -53,6 +54,28 @@ class UserService {
   async logout(refreshToken: string) {
     const token = await tokenService.removeToken(refreshToken);
     return token;
+  }
+
+  async activate(activationLink: string) {
+    const user = await User.findOne({ activationLink });
+    if (!user) {
+      throw new BadRequestError("Incorrect action link");
+    }
+    user.isActivated = true;
+    await user.save();
+  }
+
+  async getAllUsers() {
+    const users = await User.find({});
+    return users;
+  }
+
+  async getSingleUser(userId: string) {
+    const user = await User.findOne({ _id: userId });
+    if (!user) {
+      throw new NotFoundError(`No user with id: ${userId}`);
+    }
+    return user;
   }
 }
 

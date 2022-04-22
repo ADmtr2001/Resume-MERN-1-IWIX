@@ -30,15 +30,20 @@ class UserController {
   }
 
   async getAllUsers(req: Request, res: Response, next: NextFunction) {
-    res.send("Get All Users");
+    const users = await userService.getAllUsers();
+    res.json(users);
   }
 
   async getSingleUser(req: Request, res: Response, next: NextFunction) {
-    res.send("Get Single User");
+    const { id } = req.params;
+    const user = await userService.getSingleUser(id);
+    res.json(user);
   }
 
   async activate(req: Request, res: Response, next: NextFunction) {
-    res.send("Activate");
+    const { link: activationLink } = req.params;
+    await userService.activate(activationLink);
+    return res.redirect(process.env.CLIENT_URL!);
   }
 
   async refresh(req: Request, res: Response, next: NextFunction) {
