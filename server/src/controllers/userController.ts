@@ -8,7 +8,7 @@ class UserController {
 
   async register(req: Request, res: Response, next: NextFunction) {
     const { name, email, password } = req.body;
-    const userData = await userService.register(name, email, password);
+    const userData = await userService.register(req, name, email, password);
     return res.json(userData);
   }
 

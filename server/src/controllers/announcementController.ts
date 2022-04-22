@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { BadRequestError } from "../errors";
 
 class AnnouncementController {
   async createAnnouncement(req: Request, res: Response, next: NextFunction) {

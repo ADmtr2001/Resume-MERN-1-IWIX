@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { UserDto } from "../dtos";
 import { Token } from "../models";
+import { Types } from "mongoose";
 
 class TokenService {
   generateTokens(payload: UserDto) {
@@ -14,6 +15,16 @@ class TokenService {
       accessToken,
       refreshToken,
     };
+  }
+
+  async saveToken(userId: Types.ObjectId, refreshToken: string) {
+    const tokenData = await Token.findOne({ user: userId });
+    if (tokenData) {
+      tokenData.refreshToken = refreshToken;
+      return tokenData.save();
+    }
+    const token = await Token.create({ user: userId, refreshToken });
+    return token;
   }
 }
 
