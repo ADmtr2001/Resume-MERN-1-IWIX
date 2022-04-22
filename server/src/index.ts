@@ -7,6 +7,8 @@ import { connectDB } from "./db/connect";
 
 import { errorHandlerMiddleware, notFoundMiddleware } from "./middleware";
 
+import cookieParser from "cookie-parser";
+
 import {
   announcementRouter,
   categoryRouter,
@@ -17,6 +19,7 @@ import {
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/comment", commentRouter);

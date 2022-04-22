@@ -7,6 +7,7 @@ import { UserDto } from "../dtos";
 import tokenService from "./tokenService";
 import mailService from "./mailService";
 import { getApiUrl } from "../utils/getApiUrl";
+import { comparePassword } from "../utils/comparePasswords";
 
 class UserService {
   async register(req: Request, name: string, email: string, password: string) {
@@ -29,6 +30,23 @@ class UserService {
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
+    return { ...tokens, user: userDto };
+  }
+
+  async login(email: string, password: string) {
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new BadRequestError(`There's no user with this email: ${email}`);
+    }
+
+    const isPasswordCorrect = comparePassword(password, user.password);
+    if (!isPasswordCorrect) {
+      throw new BadRequestError("Wrong Password");
+    }
+
+    const userDto = new UserDto(user);
+    const tokens = tokenService.generateTokens({ ...userDto });
+    await tokenService.saveToken(userDto.id, tokens.refreshToken);
     return { ...tokens, user: userDto };
   }
 }
