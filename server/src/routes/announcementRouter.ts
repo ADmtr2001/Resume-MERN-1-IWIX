@@ -8,11 +8,10 @@ router
   .route("/")
   .get(announcementController.getAllAnnouncements)
   .post(authMiddleware, announcementController.createAnnouncement);
-router.route("/uploadImage").post(announcementController.uploadImage);
 router
   .route("/:id")
   .get(announcementController.getSingleAnnouncement)
-  .patch(announcementController.updateAnnouncement)
+  .patch(authMiddleware, announcementController.updateAnnouncement)
   .delete(announcementController.deleteAnnouncement);
 
 export default router;

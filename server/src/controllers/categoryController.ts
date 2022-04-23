@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import { v4 as uuidv4 } from "uuid";
 import path from "path";
 import { categoryService } from "../services";
+import fs from "fs";
+import { BadRequestError } from "../errors";
 
 class CategoryController {
   async createCategory(req: Request, res: Response, next: NextFunction) {
@@ -27,6 +29,34 @@ class CategoryController {
   async getAllCategories(req: Request, res: Response, next: NextFunction) {
     const categories = await categoryService.getAllCategories();
     res.json(categories);
+  }
+
+  async getSingleCategory(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    const category = await categoryService.getSingleCategory(id);
+    res.json(category);
+  }
+
+  async deleteCategory(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    const category = await categoryService.getSingleCategory(id);
+    const filePath = path.resolve(
+      __dirname,
+      "..",
+      "public",
+      "uploads",
+      "categoryImages",
+      category.image
+    );
+    fs.unlink(filePath, (error) => {
+      if (error) {
+        throw new BadRequestError(
+          `Something went wrong while deleting previous image: ${error.message}`
+        );
+      }
+    });
+    const deletedCategory = await categoryService.deleteCategory(id);
+    res.json(category);
   }
 }
 

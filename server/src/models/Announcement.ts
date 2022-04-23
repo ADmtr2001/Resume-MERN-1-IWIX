@@ -1,12 +1,12 @@
 import { Schema, model, Types } from "mongoose";
 
-interface IAnnouncement {
+export interface IAnnouncement {
   title: string;
   category: Types.ObjectId;
-  image: String;
-  description: String;
-  location: String;
-  phoneNumber: String;
+  image: string;
+  description: string;
+  location: string;
+  phoneNumber: string;
   isVip: boolean;
   creator: Types.ObjectId;
 }

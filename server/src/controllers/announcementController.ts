@@ -2,6 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import { v4 as uuidv4 } from "uuid";
 import path from "path";
 import { announcementService } from "../services";
+import fs from "fs";
+import { IAnnouncement } from "../models/Announcement";
+import { BadRequestError } from "../errors";
 
 class AnnouncementController {
   async createAnnouncement(req: Request, res: Response, next: NextFunction) {
@@ -32,23 +35,67 @@ class AnnouncementController {
   }
 
   async getAllAnnouncements(req: Request, res: Response, next: NextFunction) {
-    res.send("Get All Announcements");
-  }
-
-  async uploadImage(req: Request, res: Response, next: NextFunction) {
-    res.send("Upload Image");
+    const announcements = await announcementService.getAllAnnouncements();
+    res.json(announcements);
   }
 
   async getSingleAnnouncement(req: Request, res: Response, next: NextFunction) {
-    res.send("Get Single Announcement");
+    const { id } = req.params;
+    const announcement = await announcementService.getSingleAnnouncement(id);
+    res.json(announcement);
   }
 
   async updateAnnouncement(req: Request, res: Response, next: NextFunction) {
-    res.send("Update Announcement");
+    const { id } = req.params;
+    const { title, category, description, location, phoneNumber } = req.body;
+    const previousAnnouncement =
+      await announcementService.getSingleAnnouncement(id);
+    // @ts-ignore
+    const { image } = req.files;
+    const fileName = uuidv4() + ".jpg";
+    const filePath = path.resolve(
+      __dirname,
+      "..",
+      "public",
+      "uploads",
+      "announcementImages",
+      fileName
+    );
+    // @ts-ignore
+    image.mv(filePath);
+    const previousFilePath = path.resolve(
+      __dirname,
+      "..",
+      "public",
+      "uploads",
+      "announcementImages",
+      previousAnnouncement.image
+    );
+    fs.unlink(previousFilePath, (error) => {
+      if (error) {
+        throw new BadRequestError(
+          `Something went wrong while deleting previous image: ${error.message}`
+        );
+      }
+    });
+    const announcement = await announcementService.updateAnnouncement(
+      id,
+      title,
+      category,
+      description,
+      location,
+      phoneNumber,
+      fileName,
+      req.user.id
+    );
+    res.json(announcement);
   }
 
   async deleteAnnouncement(req: Request, res: Response, next: NextFunction) {
-    res.send("Delete Announcement");
+    const { id } = req.params;
+    const announcement = await announcementService.deleteAnnouncement(id);
+    // !Delete image
+    res.json(announcement);
   }
 }
 

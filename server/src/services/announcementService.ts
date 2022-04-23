@@ -1,5 +1,7 @@
 import { Types } from "mongoose";
+import { NotFoundError } from "../errors";
 import { Announcement } from "../models";
+import { IAnnouncement } from "../models/Announcement";
 
 class AnnouncementService {
   async createAnnouncement(
@@ -23,13 +25,52 @@ class AnnouncementService {
     return announcement;
   }
 
-  async getAllAnnouncements() {}
+  async getAllAnnouncements() {
+    const announcements = await Announcement.find({});
+    return announcements;
+  }
 
-  async getSingleAnnouncement() {}
+  async getSingleAnnouncement(announcementId: string) {
+    const announcement = await Announcement.findOne({ _id: announcementId });
+    if (!announcement) {
+      throw new NotFoundError(`No announcement with id: ${announcementId}`);
+    }
+    return announcement;
+  }
 
-  async updateAnnouncement() {}
+  async updateAnnouncement(
+    announcementId: string,
+    title: string,
+    category: Types.ObjectId,
+    description: string,
+    location: string,
+    phoneNumber: string,
+    image: string,
+    creator: Types.ObjectId
+  ) {
+    const announcement = await Announcement.findOneAndUpdate(
+      { _id: announcementId },
+      {
+        title,
+        category,
+        description,
+        location,
+        phoneNumber,
+        image,
+        creator,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    return announcement;
+  }
 
-  async deleteAnnouncement() {}
+  async deleteAnnouncement(announcementId: string) {
+    const announcement = await Announcement.deleteOne({ _id: announcementId });
+    return announcement;
+  }
 }
 
 export default new AnnouncementService();
