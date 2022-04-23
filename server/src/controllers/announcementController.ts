@@ -1,9 +1,34 @@
 import { Request, Response, NextFunction } from "express";
+import { v4 as uuidv4 } from "uuid";
+import path from "path";
+import { announcementService } from "../services";
 
 class AnnouncementController {
   async createAnnouncement(req: Request, res: Response, next: NextFunction) {
     const { title, category, description, location, phoneNumber } = req.body;
-    res.json(req.user);
+    // @ts-ignore
+    const { image } = req.files;
+    const fileName = uuidv4() + ".jpg";
+    const filePath = path.resolve(
+      __dirname,
+      "..",
+      "public",
+      "uploads",
+      "announcementImages",
+      fileName
+    );
+    // @ts-ignore
+    image.mv(filePath);
+    const announcement = await announcementService.createAnnouncement(
+      title,
+      category,
+      description,
+      location,
+      phoneNumber,
+      fileName,
+      req.user.id
+    );
+    res.json(announcement);
   }
 
   async getAllAnnouncements(req: Request, res: Response, next: NextFunction) {
