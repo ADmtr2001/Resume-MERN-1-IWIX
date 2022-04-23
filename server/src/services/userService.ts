@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { BadRequestError, NotFoundError } from "../errors";
+import { BadRequestError, NotFoundError, UnauthorizedError } from "../errors";
 import { User } from "../models";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
@@ -9,6 +9,7 @@ import mailService from "./mailService";
 import { getApiUrl } from "../utils/getApiUrl";
 import { comparePassword } from "../utils/comparePasswords";
 import { Types } from "mongoose";
+import { IUser } from "../models/User";
 
 class UserService {
   async register(req: Request, name: string, email: string, password: string) {
@@ -76,6 +77,26 @@ class UserService {
       throw new NotFoundError(`No user with id: ${userId}`);
     }
     return user;
+  }
+
+  async refresh(refreshToken: string) {
+    if (!refreshToken) {
+      throw new UnauthorizedError("Not authorized");
+    }
+    const userData: any = await tokenService.validateRefreshToken(refreshToken);
+    const tokenFromDb = await tokenService.findToken(refreshToken);
+    if (!userData || !tokenFromDb) {
+      throw new UnauthorizedError("Not authorized");
+    }
+    const user: IUser | null = await User.findById(userData.id);
+    if (!user) {
+      throw new BadRequestError("Something went wrong while getting user");
+    }
+    const userDto = new UserDto(user);
+    const tokens = tokenService.generateTokens({ ...userDto });
+
+    await tokenService.saveToken(userDto.id, tokens.refreshToken);
+    return { ...tokens, user: userDto };
   }
 }
 

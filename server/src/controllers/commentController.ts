@@ -20,6 +20,10 @@ class CommentController {
   async deleteComment(req: Request, res: Response, next: NextFunction) {
     res.send("Delete Comment");
   }
+
+  async getAllUserComments(req: Request, res: Response, next: NextFunction) {
+    res.send("Get All User Comments");
+  }
 }
 
 export default new CommentController();

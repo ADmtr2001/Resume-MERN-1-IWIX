@@ -11,6 +11,5 @@ router.get("/refresh", userController.refresh);
 
 router.get("/", userController.getAllUsers);
 router.get("/:id", userController.getSingleUser);
-router.get("/:id/comments", userController.getAllComments);
 
 export default router;

@@ -31,6 +31,17 @@ class TokenService {
     const tokenData = await Token.deleteOne({ refreshToken });
     return tokenData;
   }
+
+  async validateRefreshToken(refreshToken: string) {
+    const userData = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!);
+    console.log(userData);
+    return userData;
+  }
+
+  async findToken(refreshToken: string) {
+    const tokenData = await Token.findOne({ refreshToken });
+    return tokenData;
+  }
 }
 
 export default new TokenService();

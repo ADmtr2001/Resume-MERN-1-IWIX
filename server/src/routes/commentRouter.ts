@@ -12,5 +12,6 @@ router
   .get(commentController.getSingleComment)
   .patch(commentController.updateComment)
   .delete(commentController.deleteComment);
+router.get("/user/:userId", commentController.getAllUserComments);
 
 export default router;

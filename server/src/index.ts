@@ -4,10 +4,12 @@ import "express-async-errors";
 import express from "express";
 
 import { connectDB } from "./db/connect";
-
 import { errorHandlerMiddleware, notFoundMiddleware } from "./middleware";
 
 import cookieParser from "cookie-parser";
+import fileUpload from "express-fileupload";
+
+import path from "path";
 
 import {
   announcementRouter,
@@ -20,11 +22,17 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(fileUpload({}));
+app.use(express.static(path.resolve(__dirname, "public")));
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/comment", commentRouter);
 app.use("/api/v1/announcement", announcementRouter);
 app.use("/api/v1/category", categoryRouter);
+
+app.get("/", (req, res) => {
+  res.send("Hello");
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
