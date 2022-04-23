@@ -1,7 +1,7 @@
 import { NotFoundError } from "../errors";
 import { Category } from "../models";
 
-class categoryService {
+class CategoryService {
   async createCategory(name: string, image: string) {
     const category = await Category.create({ name, image });
     return category;
@@ -26,4 +26,4 @@ class categoryService {
   }
 }
 
-export default new categoryService();
+export default new CategoryService();
