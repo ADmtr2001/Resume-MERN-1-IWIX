@@ -3,17 +3,14 @@ import {
   BadRequestError,
   NotFoundError,
   UnauthenticatedError,
-  UnauthorizedError,
 } from "../errors";
 import { User } from "../models";
-import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import { UserDto } from "../dtos";
 import tokenService from "./tokenService";
 import mailService from "./mailService";
 import { getApiUrl } from "../utils/getApiUrl";
 import { comparePassword } from "../utils/comparePasswords";
-import { Types } from "mongoose";
 import { IUser } from "../models/User";
 
 class UserService {

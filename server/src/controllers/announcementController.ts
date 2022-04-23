@@ -1,14 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import path from "path";
 import { announcementService } from "../services";
-import fs from "fs";
-import { IAnnouncement } from "../models/Announcement";
-import { BadRequestError } from "../errors";
 import { deleteFile } from "../utils/deleteFile";
 
 class AnnouncementController {
-  async createAnnouncement(req: Request, res: Response, next: NextFunction) {
+  async createAnnouncement(req: Request, res: Response) {
     const { title, category, description, location, phoneNumber } = req.body;
     // @ts-ignore
     const { image } = req.files;
@@ -35,18 +32,18 @@ class AnnouncementController {
     res.json(announcement);
   }
 
-  async getAllAnnouncements(req: Request, res: Response, next: NextFunction) {
+  async getAllAnnouncements(req: Request, res: Response) {
     const announcements = await announcementService.getAllAnnouncements();
     res.json(announcements);
   }
 
-  async getSingleAnnouncement(req: Request, res: Response, next: NextFunction) {
+  async getSingleAnnouncement(req: Request, res: Response) {
     const { id } = req.params;
     const announcement = await announcementService.getSingleAnnouncement(id);
     res.json(announcement);
   }
 
-  async updateAnnouncement(req: Request, res: Response, next: NextFunction) {
+  async updateAnnouncement(req: Request, res: Response) {
     const { id } = req.params;
     const { title, category, description, location, phoneNumber } = req.body;
     const previousAnnouncement =
@@ -85,7 +82,7 @@ class AnnouncementController {
     res.json(announcement);
   }
 
-  async deleteAnnouncement(req: Request, res: Response, next: NextFunction) {
+  async deleteAnnouncement(req: Request, res: Response) {
     const { id } = req.params;
     const announcement = await announcementService.getSingleAnnouncement(id);
     const deletedAnnouncement = await announcementService.deleteAnnouncement(

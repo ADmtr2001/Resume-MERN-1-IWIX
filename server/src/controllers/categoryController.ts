@@ -1,13 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import path from "path";
 import { categoryService } from "../services";
-import fs from "fs";
-import { BadRequestError } from "../errors";
 import { deleteFile } from "../utils/deleteFile";
 
 class CategoryController {
-  async createCategory(req: Request, res: Response, next: NextFunction) {
+  async createCategory(req: Request, res: Response) {
     const { name } = req.body;
     // @ts-ignore
     const { image } = req.files;
@@ -27,18 +25,18 @@ class CategoryController {
     res.json(category);
   }
 
-  async getAllCategories(req: Request, res: Response, next: NextFunction) {
+  async getAllCategories(req: Request, res: Response) {
     const categories = await categoryService.getAllCategories();
     res.json(categories);
   }
 
-  async getSingleCategory(req: Request, res: Response, next: NextFunction) {
+  async getSingleCategory(req: Request, res: Response) {
     const { id } = req.params;
     const category = await categoryService.getSingleCategory(id);
     res.json(category);
   }
 
-  async deleteCategory(req: Request, res: Response, next: NextFunction) {
+  async deleteCategory(req: Request, res: Response) {
     const { id } = req.params;
     const category = await categoryService.getSingleCategory(id);
     const filePath = path.resolve(

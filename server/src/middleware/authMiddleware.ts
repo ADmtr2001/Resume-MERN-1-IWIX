@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { UserDto } from "../dtos";
-import { UnauthenticatedError, UnauthorizedError } from "../errors";
+import { UnauthenticatedError } from "../errors";
 import { tokenService } from "../services";
 
 const authMiddleware = async (

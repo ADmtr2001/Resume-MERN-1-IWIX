@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from "express";
 import { NotFoundError } from "../errors";
 import { Comment } from "../models";
 

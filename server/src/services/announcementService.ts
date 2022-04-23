@@ -1,7 +1,6 @@
 import { Types } from "mongoose";
 import { NotFoundError } from "../errors";
 import { Announcement } from "../models";
-import { IAnnouncement } from "../models/Announcement";
 
 class AnnouncementService {
   async createAnnouncement(
