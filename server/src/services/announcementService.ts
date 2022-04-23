@@ -45,8 +45,7 @@ class AnnouncementService {
     description: string,
     location: string,
     phoneNumber: string,
-    image: string,
-    creator: Types.ObjectId
+    image: string
   ) {
     const announcement = await Announcement.findOneAndUpdate(
       { _id: announcementId },
@@ -57,7 +56,6 @@ class AnnouncementService {
         location,
         phoneNumber,
         image,
-        creator,
       },
       {
         new: true,

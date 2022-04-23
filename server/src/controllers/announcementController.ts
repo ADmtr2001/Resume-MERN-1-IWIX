@@ -5,6 +5,7 @@ import { announcementService } from "../services";
 import fs from "fs";
 import { IAnnouncement } from "../models/Announcement";
 import { BadRequestError } from "../errors";
+import { deleteFile } from "../utils/deleteFile";
 
 class AnnouncementController {
   async createAnnouncement(req: Request, res: Response, next: NextFunction) {
@@ -71,13 +72,7 @@ class AnnouncementController {
       "announcementImages",
       previousAnnouncement.image
     );
-    fs.unlink(previousFilePath, (error) => {
-      if (error) {
-        throw new BadRequestError(
-          `Something went wrong while deleting previous image: ${error.message}`
-        );
-      }
-    });
+    deleteFile(previousFilePath);
     const announcement = await announcementService.updateAnnouncement(
       id,
       title,
@@ -85,17 +80,27 @@ class AnnouncementController {
       description,
       location,
       phoneNumber,
-      fileName,
-      req.user.id
+      fileName
     );
     res.json(announcement);
   }
 
   async deleteAnnouncement(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
-    const announcement = await announcementService.deleteAnnouncement(id);
-    // !Delete image
-    res.json(announcement);
+    const announcement = await announcementService.getSingleAnnouncement(id);
+    const deletedAnnouncement = await announcementService.deleteAnnouncement(
+      id
+    );
+    const imagePath = path.resolve(
+      __dirname,
+      "..",
+      "public",
+      "uploads",
+      "announcementImages",
+      announcement.image
+    );
+    deleteFile(imagePath);
+    res.json(deletedAnnouncement);
   }
 }
 

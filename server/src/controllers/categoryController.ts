@@ -4,6 +4,7 @@ import path from "path";
 import { categoryService } from "../services";
 import fs from "fs";
 import { BadRequestError } from "../errors";
+import { deleteFile } from "../utils/deleteFile";
 
 class CategoryController {
   async createCategory(req: Request, res: Response, next: NextFunction) {
@@ -48,13 +49,7 @@ class CategoryController {
       "categoryImages",
       category.image
     );
-    fs.unlink(filePath, (error) => {
-      if (error) {
-        throw new BadRequestError(
-          `Something went wrong while deleting previous image: ${error.message}`
-        );
-      }
-    });
+    deleteFile(filePath);
     const deletedCategory = await categoryService.deleteCategory(id);
     res.json(category);
   }
