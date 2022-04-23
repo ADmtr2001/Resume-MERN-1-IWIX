@@ -1,5 +1,10 @@
 import { Request } from "express";
-import { BadRequestError, NotFoundError, UnauthorizedError } from "../errors";
+import {
+  BadRequestError,
+  NotFoundError,
+  UnauthenticatedError,
+  UnauthorizedError,
+} from "../errors";
 import { User } from "../models";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
@@ -81,12 +86,12 @@ class UserService {
 
   async refresh(refreshToken: string) {
     if (!refreshToken) {
-      throw new UnauthorizedError("Not authorized");
+      throw new UnauthenticatedError("Not authorized");
     }
     const userData: any = await tokenService.validateRefreshToken(refreshToken);
     const tokenFromDb = await tokenService.findToken(refreshToken);
     if (!userData || !tokenFromDb) {
-      throw new UnauthorizedError("Not authorized");
+      throw new UnauthenticatedError("Not authorized");
     }
     const user: IUser | null = await User.findById(userData.id);
     if (!user) {

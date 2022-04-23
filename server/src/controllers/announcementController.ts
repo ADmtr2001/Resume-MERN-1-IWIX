@@ -2,7 +2,8 @@ import { Request, Response, NextFunction } from "express";
 
 class AnnouncementController {
   async createAnnouncement(req: Request, res: Response, next: NextFunction) {
-    res.send("Create Announcement");
+    const { title, category, description, location, phoneNumber } = req.body;
+    res.json(req.user);
   }
 
   async getAllAnnouncements(req: Request, res: Response, next: NextFunction) {

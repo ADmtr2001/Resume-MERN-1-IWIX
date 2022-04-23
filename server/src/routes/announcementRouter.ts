@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { announcementController } from "../controllers";
+import { authMiddleware } from "../middleware";
 
 const router = Router();
 
 router
   .route("/")
   .get(announcementController.getAllAnnouncements)
-  .post(announcementController.createAnnouncement);
+  .post(authMiddleware, announcementController.createAnnouncement);
 router.route("/uploadImage").post(announcementController.uploadImage);
 router
   .route("/:id")

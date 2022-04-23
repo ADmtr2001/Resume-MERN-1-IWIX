@@ -38,6 +38,11 @@ class TokenService {
     return userData;
   }
 
+  async validateAccessToken(accessToken: string) {
+    const userData = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET!);
+    return userData;
+  }
+
   async findToken(refreshToken: string) {
     const tokenData = await Token.findOne({ refreshToken });
     return tokenData;
