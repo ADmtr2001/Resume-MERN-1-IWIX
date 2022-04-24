@@ -1,7 +1,7 @@
 import fs from "fs";
 import { BadRequestError } from "../errors";
 
-export async function deleteFile(path: string) {
+const deleteFile =  async (path: string) => {
   fs.unlink(path, (error) => {
     if (error) {
       throw new BadRequestError(
@@ -10,3 +10,5 @@ export async function deleteFile(path: string) {
     }
   });
 }
+
+export default deleteFile;

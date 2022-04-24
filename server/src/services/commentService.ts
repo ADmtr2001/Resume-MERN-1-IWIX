@@ -1,4 +1,4 @@
-import { NotFoundError } from "../errors";
+import { BadRequestError, NotFoundError } from "../errors";
 import { Comment } from "../models";
 
 class categoryService {
@@ -37,6 +37,14 @@ class categoryService {
   async getAllUserComments(userId: string) {
     const comments = await Comment.find({ to: userId });
     return comments;
+  }
+
+  async checkIfAlreadyExist(from: string, to: string) {
+    const comment = await Comment.findOne({ from, to });
+    if (comment) {
+      throw new BadRequestError("Already submitted comment for this user");
+    }
+    return comment;
   }
 }
 

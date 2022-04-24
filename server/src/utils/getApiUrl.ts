@@ -1,5 +1,7 @@
 import { Request } from "express";
 
-export function getApiUrl(req: Request) {
+const getApiUrl = (req: Request) => {
   return `${req.protocol}://${req.get("host")}`;
 }
+
+export default getApiUrl;

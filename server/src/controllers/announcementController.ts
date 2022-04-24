@@ -2,10 +2,9 @@ import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import path from "path";
 import { announcementService } from "../services";
-import { deleteFile } from "../utils/deleteFile";
+import { deleteFile } from "../utils";
 import { checkPermission } from "../utils";
 import { StatusCodes } from "http-status-codes";
-import { IAnnouncement } from "../models/Announcement";
 
 class AnnouncementController {
   async createAnnouncement(req: Request, res: Response) {

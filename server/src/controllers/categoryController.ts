@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import path from "path";
 import { categoryService } from "../services";
-import { deleteFile } from "../utils/deleteFile";
+import { deleteFile } from "../utils";
 import { StatusCodes } from "http-status-codes";
 
 class CategoryController {
