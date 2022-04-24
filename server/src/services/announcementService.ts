@@ -68,6 +68,11 @@ class AnnouncementService {
     const announcement = await Announcement.deleteOne({ _id: announcementId });
     return announcement;
   }
+
+  async getAllUserAnnouncements(userId: string) {
+    const announcements = await Announcement.find({ creator: userId });
+    return announcements;
+  }
 }
 
 export default new AnnouncementService();

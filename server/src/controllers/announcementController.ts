@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import path from "path";
 import { announcementService } from "../services";
 import { deleteFile } from "../utils/deleteFile";
+import { checkPermission } from "../utils";
 
 class AnnouncementController {
   async createAnnouncement(req: Request, res: Response) {
@@ -48,6 +49,7 @@ class AnnouncementController {
     const { title, category, description, location, phoneNumber } = req.body;
     const previousAnnouncement =
       await announcementService.getSingleAnnouncement(id);
+    checkPermission(req.user, previousAnnouncement.creator);
     // @ts-ignore
     const { image } = req.files;
     const fileName = uuidv4() + ".jpg";
@@ -85,6 +87,7 @@ class AnnouncementController {
   async deleteAnnouncement(req: Request, res: Response) {
     const { id } = req.params;
     const announcement = await announcementService.getSingleAnnouncement(id);
+    checkPermission(req.user, announcement.creator);
     const deletedAnnouncement = await announcementService.deleteAnnouncement(
       id
     );
@@ -98,6 +101,12 @@ class AnnouncementController {
     );
     deleteFile(imagePath);
     res.json(deletedAnnouncement);
+  }
+
+  async getAllUserAnnouncements(req: Request, res: Response) {
+    const { id } = req.params;
+    const announcements = await announcementService.getAllUserAnnouncements(id);
+    res.json(announcements);
   }
 }
 

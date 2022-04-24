@@ -28,15 +28,18 @@ class CommentController {
   async updateComment(req: Request, res: Response) {
     const { id } = req.params;
     const { text, rating } = req.body;
-    const comment = await commentService.updateComment(id, text, rating);
-    res.json(comment);
+    const previousComment = await commentService.getSingleComment(id);
+    checkPermission(req.user, previousComment.from);
+    const updatedComment = await commentService.updateComment(id, text, rating);
+    res.json(updatedComment);
   }
 
   async deleteComment(req: Request, res: Response) {
     const { id } = req.params;
-    checkPermission(req.user, id);
-    const comment = await commentService.deleteComment(id);
-    res.json(comment);
+    const comment = await commentService.getSingleComment(id);
+    checkPermission(req.user, comment.from);
+    const deletedComment = await commentService.deleteComment(id);
+    res.json(deletedComment);
   }
 
   async getAllUserComments(req: Request, res: Response) {

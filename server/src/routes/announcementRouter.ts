@@ -6,12 +6,13 @@ const router = Router();
 
 router
   .route("/")
-  .get(authMiddleware, announcementController.getAllAnnouncements)
+  .get(announcementController.getAllAnnouncements)
   .post(authMiddleware, announcementController.createAnnouncement);
 router
   .route("/:id")
-  .get(authMiddleware, announcementController.getSingleAnnouncement)
+  .get(announcementController.getSingleAnnouncement)
   .patch(authMiddleware, announcementController.updateAnnouncement)
   .delete(authMiddleware, announcementController.deleteAnnouncement);
+router.get("/user/:id", announcementController.getAllUserAnnouncements);
 
 export default router;
