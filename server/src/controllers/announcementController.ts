@@ -35,8 +35,36 @@ class AnnouncementController {
   }
 
   async getAllAnnouncements(req: Request, res: Response) {
-    const announcements = await announcementService.getAllAnnouncements();
-    res.status(StatusCodes.OK).json(announcements);
+    const { page = 1 } = req.query;
+
+    const limit = 4;
+    const startIndex = (Number(page) - 1) * limit;
+    const { announcements, total } =
+      await announcementService.getAllAnnouncements(limit, startIndex);
+    res.status(StatusCodes.OK).json({
+      announcements,
+      currentPage: Number(page),
+      numberOfPages: Math.ceil(total / limit),
+    });
+  }
+
+  async getAnnouncementsBySearch(req: Request, res: Response) {
+    const { page = 1, searchQuery = "" } = req.query;
+
+    const searchQueryReg = new RegExp(searchQuery as string, "i");
+    const limit = 4;
+    const startIndex = (Number(page) - 1) * limit;
+    const { announcements, total } =
+      await announcementService.getAnnouncementsBySearch(
+        searchQueryReg,
+        limit,
+        startIndex
+      );
+    res.status(StatusCodes.OK).json({
+      announcements,
+      currentPage: Number(page),
+      numberOfPages: Math.ceil(total / limit),
+    });
   }
 
   async getSingleAnnouncement(req: Request, res: Response) {

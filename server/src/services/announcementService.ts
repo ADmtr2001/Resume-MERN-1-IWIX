@@ -24,9 +24,24 @@ class AnnouncementService {
     return announcement;
   }
 
-  async getAllAnnouncements() {
-    const announcements = await Announcement.find({});
-    return announcements;
+  async getAllAnnouncements(limit: number, startIndex: number) {
+    const total = await Announcement.countDocuments({});
+    const announcements = await Announcement.find({})
+      .limit(limit)
+      .skip(startIndex);
+    return { announcements, total };
+  }
+
+  async getAnnouncementsBySearch(
+    searchQuery: RegExp,
+    limit: number,
+    startIndex: number
+  ) {
+    const total = await Announcement.countDocuments({ title: searchQuery });
+    const announcements = await Announcement.find({ title: searchQuery })
+      .limit(limit)
+      .skip(startIndex);
+    return { announcements, total };
   }
 
   async getSingleAnnouncement(announcementId: string) {

@@ -8,6 +8,7 @@ router
   .route("/")
   .get(announcementController.getAllAnnouncements)
   .post(authMiddleware, announcementController.createAnnouncement);
+router.get("/search", announcementController.getAnnouncementsBySearch);
 router
   .route("/:id")
   .get(announcementController.getSingleAnnouncement)
