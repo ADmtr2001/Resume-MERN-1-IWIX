@@ -88,6 +88,18 @@ class AnnouncementService {
     const announcements = await Announcement.find({ creator: userId });
     return announcements;
   }
+
+  async getAll(
+    limit: number,
+    startIndex: number,
+    searchQuery: RegExp = new RegExp("", "i")
+  ) {
+    const total = await Announcement.countDocuments({ title: searchQuery });
+    const announcements = await Announcement.find({ title: searchQuery })
+      .limit(limit)
+      .skip(startIndex);
+    return { announcements, total };
+  }
 }
 
 export default new AnnouncementService();

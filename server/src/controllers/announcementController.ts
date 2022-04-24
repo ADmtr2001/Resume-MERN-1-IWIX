@@ -5,6 +5,7 @@ import { announcementService } from "../services";
 import { deleteFile } from "../utils/deleteFile";
 import { checkPermission } from "../utils";
 import { StatusCodes } from "http-status-codes";
+import { IAnnouncement } from "../models/Announcement";
 
 class AnnouncementController {
   async createAnnouncement(req: Request, res: Response) {
@@ -35,31 +36,25 @@ class AnnouncementController {
   }
 
   async getAllAnnouncements(req: Request, res: Response) {
-    const { page = 1 } = req.query;
-
-    const limit = 4;
-    const startIndex = (Number(page) - 1) * limit;
-    const { announcements, total } =
-      await announcementService.getAllAnnouncements(limit, startIndex);
-    res.status(StatusCodes.OK).json({
-      announcements,
-      currentPage: Number(page),
-      numberOfPages: Math.ceil(total / limit),
-    });
-  }
-
-  async getAnnouncementsBySearch(req: Request, res: Response) {
     const { page = 1, searchQuery = "" } = req.query;
 
-    const searchQueryReg = new RegExp(searchQuery as string, "i");
     const limit = 4;
     const startIndex = (Number(page) - 1) * limit;
-    const { announcements, total } =
-      await announcementService.getAnnouncementsBySearch(
-        searchQueryReg,
+    let announcements: any;
+    let total: any;
+    if (searchQuery) {
+      const searchQueryReg = new RegExp(searchQuery as string, "i");
+      ({ announcements, total } = await announcementService.getAll(
+        limit,
+        startIndex,
+        searchQueryReg
+      ));
+    } else {
+      ({ announcements, total } = await announcementService.getAll(
         limit,
         startIndex
-      );
+      ));
+    }
     res.status(StatusCodes.OK).json({
       announcements,
       currentPage: Number(page),
