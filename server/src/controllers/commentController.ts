@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { commentService } from "../services";
+import { checkPermission } from "../utils";
 
 class CommentController {
   async getAllComments(req: Request, res: Response) {
@@ -33,6 +34,7 @@ class CommentController {
 
   async deleteComment(req: Request, res: Response) {
     const { id } = req.params;
+    checkPermission(req.user, id);
     const comment = await commentService.deleteComment(id);
     res.json(comment);
   }

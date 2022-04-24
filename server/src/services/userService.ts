@@ -44,6 +44,7 @@ class UserService {
     }
 
     const isPasswordCorrect = comparePassword(password, user.password);
+    ``;
     if (!isPasswordCorrect) {
       throw new BadRequestError("Wrong Password");
     }
