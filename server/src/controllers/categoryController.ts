@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import path from "path";
 import { categoryService } from "../services";
 import { deleteFile } from "../utils/deleteFile";
+import { StatusCodes } from "http-status-codes";
 
 class CategoryController {
   async createCategory(req: Request, res: Response) {
@@ -22,18 +23,18 @@ class CategoryController {
     image.mv(filePath);
     // ?PROBABLY CHANGE FILE NAME
     const category = await categoryService.createCategory(name, fileName);
-    res.json(category);
+    res.status(StatusCodes.CREATED).json(category);
   }
 
   async getAllCategories(req: Request, res: Response) {
     const categories = await categoryService.getAllCategories();
-    res.json(categories);
+    res.status(StatusCodes.OK).json(categories);
   }
 
   async getSingleCategory(req: Request, res: Response) {
     const { id } = req.params;
     const category = await categoryService.getSingleCategory(id);
-    res.json(category);
+    res.status(StatusCodes.OK).json(category);
   }
 
   async deleteCategory(req: Request, res: Response) {
@@ -49,7 +50,9 @@ class CategoryController {
     );
     deleteFile(filePath);
     const deletedCategory = await categoryService.deleteCategory(id);
-    res.json(category);
+    res
+      .status(StatusCodes.OK)
+      .json({ success: true, message: "Category removed" });
   }
 }
 

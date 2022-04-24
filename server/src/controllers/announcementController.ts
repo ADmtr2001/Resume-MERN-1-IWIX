@@ -4,6 +4,7 @@ import path from "path";
 import { announcementService } from "../services";
 import { deleteFile } from "../utils/deleteFile";
 import { checkPermission } from "../utils";
+import { StatusCodes } from "http-status-codes";
 
 class AnnouncementController {
   async createAnnouncement(req: Request, res: Response) {
@@ -30,18 +31,18 @@ class AnnouncementController {
       fileName,
       req.user.id
     );
-    res.json(announcement);
+    res.status(StatusCodes.CREATED).json(announcement);
   }
 
   async getAllAnnouncements(req: Request, res: Response) {
     const announcements = await announcementService.getAllAnnouncements();
-    res.json(announcements);
+    res.status(StatusCodes.OK).json(announcements);
   }
 
   async getSingleAnnouncement(req: Request, res: Response) {
     const { id } = req.params;
     const announcement = await announcementService.getSingleAnnouncement(id);
-    res.json(announcement);
+    res.status(StatusCodes.OK).json(announcement);
   }
 
   async updateAnnouncement(req: Request, res: Response) {
@@ -81,7 +82,7 @@ class AnnouncementController {
       phoneNumber,
       fileName
     );
-    res.json(announcement);
+    res.status(StatusCodes.OK).json(announcement);
   }
 
   async deleteAnnouncement(req: Request, res: Response) {
@@ -100,13 +101,15 @@ class AnnouncementController {
       announcement.image
     );
     deleteFile(imagePath);
-    res.json(deletedAnnouncement);
+    res
+      .status(StatusCodes.OK)
+      .json({ success: true, message: "Announcement removed" });
   }
 
   async getAllUserAnnouncements(req: Request, res: Response) {
     const { id } = req.params;
     const announcements = await announcementService.getAllUserAnnouncements(id);
-    res.json(announcements);
+    res.status(StatusCodes.OK).json(announcements);
   }
 }
 
