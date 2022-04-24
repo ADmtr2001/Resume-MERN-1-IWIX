@@ -8,6 +8,9 @@ import { errorHandlerMiddleware, notFoundMiddleware } from "./middleware";
 
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import helmet from "helmet";
+import cors from "cors";
+import rateLimiter from "express-rate-limit";
 
 import path from "path";
 
@@ -20,6 +23,16 @@ import {
 
 const app = express();
 
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 60,
+  })
+);
+
+app.use(helmet());
+app.use(cors());
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload({}));
@@ -29,10 +42,6 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/comment", commentRouter);
 app.use("/api/v1/announcement", announcementRouter);
 app.use("/api/v1/category", categoryRouter);
-
-app.get("/", (req, res) => {
-  res.send("Hello");
-});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
