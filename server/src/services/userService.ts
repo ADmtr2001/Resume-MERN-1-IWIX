@@ -69,12 +69,15 @@ class UserService {
   }
 
   async getAllUsers() {
-    const users = await User.find({});
+    const users = await User.find({}, { password: 0, activationLink: 0 });
     return users;
   }
 
   async getSingleUser(userId: string) {
-    const user = await User.findOne({ _id: userId });
+    const user = await User.findOne(
+      { _id: userId },
+      { password: 0, activationLink: 0 }
+    );
     if (!user) {
       throw new NotFoundError(`No user with id: ${userId}`);
     }
