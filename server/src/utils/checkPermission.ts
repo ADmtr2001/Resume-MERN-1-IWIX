@@ -7,7 +7,9 @@ const checkPermission = (
   resourceUserId: Types.ObjectId
 ) => {
   if (requestUser.role === "admin") return;
+
   if (requestUser.id.toString() === resourceUserId.toString()) return;
+
   throw new UnauthorizedError("You don't have access");
 };
 

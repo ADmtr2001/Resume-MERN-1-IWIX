@@ -1,27 +1,52 @@
 import { Request, Response } from "express";
-import { v4 as uuidv4 } from "uuid";
-import path from "path";
-import { announcementService } from "../services";
-import { deleteFile } from "../utils";
-import { checkPermission } from "../utils";
+
 import { StatusCodes } from "http-status-codes";
 
+import { announcementService } from "../services";
+import {
+  checkPermission,
+  moveFileToLocalFolder,
+  deleteFileFromLocalFolder,
+} from "../utils";
+
 class AnnouncementController {
+  async getAllAnnouncements(req: Request, res: Response) {
+    const { page = 1, searchQuery = "" } = req.query;
+
+    const limit = 4;
+    const startIndex = (Number(page) - 1) * limit;
+
+    let announcements: any;
+    let total: any;
+
+    if (searchQuery) {
+      const searchQueryReg = new RegExp(searchQuery as string, "i");
+      ({ announcements, total } = await announcementService.getAllAnnouncements(
+        limit,
+        startIndex,
+        searchQueryReg
+      ));
+    } else {
+      ({ announcements, total } = await announcementService.getAllAnnouncements(
+        limit,
+        startIndex
+      ));
+    }
+
+    res.status(StatusCodes.OK).json({
+      announcements,
+      currentPage: Number(page),
+      numberOfPages: Math.ceil(total / limit),
+    });
+  }
+
   async createAnnouncement(req: Request, res: Response) {
     const { title, category, description, location, phoneNumber } = req.body;
     // @ts-ignore
     const { image } = req.files;
-    const fileName = uuidv4() + ".jpg";
-    const filePath = path.resolve(
-      __dirname,
-      "..",
-      "public",
-      "uploads",
-      "announcementImages",
-      fileName
-    );
-    // @ts-ignore
-    image.mv(filePath);
+
+    const fileName = moveFileToLocalFolder(image, "announcementImages");
+
     const announcement = await announcementService.createAnnouncement(
       title,
       category,
@@ -31,34 +56,8 @@ class AnnouncementController {
       fileName,
       req.user.id
     );
+
     res.status(StatusCodes.CREATED).json(announcement);
-  }
-
-  async getAllAnnouncements(req: Request, res: Response) {
-    const { page = 1, searchQuery = "" } = req.query;
-
-    const limit = 4;
-    const startIndex = (Number(page) - 1) * limit;
-    let announcements: any;
-    let total: any;
-    if (searchQuery) {
-      const searchQueryReg = new RegExp(searchQuery as string, "i");
-      ({ announcements, total } = await announcementService.getAll(
-        limit,
-        startIndex,
-        searchQueryReg
-      ));
-    } else {
-      ({ announcements, total } = await announcementService.getAll(
-        limit,
-        startIndex
-      ));
-    }
-    res.status(StatusCodes.OK).json({
-      announcements,
-      currentPage: Number(page),
-      numberOfPages: Math.ceil(total / limit),
-    });
   }
 
   async getSingleAnnouncement(req: Request, res: Response) {
@@ -70,31 +69,17 @@ class AnnouncementController {
   async updateAnnouncement(req: Request, res: Response) {
     const { id } = req.params;
     const { title, category, description, location, phoneNumber } = req.body;
+    // @ts-ignore
+    const { image } = req.files;
+
     const previousAnnouncement =
       await announcementService.getSingleAnnouncement(id);
     checkPermission(req.user, previousAnnouncement.creator);
-    // @ts-ignore
-    const { image } = req.files;
-    const fileName = uuidv4() + ".jpg";
-    const filePath = path.resolve(
-      __dirname,
-      "..",
-      "public",
-      "uploads",
-      "announcementImages",
-      fileName
-    );
-    // @ts-ignore
-    image.mv(filePath);
-    const previousFilePath = path.resolve(
-      __dirname,
-      "..",
-      "public",
-      "uploads",
-      "announcementImages",
-      previousAnnouncement.image
-    );
-    deleteFile(previousFilePath);
+
+    const fileName = moveFileToLocalFolder(image, "announcementImages");
+
+    deleteFileFromLocalFolder("announcementImages", previousAnnouncement.image);
+
     const announcement = await announcementService.updateAnnouncement(
       id,
       title,
@@ -104,25 +89,20 @@ class AnnouncementController {
       phoneNumber,
       fileName
     );
+
     res.status(StatusCodes.OK).json(announcement);
   }
 
   async deleteAnnouncement(req: Request, res: Response) {
     const { id } = req.params;
+
     const announcement = await announcementService.getSingleAnnouncement(id);
     checkPermission(req.user, announcement.creator);
-    const deletedAnnouncement = await announcementService.deleteAnnouncement(
-      id
-    );
-    const imagePath = path.resolve(
-      __dirname,
-      "..",
-      "public",
-      "uploads",
-      "announcementImages",
-      announcement.image
-    );
-    deleteFile(imagePath);
+
+    await announcementService.deleteAnnouncement(id);
+
+    deleteFileFromLocalFolder("announcementImages", announcement.image);
+
     res
       .status(StatusCodes.OK)
       .json({ success: true, message: "Announcement removed" });

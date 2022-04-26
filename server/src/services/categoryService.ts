@@ -2,14 +2,14 @@ import { NotFoundError } from "../errors";
 import { Category } from "../models";
 
 class CategoryService {
-  async createCategory(name: string, image: string) {
-    const category = await Category.create({ name, image });
-    return category;
-  }
-
   async getAllCategories() {
     const categories = await Category.find({});
     return categories;
+  }
+
+  async createCategory(name: string, image: string) {
+    const category = await Category.create({ name, image });
+    return category;
   }
 
   async getSingleCategory(categoryId: string) {

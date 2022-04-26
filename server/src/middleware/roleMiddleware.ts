@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { UnauthenticatedError, UnauthorizedError } from "../errors";
-import { tokenService } from "../services";
+
+import { UnauthorizedError } from "../errors";
 
 const roleMiddleware = (...roles: [string]) => {
   return async function (req: Request, res: Response, next: NextFunction) {

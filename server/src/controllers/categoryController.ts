@@ -1,34 +1,27 @@
 import { Request, Response } from "express";
-import { v4 as uuidv4 } from "uuid";
-import path from "path";
-import { categoryService } from "../services";
-import { deleteFile } from "../utils";
+
 import { StatusCodes } from "http-status-codes";
 
+import { categoryService } from "../services";
+import { deleteFileFromLocalFolder, moveFileToLocalFolder } from "../utils";
+
 class CategoryController {
+  async getAllCategories(req: Request, res: Response) {
+    const categories = await categoryService.getAllCategories();
+    res.status(StatusCodes.OK).json(categories);
+  }
+
   async createCategory(req: Request, res: Response) {
     const { name } = req.body;
     // @ts-ignore
     const { image } = req.files;
-    const fileName = uuidv4() + ".jpg";
-    const filePath = path.resolve(
-      __dirname,
-      "..",
-      "public",
-      "uploads",
-      "categoryImages",
-      fileName
-    );
-    // @ts-ignore
-    image.mv(filePath);
+
+    const fileName = moveFileToLocalFolder(image, "categoryImages");
+
     // ?PROBABLY CHANGE FILE NAME
     const category = await categoryService.createCategory(name, fileName);
-    res.status(StatusCodes.CREATED).json(category);
-  }
 
-  async getAllCategories(req: Request, res: Response) {
-    const categories = await categoryService.getAllCategories();
-    res.status(StatusCodes.OK).json(categories);
+    res.status(StatusCodes.CREATED).json(category);
   }
 
   async getSingleCategory(req: Request, res: Response) {
@@ -39,17 +32,12 @@ class CategoryController {
 
   async deleteCategory(req: Request, res: Response) {
     const { id } = req.params;
+
     const category = await categoryService.getSingleCategory(id);
-    const filePath = path.resolve(
-      __dirname,
-      "..",
-      "public",
-      "uploads",
-      "categoryImages",
-      category.image
-    );
-    deleteFile(filePath);
-    const deletedCategory = await categoryService.deleteCategory(id);
+
+    deleteFileFromLocalFolder("categoryImages", category.image);
+
+    await categoryService.deleteCategory(id);
     res
       .status(StatusCodes.OK)
       .json({ success: true, message: "Category removed" });

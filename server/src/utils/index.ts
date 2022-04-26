@@ -1,6 +1,13 @@
 import checkPermission from "./checkPermission";
 import comparePassword from "./comparePasswords";
-import deleteFile from "./deleteFile";
 import getApiUrl from "./getApiUrl";
+import moveFileToLocalFolder from "./moveFileToLocalFolder";
+import deleteFileFromLocalFolder from "./deleteFileFromLocalFolder";
 
-export { checkPermission, comparePassword, deleteFile, getApiUrl };
+export {
+  checkPermission,
+  comparePassword,
+  getApiUrl,
+  moveFileToLocalFolder,
+  deleteFileFromLocalFolder,
+};

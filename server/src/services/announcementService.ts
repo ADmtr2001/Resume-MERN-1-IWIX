@@ -1,8 +1,21 @@
 import { Types } from "mongoose";
+
 import { NotFoundError } from "../errors";
 import { Announcement } from "../models";
 
 class AnnouncementService {
+  async getAllAnnouncements(
+    limit: number,
+    startIndex: number,
+    searchQuery: RegExp = new RegExp("", "i")
+  ) {
+    const total = await Announcement.countDocuments({ title: searchQuery });
+    const announcements = await Announcement.find({ title: searchQuery })
+      .limit(limit)
+      .skip(startIndex);
+    return { announcements, total };
+  }
+
   async createAnnouncement(
     title: string,
     category: Types.ObjectId,
@@ -22,26 +35,6 @@ class AnnouncementService {
       creator,
     });
     return announcement;
-  }
-
-  async getAllAnnouncements(limit: number, startIndex: number) {
-    const total = await Announcement.countDocuments({});
-    const announcements = await Announcement.find({})
-      .limit(limit)
-      .skip(startIndex);
-    return { announcements, total };
-  }
-
-  async getAnnouncementsBySearch(
-    searchQuery: RegExp,
-    limit: number,
-    startIndex: number
-  ) {
-    const total = await Announcement.countDocuments({ title: searchQuery });
-    const announcements = await Announcement.find({ title: searchQuery })
-      .limit(limit)
-      .skip(startIndex);
-    return { announcements, total };
   }
 
   async getSingleAnnouncement(announcementId: string) {
@@ -87,18 +80,6 @@ class AnnouncementService {
   async getAllUserAnnouncements(userId: string) {
     const announcements = await Announcement.find({ creator: userId });
     return announcements;
-  }
-
-  async getAll(
-    limit: number,
-    startIndex: number,
-    searchQuery: RegExp = new RegExp("", "i")
-  ) {
-    const total = await Announcement.countDocuments({ title: searchQuery });
-    const announcements = await Announcement.find({ title: searchQuery })
-      .limit(limit)
-      .skip(startIndex);
-    return { announcements, total };
   }
 }
 

@@ -8,9 +8,11 @@ class TokenService {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET!, {
       expiresIn: process.env.JWT_ACCESS_DURATION,
     });
+
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET!, {
       expiresIn: process.env.JWT_REFRESH_DURATION,
     });
+
     return {
       accessToken,
       refreshToken,
@@ -34,7 +36,6 @@ class TokenService {
 
   async validateRefreshToken(refreshToken: string) {
     const userData = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!);
-    console.log(userData);
     return userData;
   }
 
