@@ -5,6 +5,7 @@ import App from "./App";
 import { Provider } from "react-redux";
 
 import { setupStore } from "./store/store";
+import { GlobalStyles } from "./styles/globalStyles";
 
 const store = setupStore();
 
@@ -15,6 +16,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <GlobalStyles />
       <App />
     </Provider>
   </React.StrictMode>
