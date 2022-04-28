@@ -1,7 +1,16 @@
-import React from 'react';
+import React from "react";
+import AnnouncementList from "../../components/Categories/Announcements/AnnouncementList";
+import Categories from "../../components/Categories/Categories";
+import Search from "../../components/Search/Search";
 
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return (
+    <>
+      <Search />
+      <Categories />
+      <AnnouncementList />
+    </>
+  );
 };
 
 export default HomePage;
