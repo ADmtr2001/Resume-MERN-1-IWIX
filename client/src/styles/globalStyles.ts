@@ -80,6 +80,10 @@ body {
   height: 100%;
 }
 
+button {
+  cursor: pointer;
+}
+
 /* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
 @media (prefers-reduced-motion: reduce) {
   * {
