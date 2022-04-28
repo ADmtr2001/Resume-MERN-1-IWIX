@@ -5,6 +5,7 @@ import CreationPage from "./Creation/CreationPage";
 import HomePage from "./Home/HomePage";
 import NotFoundPage from "./NotFound/NotFoundPage";
 import UserPage from "./User/UserPage";
+import CategoryAnnouncementsPage from "./CategoryAnnouncements/CategoryAnnouncementsPage";
 
 export {
   AdminPage,
@@ -14,4 +15,5 @@ export {
   HomePage,
   NotFoundPage,
   UserPage,
+  CategoryAnnouncementsPage,
 };

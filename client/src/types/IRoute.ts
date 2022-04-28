@@ -5,6 +5,7 @@ export enum RoutesNames {
   CREATION = "/creation",
   USER = "/user",
   ANNOUNCEMENT = "/announcement/:id",
+  CATEGORY_ANNOUNCEMENTS = '/category-announcements',
   NOT_FOUND = "*",
 }
 
