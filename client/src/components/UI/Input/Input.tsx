@@ -7,7 +7,7 @@ interface InputProps {
 }
 
 const Input: FC<InputProps> = ({ fullWidth }) => {
-  return <Wrapper fullWidth={fullWidth}></Wrapper>;
+  return <Wrapper fullWidth={fullWidth} />;
 };
 
 export default Input;

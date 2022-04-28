@@ -5,5 +5,5 @@ interface WrapperProps {
 }
 
 export const Wrapper = styled.input<WrapperProps>`
-  width: ${(props) => (props.fullWidth ? "100%" : "")};
+  width: ${(props) => (props.fullWidth ? "100%" : "50%")};
 `;

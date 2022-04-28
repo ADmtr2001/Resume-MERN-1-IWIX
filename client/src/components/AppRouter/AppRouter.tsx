@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "../../router";
 
 const AppRouter = () => {
-  const user = false;
+  const user = true;
 
   return (
     <Routes>
