@@ -12,7 +12,9 @@ const App = () => {
     <BrowserRouter>
       <Wrapper>
         <NavBar />
-        <AppRouter />
+        <div className='content'>
+          <AppRouter />
+        </div>
         <Footer />
       </Wrapper>
     </BrowserRouter>
