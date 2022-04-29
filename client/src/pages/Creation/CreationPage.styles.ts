@@ -9,7 +9,6 @@ export const Wrapper = styled.section`
   ${setShadowForSection()};
 
   input {
-    height: 5rem;
     margin-top: 2rem;
   }
 

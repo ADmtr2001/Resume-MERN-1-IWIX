@@ -4,11 +4,15 @@ import Input from "../UI/Input/Input";
 
 import { Wrapper } from "./Search.styles";
 
+import { BsSearch } from "react-icons/bs";
+
 const Search = () => {
   return (
     <Wrapper>
       <Input fullWidth />
-      <button>Hello</button>
+      <button>
+        <span>Search</span> <BsSearch />
+      </button>
     </Wrapper>
   );
 };
