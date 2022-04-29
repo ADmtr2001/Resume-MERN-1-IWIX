@@ -23,6 +23,7 @@ const Categories = () => {
         <Category />
         <Category />
         <Category />
+        <Category />
       </div>
     </Wrapper>
   );

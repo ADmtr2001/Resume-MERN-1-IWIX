@@ -7,7 +7,6 @@ import {
 export const Wrapper = styled.section`
   background-color: ${(props) => props.theme.light2};
   margin-top: 2rem;
-  padding: 2rem;
   ${setShadowForSection()};
 
   .title {

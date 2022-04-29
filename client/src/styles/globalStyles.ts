@@ -91,6 +91,14 @@ a {
   color: inherit;
 }
 
+h2 {
+  margin-bottom: 2rem;
+}
+
+section {
+  padding: 1rem;
+}
+
 /* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
 @media (prefers-reduced-motion: reduce) {
   * {

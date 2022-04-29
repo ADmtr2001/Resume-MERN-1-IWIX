@@ -9,7 +9,6 @@ export const Wrapper = styled.section`
   background-color: ${(props) => props.theme.light2};
 
   margin: 2rem auto 0;
-  padding: 1rem;
 
   ${setShadowForSection()};
 
@@ -34,7 +33,7 @@ export const Wrapper = styled.section`
 
     ${setFlex({ justify: "center", align: "center" })}
 
-    transition: background-color 0.35s;
+    transition: background-color ${(props) => props.theme.fastTransition};
 
     span {
       margin-right: 0.5rem;

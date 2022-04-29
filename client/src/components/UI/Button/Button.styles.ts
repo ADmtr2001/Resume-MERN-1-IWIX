@@ -15,7 +15,7 @@ export const Wrapper = styled.button<WrapperProps>`
 
   font-size: 2rem;
 
-  transition: all 0.35s;
+  transition: all ${(props) => props.theme.fastTransition};
 
   box-shadow: ${(props) =>
     props.isActive ? "none" : "0.1rem 0.1rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2)"};

@@ -6,4 +6,5 @@ export const defaultTheme = {
   dark1: "#91AEC4",
   dark2: "#5F84A2",
   dark3: "#194569",
+  fastTransition: "0.35s",
 };
