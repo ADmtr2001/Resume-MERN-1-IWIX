@@ -84,6 +84,7 @@ body {
 
 button {
   cursor: pointer;
+  outline: none;
 }
 
 a {

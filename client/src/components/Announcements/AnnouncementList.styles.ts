@@ -4,6 +4,7 @@ import { setShadowForSection } from "../../styles/mixins/mixins.styles";
 export const Wrapper = styled.section`
   margin-top: 2rem;
   background-color: ${(props) => props.theme.light2};
+  padding: 2rem;
 
   ${setShadowForSection()};
 
@@ -15,6 +16,6 @@ export const Wrapper = styled.section`
   .announcements {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 1rem;
+    grid-gap: 2rem;
   }
 `;

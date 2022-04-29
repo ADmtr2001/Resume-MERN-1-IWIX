@@ -11,8 +11,10 @@ export const Wrapper = styled.article`
 
   ${setFlex({ direction: "column" })};
 
+  cursor: pointer;
+
   .announcement-top {
-    height: 60%;
+    height: 65%;
 
     img {
       width: 100%;
@@ -22,7 +24,7 @@ export const Wrapper = styled.article`
 
   .announcement-bot {
     ${setFlex({ direction: "column" })}
-    height: 40%;
+    height: 35%;
 
     .title {
       flex: 1;

@@ -3,7 +3,7 @@ import Button from "../UI/Button/Button";
 
 import { Wrapper } from "./NavBar.styles";
 
-import logo from "../../assets/logo1.png";
+import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useOutsideAlerter } from "../../hooks/useOutsideAlerter";
 
