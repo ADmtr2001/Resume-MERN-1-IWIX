@@ -7,7 +7,7 @@ export const Wrapper = styled.section`
 
   ${setShadowForSection()};
 
-  .title {
+  .announcement-title {
     font-size: 4rem;
     text-align: center;
   }
