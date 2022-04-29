@@ -1,10 +1,14 @@
 import styled from "styled-components";
-import { setFlex } from "../../styles/mixins/mixins.styles";
+import {
+  setFlex,
+  setShadowForSection,
+} from "../../styles/mixins/mixins.styles";
 
 export const Wrapper = styled.section`
-  background: grey;
+  background-color: ${(props) => props.theme.light2};
   margin-top: 2rem;
   padding: 2rem;
+  ${setShadowForSection()};
 
   .title {
     text-align: center;

@@ -8,7 +8,8 @@ export const Wrapper = styled.button<WrapperProps>`
   width: 15rem;
   height: 4rem;
 
-  background-color: ${(props) => (props.isActive ? "#91aec4" : "#b7d0e1")};
+  background-color: ${(props) =>
+    props.isActive ? props.theme.dark1 : props.theme.light3};
 
   border: none;
 
@@ -20,7 +21,7 @@ export const Wrapper = styled.button<WrapperProps>`
     props.isActive ? "none" : "0.1rem 0.1rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2)"};
 
   &:hover {
-    background-color: #91aec4;
+    background-color: ${(props) => props.theme.dark1};
     box-shadow: none;
   }
 `;

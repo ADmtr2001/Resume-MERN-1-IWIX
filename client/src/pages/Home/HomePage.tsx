@@ -1,5 +1,5 @@
 import React from "react";
-import AnnouncementList from "../../components/Categories/Announcements/AnnouncementList";
+import AnnouncementList from "../../components/Announcements/AnnouncementList";
 import Categories from "../../components/Categories/Categories";
 import Search from "../../components/Search/Search";
 

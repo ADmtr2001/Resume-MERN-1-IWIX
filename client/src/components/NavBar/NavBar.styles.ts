@@ -1,15 +1,18 @@
 import styled from "styled-components";
 
-import { setFlex } from "../../styles/mixins/mixins.styles";
+import {
+  setFlex,
+  setShadowForSection,
+} from "../../styles/mixins/mixins.styles";
 
 export const Wrapper = styled.nav`
   height: 6rem;
 
-  background-color: #cadeed;
+  background-color: ${(props) => props.theme.light2};
 
   padding: 0 2.5rem;
 
-  box-shadow: 0.3rem 0.3rem 1rem 0.1rem rgba(0, 0, 0, 0.2);
+  ${setShadowForSection()};
 
   ${setFlex({ justify: "space-between", align: "center" })}
 
@@ -28,7 +31,7 @@ export const Wrapper = styled.nav`
       position: relative;
 
       .more-menu {
-        background-color: #91aec4;
+        background-color: ${(props) => props.theme.dark1};
         position: absolute;
         top: 4rem;
         left: 0;
@@ -45,7 +48,7 @@ export const Wrapper = styled.nav`
           border-top: 1px solid black;
 
           &:hover {
-            background-color: #5f84a2;
+            background-color: ${(props) => props.theme.dark2};
           }
         }
       }

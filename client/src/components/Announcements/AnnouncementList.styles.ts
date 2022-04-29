@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import { setShadowForSection } from "../../styles/mixins/mixins.styles";
 
 export const Wrapper = styled.section`
   margin-top: 2rem;
-  background-color: grey;
+  background-color: ${(props) => props.theme.light2};
   padding: 0 1rem 2rem;
+  ${setShadowForSection()};
 
   .title {
     font-size: 4rem;

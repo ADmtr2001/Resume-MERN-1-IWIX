@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import { setShadowForSection } from "../../styles/mixins/mixins.styles";
 
 export const Wrapper = styled.section`
-  background-color: grey;
+  background-color: ${(props) => props.theme.light2};
   width: 50rem;
   margin: 2rem auto 0;
   padding: 1rem;
+  ${setShadowForSection()};
 
   form {
     input {
