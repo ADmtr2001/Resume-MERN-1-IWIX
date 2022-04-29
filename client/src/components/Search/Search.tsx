@@ -9,7 +9,7 @@ import { BsSearch } from "react-icons/bs";
 const Search = () => {
   return (
     <Wrapper>
-      <Input fullWidth />
+      <Input fullWidth placeholder='Search for anything...' />
       <button>
         <span>Search</span> <BsSearch />
       </button>

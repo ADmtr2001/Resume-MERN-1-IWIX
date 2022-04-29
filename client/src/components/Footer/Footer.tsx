@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 
 import { Wrapper } from "./Footer.styles";
@@ -25,7 +26,7 @@ const Footer = () => {
         </div>
       </div>
       <div className='my-socials'>
-        <a href='https://github.com/ADmtr2001' target='_blank'>
+        <a href='https://github.com/ADmtr2001' target='_blank' rel='noreferrer'>
           <BsGithub />
         </a>
       </div>

@@ -13,6 +13,8 @@ export const Wrapper = styled.article`
 
   cursor: pointer;
 
+  transition: all ${(props) => props.theme.fastTransition};
+
   .announcement-top {
     height: 65%;
 
@@ -40,5 +42,9 @@ export const Wrapper = styled.article`
     .price {
       font-size: 1.9rem;
     }
+  }
+
+  &:hover {
+    transform: scale(1.1);
   }
 `;
