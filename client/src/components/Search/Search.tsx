@@ -8,7 +8,7 @@ const Search = () => {
   return (
     <Wrapper>
       <Input fullWidth />
-      <Button>Hello</Button>
+      <button>Hello</button>
     </Wrapper>
   );
 };

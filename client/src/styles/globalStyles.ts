@@ -73,6 +73,8 @@ select {
 html {
   font-size: 62.5%; /* 1 */
   heigth: 100%;
+  background-color: #FFFFFF;
+  font-family: 'Radio Canada', sans-serif;
 }
 
 body {
@@ -82,6 +84,11 @@ body {
 
 button {
   cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
