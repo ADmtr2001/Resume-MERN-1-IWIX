@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Wrapper } from "./Announcement.styles";
+import { Wrapper } from "./BoxAnnouncement.styles";
 
-const Announcement = () => {
+const BoxAnnouncement = () => {
   return (
     <Wrapper>
       <div className='announcement-top'>
@@ -20,4 +20,4 @@ const Announcement = () => {
   );
 };
 
-export default Announcement;
+export default BoxAnnouncement;

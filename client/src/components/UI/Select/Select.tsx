@@ -8,7 +8,7 @@ interface SelectProps {
 
 const Select: FC<SelectProps> = ({ options }) => {
   const generatedOptions = options.map((optionText) => (
-    <option>{optionText}</option>
+    <option key={optionText}>{optionText}</option>
   ));
 
   return <Wrapper>{generatedOptions}</Wrapper>;

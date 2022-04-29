@@ -1,23 +1,14 @@
 import styled from "styled-components";
 import { setFlex } from "../../../styles/mixins/mixins.styles";
+import { Announcement } from "../AnnouncementBaseStyle/Announcement.styles";
 
-export const Wrapper = styled.article`
+export const Wrapper = styled(Announcement)`
   width: 100%;
   height: 35rem;
 
-  background: ${(props) => props.theme.dark1};
-
-  padding: 1rem;
-
   ${setFlex({ direction: "column" })};
 
-  cursor: pointer;
-
-  transition: all ${(props) => props.theme.fastTransition};
-
   .announcement-top {
-    height: 65%;
-
     img {
       width: 100%;
       height: 100%;
@@ -26,7 +17,7 @@ export const Wrapper = styled.article`
 
   .announcement-bot {
     ${setFlex({ direction: "column" })}
-    height: 35%;
+    height: 100%;
 
     .title {
       flex: 1;
@@ -42,9 +33,5 @@ export const Wrapper = styled.article`
     .price {
       font-size: 1.9rem;
     }
-  }
-
-  &:hover {
-    transform: scale(1.1);
   }
 `;
