@@ -23,6 +23,7 @@ class AnnouncementService {
     location: string,
     phoneNumber: string,
     image: string,
+    price: number,
     creator: Types.ObjectId
   ) {
     const announcement = await Announcement.create({
@@ -32,6 +33,7 @@ class AnnouncementService {
       location,
       phoneNumber,
       image,
+      price,
       creator,
     });
     return announcement;
@@ -52,6 +54,7 @@ class AnnouncementService {
     description: string,
     location: string,
     phoneNumber: string,
+    price: number,
     image: string
   ) {
     const announcement = await Announcement.findOneAndUpdate(
@@ -62,6 +65,7 @@ class AnnouncementService {
         description,
         location,
         phoneNumber,
+        price,
         image,
       },
       {

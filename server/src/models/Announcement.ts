@@ -3,6 +3,7 @@ import { Schema, model, Types } from "mongoose";
 export interface IAnnouncement {
   title: string;
   category: Types.ObjectId;
+  price: number;
   image: string;
   description: string;
   location: string;
@@ -21,6 +22,10 @@ const announcementSchema = new Schema<IAnnouncement>(
       type: Schema.Types.ObjectId,
       ref: "Category",
       required: [true, "Please provide category"],
+    },
+    price: {
+      type: Number,
+      required: [true, "Please provide price"],
     },
     image: {
       type: String,
