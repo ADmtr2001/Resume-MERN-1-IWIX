@@ -13,12 +13,13 @@ const Filters = () => {
     <Wrapper>
       <div className='price'>
         <p>Price</p>
-        <Input placeholder='From' />
-        <Input placeholder='To' />
+        <Input name='from' placeholder='From' />
+        <Input name='to' placeholder='To' />
       </div>
       <div className='sort'>
         <p>Sort</p>
         <Select
+          name='sort'
           options={[
             "Price: lowest first",
             "Price: highest first",

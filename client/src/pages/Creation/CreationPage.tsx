@@ -9,38 +9,21 @@ const CreationPage = () => {
   return (
     <Wrapper>
       <form>
-        <label>
-          Title
-          <Input fullWidth />
-        </label>
-        <label>
-          Category
-          <Select options={["Transport", "Food", "Sport"]} fullWidth />
-        </label>
-        <label>
-          Price
-          <Input fullWidth />
-        </label>
-        <label>
-          Image
-          <Input fullWidth type='file' />
-        </label>
-        <label>
-          Description
-          <textarea rows={5} />
-        </label>
-        <label>
-          Location
-          <Input fullWidth />
-        </label>
-        <label>
-          Email
-          <Input fullWidth type='email' />
-        </label>
-        <label>
-          Phone Number
-          <Input fullWidth />
-        </label>
+        <Input name='title' label='Title' fullWidth />
+        Category
+        <Select
+          name='category'
+          label='Category'
+          options={["Transport", "Food", "Sport"]}
+          fullWidth
+        />
+        <Input name='price' label='Price' fullWidth />
+        <Input name='image' label='Image' fullWidth type='file' />
+        Description
+        <textarea rows={5} />
+        <Input name='location' label='Location' fullWidth />
+        <Input name='email' label='Email' fullWidth type='email' />
+        <Input name='phoneNumber' label='Phone Number' fullWidth />
         <Button>Create</Button>
       </form>
     </Wrapper>
