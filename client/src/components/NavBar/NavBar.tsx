@@ -40,20 +40,16 @@ const NavBar = () => {
             >
               Profile
             </span>
-            <ul
+            <div
               className={
                 isMenuActive ? "more-menu active-more-menu" : "more-menu"
               }
             >
-              <li>
-                <Link to='/user'>My Profile</Link>
-              </li>
-              <li>
-                <Link to='/' onClick={() => console.log("logout")}>
-                  Logout
-                </Link>
-              </li>
-            </ul>
+              <Link to='/user'>My Profile</Link>
+              <Link to='/' onClick={() => console.log("logout")}>
+                Logout
+              </Link>
+            </div>
           </Button>
         </div>
         <StyledLink to='/creation'>

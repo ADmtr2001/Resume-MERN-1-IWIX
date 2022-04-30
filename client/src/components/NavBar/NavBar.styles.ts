@@ -43,9 +43,10 @@ export const Wrapper = styled.nav`
         transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out,
           max-height 0.2s ease-in-out, margin-bottom 0.3s ease-in-out;
 
-        li {
+        a {
           padding: 0.75rem;
           border-top: 1px solid black;
+          display: block;
 
           &:hover {
             background-color: ${(props) => props.theme.dark2};
