@@ -6,9 +6,10 @@ interface WrapperProps {
 
 export const Wrapper = styled.input<WrapperProps>`
   width: ${(props) => (props.fullWidth ? "100%" : "50%")};
-  padding: 1rem;
+  padding: ${(props) => (props.type === "file" ? "1rem 0" : "1rem")};
   height: 5rem;
-  border: 0.3rem solid ${(props) => props.theme.dark1};
+  border: ${(props) =>
+    props.type === "file" ? "none" : `0.3rem solid ${props.theme.dark1}}`};
   font-size: 2rem;
   outline: none;
 `;

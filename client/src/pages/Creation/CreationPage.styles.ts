@@ -9,11 +9,10 @@ export const Wrapper = styled.section`
   ${setShadowForSection()};
 
   input {
-    margin-top: 2rem;
   }
 
   textarea {
-    margin-top: 2rem;
+    border: 2px solid ${(props) => props.theme.dark1};
     width: 100%;
     resize: none;
   }
