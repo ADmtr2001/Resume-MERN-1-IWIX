@@ -6,6 +6,8 @@ import { Wrapper } from "./NavBar.styles";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useOutsideAlerter } from "../../hooks/useOutsideAlerter";
+import { GrFormAdd } from "react-icons/gr";
+import StyledLink from "../UI/StyledLink/StyledLink";
 
 const NavBar = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
@@ -54,9 +56,9 @@ const NavBar = () => {
             </ul>
           </Button>
         </div>
-        <Button>
-          <Link to='/creation'>Create</Link>
-        </Button>
+        <StyledLink to='/creation'>
+          <span>Create</span> <GrFormAdd />
+        </StyledLink>
       </div>
     </Wrapper>
   );

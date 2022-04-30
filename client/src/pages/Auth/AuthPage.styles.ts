@@ -10,8 +10,6 @@ export const Wrapper = styled.section`
 
   form {
     input {
-      height: 5rem;
-      margin-top: 2rem;
     }
 
     button {
@@ -25,6 +23,5 @@ export const Wrapper = styled.section`
     margin: 2rem auto 0;
     background-color: transparent;
     border: none;
-    color: white;
   }
 `;

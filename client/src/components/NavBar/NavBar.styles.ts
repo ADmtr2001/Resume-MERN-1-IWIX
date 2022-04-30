@@ -23,7 +23,7 @@ export const Wrapper = styled.nav`
   .buttons {
     ${setFlex({})};
 
-    > button {
+    > a {
       margin-left: 2rem;
     }
 
@@ -64,18 +64,18 @@ export const Wrapper = styled.nav`
     }
 
     .menu-button-text::after {
-      content: "^";
+      content: "➤";
       display: inline-block;
       position: relative;
-      top: 2px;
+      top: 0px;
       left: 4px;
-      font-size: 1em;
-      transform: rotate(90deg);
+      font-size: 1.7rem;
+      transform: rotate(0deg);
       transition: all 0.3s;
     }
 
     .menu-button-text.rotated::after {
-      transform: rotate(180deg);
+      transform: rotate(90deg);
       top: -2px;
     }
   }

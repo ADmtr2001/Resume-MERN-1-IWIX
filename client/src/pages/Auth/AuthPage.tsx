@@ -8,10 +8,22 @@ const AuthPage = () => {
   return (
     <Wrapper>
       <form>
-        <Input fullWidth />
-        <Input fullWidth />
-        <Input fullWidth />
-        <Input fullWidth />
+        <label>
+          Name
+          <Input fullWidth />
+        </label>
+        <label>
+          Email
+          <Input fullWidth />
+        </label>
+        <label>
+          Password
+          <Input fullWidth />
+        </label>
+        <label>
+          Confirm Passowrd
+          <Input fullWidth />
+        </label>
         <Button>Login</Button>
       </form>
       <button>Already have an account? Sign in</button>
