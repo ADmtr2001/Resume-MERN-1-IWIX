@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./components/AppRouter/AppRouter";
 import Footer from "./components/Footer/Footer";
 import NavBar from "./components/NavBar/NavBar";
+import ScrollToTopButton from "./components/UI/ScrollToTopButton/ScrollToTopButton";
 
 import { Wrapper } from "./styles/App.styles";
 
@@ -16,6 +17,7 @@ const App = () => {
           <AppRouter />
         </div>
         <Footer />
+        <ScrollToTopButton />
       </Wrapper>
     </BrowserRouter>
   );
