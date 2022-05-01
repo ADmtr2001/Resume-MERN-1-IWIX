@@ -3,7 +3,6 @@ import AnnouncementPage from "./Announcement/AnnouncementPage";
 import AuthPage from "./Auth/AuthPage";
 import CreationPage from "./Creation/CreationPage";
 import HomePage from "./Home/HomePage";
-import NotFoundPage from "./NotFound/NotFoundPage";
 import UserPage from "./User/UserPage";
 import CategoryAnnouncementsPage from "./CategoryAnnouncements/CategoryAnnouncementsPage";
 
@@ -13,7 +12,6 @@ export {
   AuthPage,
   CreationPage,
   HomePage,
-  NotFoundPage,
   UserPage,
   CategoryAnnouncementsPage,
 };

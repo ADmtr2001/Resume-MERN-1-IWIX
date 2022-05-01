@@ -1,15 +1,24 @@
 import IOption from "./IOption";
 import IRoute from "./IRoute";
 import IUser from "./IUser";
-import { IFormData, ILoginData, IRegisterData } from "./IFormData";
+import {
+  IAuthFormData,
+  ILoginData,
+  IRegisterData,
+  ICreationFormData,
+} from "./IFormData";
 import IAuthResponse from "./IAuthResponse";
+import { GetAnnouncementsResponse, IAnnouncement } from "./IAnnouncement";
 
 export type {
   IOption,
   IRoute,
   IUser,
-  IFormData,
+  IAuthFormData,
   ILoginData,
   IRegisterData,
   IAuthResponse,
+  ICreationFormData,
+  IAnnouncement,
+  GetAnnouncementsResponse,
 };

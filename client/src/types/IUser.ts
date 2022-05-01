@@ -1,7 +1,7 @@
 interface IUser {
   email: string;
   name: string;
-  id: string;
+  _id: string;
   isActivated: boolean;
   role: string;
 }

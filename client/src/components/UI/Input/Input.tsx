@@ -8,8 +8,8 @@ interface InputProps {
   type?: "text" | "file" | "password" | "email";
   placeholder?: string;
   fullWidth?: boolean;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input: FC<InputProps> = ({

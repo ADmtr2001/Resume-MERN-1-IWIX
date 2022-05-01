@@ -6,10 +6,11 @@ import {
   asyncLogin,
   asyncRegister,
 } from "../../store/reducers/user/userActionCreators";
+import { IAuthFormData } from "../../types";
 
 import { Wrapper } from "./AuthPage.styles";
 
-const initialState = {
+const initialState: IAuthFormData = {
   name: "",
   email: "",
   password: "",

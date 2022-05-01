@@ -8,7 +8,9 @@ export const Wrapper = styled.section`
   padding: 1rem;
   ${setShadowForSection()};
 
-  input {
+  label {
+    display: block;
+    margin-top: 0.5rem;
   }
 
   textarea {

@@ -8,7 +8,7 @@ const CategoryAnnouncementsPage = () => {
     <>
       <Search />
       <Filters />
-      <AnnouncementList />
+      <AnnouncementList title='Announcements' announcements={[]} />
     </>
   );
 };

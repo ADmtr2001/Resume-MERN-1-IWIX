@@ -1,40 +1,37 @@
-import React, { useState } from "react";
+import React, { FC, PropsWithChildren, useState } from "react";
 import BoxAnnouncement from "./BoxAnnouncement/BoxAnnouncement";
 
 import { Wrapper } from "./AnnouncementList.styles";
 import LineAnnouncement from "./LineAnnouncement/LineAnnouncement";
+import { IAnnouncement } from "../../types";
 
-const AnnouncementList = () => {
-  const isGridView = false;
+interface AnnouncementListProps {
+  title: string;
+  announcements: IAnnouncement[];
+}
+
+const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
+  title,
+  announcements,
+}) => {
+  const isGridView = true;
+
+  let listAnnouncements: JSX.Element[];
+  if (isGridView) {
+    listAnnouncements = announcements.map((announcement) => (
+      <BoxAnnouncement key={announcement._id} />
+    ));
+  } else {
+    listAnnouncements = announcements.map((announcement) => (
+      <LineAnnouncement key={announcement._id} />
+    ));
+  }
 
   return (
     <Wrapper>
-      <h2 className='announcement-title'>Announcements</h2>
+      <h2 className='announcement-title'>{title}</h2>
       <div className={isGridView ? "announcements-grid" : "announcements-line"}>
-        {/* <BoxAnnouncement />
-        <BoxAnnouncement />
-        <BoxAnnouncement />
-        <BoxAnnouncement />
-        <BoxAnnouncement />
-        <BoxAnnouncement />
-        <BoxAnnouncement />
-        <BoxAnnouncement />
-        <BoxAnnouncement />
-        <BoxAnnouncement />
-        <BoxAnnouncement />
-        <BoxAnnouncement /> */}
-        <LineAnnouncement />
-        <LineAnnouncement />
-        <LineAnnouncement />
-        <LineAnnouncement />
-        <LineAnnouncement />
-        <LineAnnouncement />
-        <LineAnnouncement />
-        <LineAnnouncement />
-        <LineAnnouncement />
-        <LineAnnouncement />
-        <LineAnnouncement />
-        <LineAnnouncement />
+        {listAnnouncements}
       </div>
     </Wrapper>
   );

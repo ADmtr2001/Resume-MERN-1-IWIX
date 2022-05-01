@@ -1,4 +1,4 @@
-interface IFormData {
+interface IAuthFormData {
   name: string;
   email: string;
   password: string;
@@ -16,4 +16,15 @@ interface ILoginData {
   password: string;
 }
 
-export type { IFormData, IRegisterData, ILoginData };
+interface ICreationFormData {
+  title: string;
+  category: string;
+  price: string;
+  image: Blob | null;
+  description: string;
+  location: string;
+  email: string;
+  phoneNumber: string;
+}
+
+export type { IAuthFormData, IRegisterData, ILoginData, ICreationFormData };

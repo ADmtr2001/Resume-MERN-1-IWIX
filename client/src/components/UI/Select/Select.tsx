@@ -30,7 +30,7 @@ const Select: FC<SelectProps> = ({
 
   return label ? (
     <label>
-      {label}{" "}
+      {label}
       <Wrapper
         name={name}
         fullWidth={fullWidth}

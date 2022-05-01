@@ -6,7 +6,7 @@ const UserPage = () => {
   return (
     <>
       <Filters />
-      <AnnouncementList />
+      <AnnouncementList title='My Announcements' announcements={[]} />
     </>
   );
 };

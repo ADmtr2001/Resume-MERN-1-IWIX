@@ -4,7 +4,6 @@ import {
   AuthPage,
   CreationPage,
   HomePage,
-  NotFoundPage,
   UserPage,
   CategoryAnnouncementsPage,
 } from "../pages";
