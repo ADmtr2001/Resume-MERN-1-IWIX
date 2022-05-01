@@ -31,7 +31,6 @@ export const asyncLogin = createAsyncThunk(
         loginData,
         { withCredentials: true }
       );
-      console.log(data.user);
       localStorage.setItem("token", data.accessToken);
       return data.user;
     } catch (error: any) {
@@ -48,7 +47,6 @@ export const asyncLogout = createAsyncThunk(
       const { data } = await $host.post("/user/logout", _, {
         withCredentials: true,
       });
-      console.log(data);
       localStorage.removeItem("token");
     } catch (error: any) {
       console.log(error.response.data.message);
@@ -64,7 +62,6 @@ export const asyncCheckAuth = createAsyncThunk(
       const { data } = await $host.get<IAuthResponse>("/user/refresh", {
         withCredentials: true,
       });
-      console.log(data);
       localStorage.setItem("token", data.accessToken);
       return data.user;
     } catch (error: any) {

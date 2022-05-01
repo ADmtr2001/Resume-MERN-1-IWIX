@@ -11,9 +11,11 @@ import StyledLink from "../UI/StyledLink/StyledLink";
 import { BiLogIn } from "react-icons/bi";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { asyncLogout } from "../../store/reducers/user/userActionCreators";
+import { JsxElement } from "typescript";
+import Loader from "../UI/Loader/Loader";
 
 const NavBar = () => {
-  const { user } = useAppSelector((state) => state.user);
+  const { user, isUserLoading } = useAppSelector((state) => state.user);
   const [isMenuActive, setIsMenuActive] = useState(false);
   const openMenuButtonRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
@@ -32,6 +34,44 @@ const NavBar = () => {
 
   useOutsideAlerter(openMenuButtonRef, closeMenu);
 
+  let buttonsSectionContent: JSX.Element;
+  if (isUserLoading) {
+    buttonsSectionContent = <Loader />;
+  } else {
+    buttonsSectionContent = user ? (
+      <>
+        <div ref={openMenuButtonRef}>
+          <Button onClick={toggleMenu} isActive={isMenuActive}>
+            <span
+              className={
+                isMenuActive ? "menu-button-text rotated" : "menu-button-text"
+              }
+            >
+              Profile
+            </span>
+            <div
+              className={
+                isMenuActive ? "more-menu active-more-menu" : "more-menu"
+              }
+            >
+              <Link to='/user'>My Profile</Link>
+              <Link to='/' onClick={logout}>
+                Logout
+              </Link>
+            </div>
+          </Button>
+        </div>
+        <StyledLink to='/creation'>
+          <span>Create</span> <GrFormAdd />
+        </StyledLink>
+      </>
+    ) : (
+      <StyledLink to='/auth'>
+        <span>Login</span> <BiLogIn />
+      </StyledLink>
+    );
+  }
+
   return (
     <Wrapper>
       <div className='logo'>
@@ -39,42 +79,7 @@ const NavBar = () => {
           <img src={logo} alt='logo' />
         </Link>
       </div>
-      <div className='buttons'>
-        {user ? (
-          <>
-            <div ref={openMenuButtonRef}>
-              <Button onClick={toggleMenu} isActive={isMenuActive}>
-                <span
-                  className={
-                    isMenuActive
-                      ? "menu-button-text rotated"
-                      : "menu-button-text"
-                  }
-                >
-                  Profile
-                </span>
-                <div
-                  className={
-                    isMenuActive ? "more-menu active-more-menu" : "more-menu"
-                  }
-                >
-                  <Link to='/user'>My Profile</Link>
-                  <Link to='/' onClick={logout}>
-                    Logout
-                  </Link>
-                </div>
-              </Button>
-            </div>
-            <StyledLink to='/creation'>
-              <span>Create</span> <GrFormAdd />
-            </StyledLink>
-          </>
-        ) : (
-          <StyledLink to='/auth'>
-            <span>Login</span> <BiLogIn />
-          </StyledLink>
-        )}
-      </div>
+      <div className='buttons'>{buttonsSectionContent}</div>
     </Wrapper>
   );
 };

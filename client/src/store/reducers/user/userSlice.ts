@@ -9,10 +9,12 @@ import {
 
 interface UserState {
   user: IUser | null;
+  isUserLoading: boolean;
 }
 
 const initialState: UserState = {
   user: null,
+  isUserLoading: true,
 };
 
 export const userSlice = createSlice({
@@ -24,14 +26,17 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
     [asyncLogin.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
-      console.log(action.payload);
       state.user = action.payload;
     },
     [asyncLogout.fulfilled.type]: (state) => {
       state.user = null;
     },
+    [asyncCheckAuth.pending.type]: (state, action: PayloadAction<IUser>) => {
+      state.isUserLoading = true;
+    },
     [asyncCheckAuth.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
       state.user = action.payload;
+      state.isUserLoading = false;
     },
   },
 });

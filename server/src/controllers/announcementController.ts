@@ -13,7 +13,7 @@ class AnnouncementController {
   async getAllAnnouncements(req: Request, res: Response) {
     const { page = 1, searchQuery = "" } = req.query;
 
-    const limit = 4;
+    const limit = 8;
     const startIndex = (Number(page) - 1) * limit;
 
     let announcements: any;
