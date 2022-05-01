@@ -8,7 +8,6 @@ import { fetchAsyncAnnouncements } from "../../store/reducers/announcement/annou
 const HomePage = () => {
   const { announcements } = useAppSelector((state) => state.announcement);
   const dispatch = useAppDispatch();
-  console.log(announcements);
 
   useEffect(() => {
     dispatch(fetchAsyncAnnouncements());

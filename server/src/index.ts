@@ -10,7 +10,6 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import helmet from "helmet";
 import cors from "cors";
-import rateLimiter from "express-rate-limit";
 
 import path from "path";
 
@@ -23,14 +22,8 @@ import {
 
 const app = express();
 
-app.use(
-  rateLimiter({
-    windowMs: 15 * 60 * 1000,
-    max: 60,
-  })
-);
+app.use(helmet({}));
 
-app.use(helmet());
 app.use(
   cors({
     credentials: true,

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Announcement = styled.article`
+export const Wrapper = styled.article`
   background: ${(props) => props.theme.dark1};
   padding: 1rem;
   cursor: pointer;

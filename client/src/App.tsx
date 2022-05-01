@@ -17,8 +17,6 @@ const App = () => {
     dispatch(asyncCheckAuth());
   });
 
-  console.log(document.cookie);
-
   return (
     <BrowserRouter>
       <Wrapper>
