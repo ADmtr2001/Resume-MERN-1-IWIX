@@ -9,7 +9,8 @@ import {
   CategoryAnnouncementsPage,
 } from "../pages";
 
-import { IRoute, RoutesNames } from "../types/IRoute";
+import { IRoute } from "../types";
+import { RoutesNames } from "../types/IRoute";
 
 export const publicRoutes: IRoute[] = [
   { path: RoutesNames.HOME, element: HomePage },
@@ -19,7 +20,6 @@ export const publicRoutes: IRoute[] = [
     path: RoutesNames.CATEGORY_ANNOUNCEMENTS,
     element: CategoryAnnouncementsPage,
   },
-  { path: RoutesNames.NOT_FOUND, element: NotFoundPage },
 ];
 
 export const privateRoutes: IRoute[] = [
@@ -32,5 +32,4 @@ export const privateRoutes: IRoute[] = [
     path: RoutesNames.CATEGORY_ANNOUNCEMENTS,
     element: CategoryAnnouncementsPage,
   },
-  { path: RoutesNames.NOT_FOUND, element: NotFoundPage },
 ];

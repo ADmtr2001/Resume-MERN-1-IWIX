@@ -102,7 +102,6 @@ class AnnouncementController {
 
     const announcement = await announcementService.getSingleAnnouncement(id);
     checkPermission(req.user, announcement.creator);
-
     await announcementService.deleteAnnouncement(id);
 
     deleteFileFromLocalFolder("announcementImages", announcement.image);

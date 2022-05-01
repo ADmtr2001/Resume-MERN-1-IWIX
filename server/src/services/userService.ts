@@ -47,8 +47,7 @@ class UserService {
       throw new BadRequestError(`There's no user with this email: ${email}`);
     }
 
-    const isPasswordCorrect = comparePassword(password, user.password);
-    ``;
+    const isPasswordCorrect = await comparePassword(password, user.password);
     if (!isPasswordCorrect) {
       throw new BadRequestError("Wrong Password");
     }

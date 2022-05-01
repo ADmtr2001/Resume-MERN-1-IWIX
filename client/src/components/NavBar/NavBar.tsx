@@ -9,11 +9,14 @@ import { useOutsideAlerter } from "../../hooks/useOutsideAlerter";
 import { GrFormAdd } from "react-icons/gr";
 import StyledLink from "../UI/StyledLink/StyledLink";
 import { BiLogIn } from "react-icons/bi";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { asyncLogout } from "../../store/reducers/user/userActionCreators";
 
 const NavBar = () => {
-  const user = false;
+  const { user } = useAppSelector((state) => state.user);
   const [isMenuActive, setIsMenuActive] = useState(false);
   const openMenuButtonRef = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
 
   const toggleMenu = () => {
     setIsMenuActive((prev) => !prev);
@@ -22,6 +25,10 @@ const NavBar = () => {
   const closeMenu = useCallback(() => {
     setIsMenuActive(false);
   }, []);
+
+  const logout = () => {
+    dispatch(asyncLogout());
+  };
 
   useOutsideAlerter(openMenuButtonRef, closeMenu);
 
@@ -52,7 +59,7 @@ const NavBar = () => {
                   }
                 >
                   <Link to='/user'>My Profile</Link>
-                  <Link to='/' onClick={() => console.log("logout")}>
+                  <Link to='/' onClick={logout}>
                     Logout
                   </Link>
                 </div>

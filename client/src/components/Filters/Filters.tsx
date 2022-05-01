@@ -13,19 +13,21 @@ const Filters = () => {
     <Wrapper>
       <div className='price'>
         <p>Price</p>
-        <Input name='from' placeholder='From' />
-        <Input name='to' placeholder='To' />
+        <Input name='from' placeholder='From' value='' onChange={() => {}} />
+        <Input name='to' placeholder='To' value='' onChange={() => {}} />
       </div>
       <div className='sort'>
         <p>Sort</p>
         <Select
           name='sort'
           options={[
-            "Price: lowest first",
-            "Price: highest first",
-            "Time: new first",
-            "Time: old first",
+            { label: "Price: lowest first", value: "asc" },
+            { label: "Price: highest first", value: "des" },
+            { label: "Time: new first", value: "new" },
+            { label: "Time: old first", value: "old" },
           ]}
+          value=''
+          onChange={() => {}}
         />
       </div>
       <div className='display'>

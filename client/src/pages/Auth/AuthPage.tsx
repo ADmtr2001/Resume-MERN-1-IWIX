@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
+import { useAppDispatch } from "../../hooks/redux";
+import {
+  asyncLogin,
+  asyncRegister,
+} from "../../store/reducers/user/userActionCreators";
 
 import { Wrapper } from "./AuthPage.styles";
 
@@ -14,8 +19,10 @@ const initialState = {
 const AuthPage = () => {
   const [formData, setFormData] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
+  const dispatch = useAppDispatch();
 
   const switchMode = () => {
+    setFormData(initialState);
     setIsSignup((prev) => !prev);
   };
 
@@ -23,26 +30,54 @@ const AuthPage = () => {
     e.preventDefault();
 
     if (isSignup) {
+      dispatch(asyncRegister(formData));
     } else {
+      dispatch(asyncLogin(formData));
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
     <Wrapper>
       <form onSubmit={handleSubmit}>
-        {isSignup && <Input name='name' label='Name' fullWidth />}
-        <Input name='email' type='email' label='Email' fullWidth />
-        <Input name='password' type='password' label='Password' fullWidth />
+        {isSignup && (
+          <Input
+            name='name'
+            label='Name'
+            fullWidth
+            value={formData.name}
+            onChange={handleChange}
+          />
+        )}
+        <Input
+          name='email'
+          type='email'
+          label='Email'
+          fullWidth
+          value={formData.email}
+          onChange={handleChange}
+        />
+        <Input
+          name='password'
+          type='password'
+          label='Password'
+          fullWidth
+          value={formData.password}
+          onChange={handleChange}
+        />
         {isSignup && (
           <Input
             name='confirmPassword'
             type='password'
             label='Confirm Passowrd'
             fullWidth
+            value={formData.confirmPassword}
+            onChange={handleChange}
           />
         )}
         <Button>{isSignup ? "Sign Up" : "Sign In"}</Button>

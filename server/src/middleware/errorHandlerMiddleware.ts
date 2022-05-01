@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 import { StatusCodes } from "http-status-codes";
 import { CustomApiError } from "../errors";
@@ -6,7 +6,8 @@ import { CustomApiError } from "../errors";
 const errorHandlerMiddleware = (
   err: Error,
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
   if (err instanceof CustomApiError) {
     return res.status(err.statusCode).json({ message: err.message });

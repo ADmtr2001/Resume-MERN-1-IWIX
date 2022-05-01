@@ -9,21 +9,61 @@ const CreationPage = () => {
   return (
     <Wrapper>
       <form>
-        <Input name='title' label='Title' fullWidth />
+        <Input
+          name='title'
+          label='Title'
+          fullWidth
+          value=''
+          onChange={() => {}}
+        />
         Category
         <Select
           name='category'
           label='Category'
-          options={["Transport", "Food", "Sport"]}
+          options={[{ label: "Value", value: "value" }]}
           fullWidth
+          value=''
+          onChange={() => {}}
         />
-        <Input name='price' label='Price' fullWidth />
-        <Input name='image' label='Image' fullWidth type='file' />
+        <Input
+          name='price'
+          label='Price'
+          fullWidth
+          value=''
+          onChange={() => {}}
+        />
+        <Input
+          name='image'
+          label='Image'
+          fullWidth
+          type='file'
+          value=''
+          onChange={() => {}}
+        />
         Description
         <textarea rows={5} />
-        <Input name='location' label='Location' fullWidth />
-        <Input name='email' label='Email' fullWidth type='email' />
-        <Input name='phoneNumber' label='Phone Number' fullWidth />
+        <Input
+          name='location'
+          label='Location'
+          fullWidth
+          value=''
+          onChange={() => {}}
+        />
+        <Input
+          name='email'
+          label='Email'
+          fullWidth
+          type='email'
+          value=''
+          onChange={() => {}}
+        />
+        <Input
+          name='phoneNumber'
+          label='Phone Number'
+          fullWidth
+          value=''
+          onChange={() => {}}
+        />
         <Button>Create</Button>
       </form>
     </Wrapper>

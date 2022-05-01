@@ -8,6 +8,8 @@ interface InputProps {
   type?: "text" | "file" | "password" | "email";
   placeholder?: string;
   fullWidth?: boolean;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input: FC<InputProps> = ({
@@ -16,6 +18,8 @@ const Input: FC<InputProps> = ({
   type = "text",
   placeholder,
   fullWidth,
+  value,
+  onChange,
 }) => {
   return label ? (
     <label>
@@ -25,6 +29,9 @@ const Input: FC<InputProps> = ({
         type={type}
         placeholder={placeholder}
         fullWidth={fullWidth}
+        value={value}
+        onChange={onChange}
+        autoComplete='off'
       />
     </label>
   ) : (
@@ -33,6 +40,9 @@ const Input: FC<InputProps> = ({
       type={type}
       placeholder={placeholder}
       fullWidth={fullWidth}
+      value={value}
+      onChange={onChange}
+      autoComplete='off'
     />
   );
 };
