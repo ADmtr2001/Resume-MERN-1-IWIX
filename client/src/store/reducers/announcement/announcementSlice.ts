@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAnnouncement } from "../../../types";
+import { GetAnnouncementsResponse, IAnnouncement } from "../../../types";
 import {
   createAsyncAnnouncement,
   fetchAsyncAnnouncements,
@@ -7,10 +7,14 @@ import {
 
 interface AnnouncementState {
   announcements: IAnnouncement[];
+  currentPage: number;
+  numberOfPages: number;
 }
 
 const initialState: AnnouncementState = {
   announcements: [],
+  currentPage: 0,
+  numberOfPages: 0,
 };
 
 export const announcementSlice = createSlice({
@@ -20,15 +24,17 @@ export const announcementSlice = createSlice({
   extraReducers: {
     [fetchAsyncAnnouncements.fulfilled.type]: (
       state,
-      action: PayloadAction<IAnnouncement[]>
+      action: PayloadAction<GetAnnouncementsResponse>
     ) => {
-      state.announcements = action.payload;
+      state.announcements = action.payload.announcements;
+      state.currentPage = action.payload.currentPage;
+      state.numberOfPages = action.payload.numberOfPages;
     },
     [createAsyncAnnouncement.fulfilled.type]: (
       state,
       action: PayloadAction<IAnnouncement>
     ) => {
-      console.log("Created");
+      console.log(action.payload);
     },
   },
 });

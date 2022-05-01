@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../../../types";
-import { asyncLogin, asyncLogout, asyncRegister } from "./userActionCreators";
+import {
+  asyncCheckAuth,
+  asyncLogin,
+  asyncLogout,
+  asyncRegister,
+} from "./userActionCreators";
 
 interface UserState {
   user: IUser | null;
@@ -24,6 +29,9 @@ export const userSlice = createSlice({
     },
     [asyncLogout.fulfilled.type]: (state) => {
       state.user = null;
+    },
+    [asyncCheckAuth.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+      state.user = action.payload;
     },
   },
 });

@@ -6,11 +6,19 @@ import Footer from "./components/Footer/Footer";
 import NavBar from "./components/NavBar/NavBar";
 import ScrollToTopButton from "./components/UI/ScrollToTopButton/ScrollToTopButton";
 import { useAppDispatch } from "./hooks/redux";
-import { asyncRegister } from "./store/reducers/user/userActionCreators";
+import { asyncCheckAuth } from "./store/reducers/user/userActionCreators";
 
 import { Wrapper } from "./styles/App.styles";
 
 const App = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(asyncCheckAuth());
+  });
+
+  console.log(document.cookie);
+
   return (
     <BrowserRouter>
       <Wrapper>

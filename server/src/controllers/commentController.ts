@@ -17,7 +17,7 @@ class CommentController {
     await commentService.checkIfAlreadyExist(req.user.id, to);
 
     const comment = await commentService.createComment(
-      req.user.id,
+      req.user._id,
       to,
       text,
       rating

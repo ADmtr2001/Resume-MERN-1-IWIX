@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 import Select from "../../components/UI/Select/Select";
+import { useAppDispatch } from "../../hooks/redux";
+import { createAsyncAnnouncement } from "../../store/reducers/announcement/announcementActionCreators";
 import { ICreationFormData } from "../../types/IFormData";
 
 import { Wrapper } from "./CreationPage.styles";
@@ -18,9 +20,9 @@ const initialState: ICreationFormData = {
 };
 
 const categories = [
-  { label: "Transport", value: "trasport" },
-  { label: "Food", value: "food" },
-  { label: "Sport", value: "sport" },
+  { label: "Transport", value: "626342f5451af261488363eb" },
+  { label: "Food", value: "626342f5451af261488363ec" },
+  { label: "Sport", value: "626342f5451af261488363ex" },
 ];
 
 const CreationPage = () => {
@@ -28,6 +30,7 @@ const CreationPage = () => {
     ...initialState,
     category: categories[0].value,
   });
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,6 +46,8 @@ const CreationPage = () => {
     announcementData.append("email", formData.email);
     announcementData.append("phoneNumber", formData.phoneNumber);
     announcementData.append("image", formData.image);
+
+    dispatch(createAsyncAnnouncement(announcementData));
   };
 
   const handleInputChange = (
@@ -62,7 +67,7 @@ const CreationPage = () => {
 
   return (
     <Wrapper>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Input
           name='title'
           label='Title'

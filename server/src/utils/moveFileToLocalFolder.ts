@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 import { FolderType } from "../types/local";
 
 const moveFileToLocalFolder = (image: any, folderName: FolderType) => {
-  const fileName = uuidv4() + ".jpg";
+  const fileExtension = image.name.split(".")[1];
+  const fileName = uuidv4() + `.${fileExtension}`;
   const filePath = path.resolve(
     __dirname,
     "..",
@@ -15,7 +16,7 @@ const moveFileToLocalFolder = (image: any, folderName: FolderType) => {
   // @ts-ignore
   image.mv(filePath);
 
-  return fileName;
+  return `/uploads/${folderName}/${fileName}`;
 };
 
 export default moveFileToLocalFolder;

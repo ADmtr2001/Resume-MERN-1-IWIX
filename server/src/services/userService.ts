@@ -92,6 +92,7 @@ class UserService {
 
   async refresh(refreshToken: string) {
     if (!refreshToken) {
+      console.log("There're no refresh token");
       throw new UnauthenticatedError("Not authorized");
     }
 
@@ -101,7 +102,7 @@ class UserService {
       throw new UnauthenticatedError("Not authorized");
     }
 
-    const user: IUser | null = await User.findById(userData.id);
+    const user: IUser | null = await User.findById(userData._id);
     if (!user) {
       throw new BadRequestError("Something went wrong while getting user");
     }

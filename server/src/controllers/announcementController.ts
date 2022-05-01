@@ -41,8 +41,15 @@ class AnnouncementController {
   }
 
   async createAnnouncement(req: Request, res: Response) {
-    const { title, category, description, location, phoneNumber, price } =
-      req.body;
+    const {
+      title,
+      category,
+      description,
+      location,
+      email,
+      phoneNumber,
+      price,
+    } = req.body;
     // @ts-ignore
     const { image } = req.files;
 
@@ -53,10 +60,11 @@ class AnnouncementController {
       category,
       description,
       location,
+      email,
       phoneNumber,
       fileName,
       price,
-      req.user.id
+      req.user._id
     );
 
     res.status(StatusCodes.CREATED).json(announcement);
@@ -70,8 +78,15 @@ class AnnouncementController {
 
   async updateAnnouncement(req: Request, res: Response) {
     const { id } = req.params;
-    const { title, category, description, location, phoneNumber, price } =
-      req.body;
+    const {
+      title,
+      category,
+      description,
+      location,
+      email,
+      phoneNumber,
+      price,
+    } = req.body;
     // @ts-ignore
     const { image } = req.files;
 
@@ -89,6 +104,7 @@ class AnnouncementController {
       category,
       description,
       location,
+      email,
       phoneNumber,
       price,
       fileName

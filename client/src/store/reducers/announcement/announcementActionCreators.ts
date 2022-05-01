@@ -9,7 +9,7 @@ export const fetchAsyncAnnouncements = createAsyncThunk(
       const { data } = await $host.get<GetAnnouncementsResponse>(
         "/announcement"
       );
-      return data.announcements;
+      return data;
     } catch (error: any) {
       console.log(error.response.data.message);
       return rejectWithValue("Failed");
@@ -19,7 +19,7 @@ export const fetchAsyncAnnouncements = createAsyncThunk(
 
 export const createAsyncAnnouncement = createAsyncThunk(
   "announcement/createAnnouncement",
-  async (announcementData, { rejectWithValue }) => {
+  async (announcementData: FormData, { rejectWithValue }) => {
     try {
       const { data } = await $authHost.post<IAnnouncement>(
         "/announcement",

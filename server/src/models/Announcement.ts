@@ -7,6 +7,7 @@ export interface IAnnouncement {
   image: string;
   description: string;
   location: string;
+  email: string;
   phoneNumber: string;
   isVip: boolean;
   creator: Types.ObjectId;
@@ -38,6 +39,10 @@ const announcementSchema = new Schema<IAnnouncement>(
     location: {
       type: String,
       required: [true, "Please provide location"],
+    },
+    email: {
+      type: String,
+      required: [true, "Please provide email"],
     },
     phoneNumber: {
       type: String,
