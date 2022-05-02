@@ -67,9 +67,11 @@ export const Wrapper = styled.section`
     gap: 2rem;
 
     article {
-      ${setFlex({})}
-      height: 20rem;
-      heigth: 20rem;
+      a {
+        ${setFlex({})}
+        height: 20rem;
+        heigth: 20rem;
+      }
 
       .announcement-top {
         width: 20rem;

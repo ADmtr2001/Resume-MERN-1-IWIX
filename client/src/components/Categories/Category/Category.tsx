@@ -11,7 +11,7 @@ interface CategoryProps {
 const Category: FC<CategoryProps> = ({ category }) => {
   return (
     <Wrapper>
-      <Link to='/user'>
+      <Link to='/category-announcements'>
         <img
           crossOrigin='anonymous'
           src={`http://localhost:5000/${category.image}`}

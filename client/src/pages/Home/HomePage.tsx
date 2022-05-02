@@ -9,11 +9,6 @@ const HomePage = () => {
   const { announcements, isAnnouncementsLoading } = useAppSelector(
     (state) => state.announcement
   );
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(asyncFetchAnnouncements());
-  }, [dispatch]);
 
   return (
     <>

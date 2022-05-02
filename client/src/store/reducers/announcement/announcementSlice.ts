@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GetAnnouncementsResponse, IAnnouncement } from "../../../types";
+import { GetAnnouncementsResponse, IAnnouncement, IUser } from "../../../types";
 import {
   asyncCreateAnnouncement,
   asyncFetchAnnouncements,
+  asyncGetSingleAnnouncement,
 } from "./announcementActionCreators";
 
 interface AnnouncementState {
   announcements: IAnnouncement[];
   isAnnouncementsLoading: boolean;
+  currentAnnouncement: IAnnouncement | null;
+  currentAnnouncementUser: IUser | null;
   currentPage: number;
   numberOfPages: number;
 }
@@ -15,6 +18,8 @@ interface AnnouncementState {
 const initialState: AnnouncementState = {
   announcements: [],
   isAnnouncementsLoading: false,
+  currentAnnouncement: null,
+  currentAnnouncementUser: null,
   currentPage: 0,
   numberOfPages: 0,
 };
@@ -44,6 +49,14 @@ export const announcementSlice = createSlice({
       action: PayloadAction<IAnnouncement>
     ) => {
       console.log(action.payload);
+    },
+    [asyncGetSingleAnnouncement.fulfilled.type]: (
+      state,
+      action: PayloadAction<{ announcement: IAnnouncement; user: IUser }>
+    ) => {
+      console.log(action.payload);
+      state.currentAnnouncement = action.payload.announcement;
+      state.currentAnnouncementUser = action.payload.user;
     },
   },
 });
