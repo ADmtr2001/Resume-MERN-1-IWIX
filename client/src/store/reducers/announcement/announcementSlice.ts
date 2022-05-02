@@ -4,13 +4,17 @@ import {
   asyncCreateAnnouncement,
   asyncFetchAnnouncements,
   asyncGetSingleAnnouncement,
+  asyncGetUserAnnouncements,
 } from "./announcementActionCreators";
 
 interface AnnouncementState {
   announcements: IAnnouncement[];
   isAnnouncementsLoading: boolean;
   currentAnnouncement: IAnnouncement | null;
-  currentAnnouncementUser: IUser | null;
+  isCurrentAnnouncementLoading: boolean;
+  currentUserAnnouncements: IAnnouncement[];
+  isCurrentUserAnnouncementsLoading: boolean;
+  isAnnouncementCreating: boolean;
   currentPage: number;
   numberOfPages: number;
 }
@@ -19,7 +23,10 @@ const initialState: AnnouncementState = {
   announcements: [],
   isAnnouncementsLoading: false,
   currentAnnouncement: null,
-  currentAnnouncementUser: null,
+  isCurrentAnnouncementLoading: false,
+  currentUserAnnouncements: [],
+  isCurrentUserAnnouncementsLoading: false,
+  isAnnouncementCreating: false,
   currentPage: 0,
   numberOfPages: 0,
 };
@@ -44,19 +51,61 @@ export const announcementSlice = createSlice({
     [asyncFetchAnnouncements.rejected.type]: (state) => {
       state.isAnnouncementsLoading = false;
     },
+    [asyncCreateAnnouncement.pending.type]: (
+      state,
+      action: PayloadAction<IAnnouncement>
+    ) => {
+      state.isAnnouncementCreating = true;
+    },
     [asyncCreateAnnouncement.fulfilled.type]: (
       state,
       action: PayloadAction<IAnnouncement>
     ) => {
-      console.log(action.payload);
+      state.isAnnouncementCreating = false;
+    },
+    [asyncCreateAnnouncement.rejected.type]: (
+      state,
+      action: PayloadAction<IAnnouncement>
+    ) => {
+      state.isAnnouncementCreating = false;
+    },
+    [asyncGetSingleAnnouncement.pending.type]: (
+      state,
+      action: PayloadAction<IAnnouncement>
+    ) => {
+      state.isCurrentAnnouncementLoading = true;
     },
     [asyncGetSingleAnnouncement.fulfilled.type]: (
       state,
-      action: PayloadAction<{ announcement: IAnnouncement; user: IUser }>
+      action: PayloadAction<IAnnouncement>
     ) => {
-      console.log(action.payload);
-      state.currentAnnouncement = action.payload.announcement;
-      state.currentAnnouncementUser = action.payload.user;
+      state.currentAnnouncement = action.payload;
+      state.isCurrentAnnouncementLoading = false;
+    },
+    [asyncGetSingleAnnouncement.rejected.type]: (
+      state,
+      action: PayloadAction<IAnnouncement>
+    ) => {
+      state.isCurrentAnnouncementLoading = false;
+    },
+    [asyncGetUserAnnouncements.pending.type]: (
+      state,
+      action: PayloadAction<IAnnouncement[]>
+    ) => {
+      state.isCurrentUserAnnouncementsLoading = true;
+    },
+    [asyncGetUserAnnouncements.fulfilled.type]: (
+      state,
+      action: PayloadAction<IAnnouncement[]>
+    ) => {
+      state.currentUserAnnouncements = action.payload;
+      state.isCurrentUserAnnouncementsLoading = false;
+    },
+    [asyncGetUserAnnouncements.rejected.type]: (
+      state,
+      action: PayloadAction<IAnnouncement[]>
+    ) => {
+      state.isCurrentUserAnnouncementsLoading = false;
     },
   },
 });

@@ -13,18 +13,21 @@ export const Wrapper = styled.main`
     .left {
       background-color: ${(props) => props.theme.light2};
       width: 50%;
-      min-height: 40rem;
+      min-height: 10rem;
+      max-height: 55rem;
       ${setShadowForSection()};
-      ${setFlex({ justify: "center", align: "center" })};
 
       .announcement-image {
         width: 100%;
-        heigth: 100%;
+        height: 100%;
+        max-height: 100%;
         padding: 1rem;
+        ${setFlex({ justify: "center", align: "center" })}
 
         img {
           width: 100%;
           heigth: auto;
+          max-height: 100%;
         }
       }
     }

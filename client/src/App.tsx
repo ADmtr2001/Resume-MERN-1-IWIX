@@ -19,7 +19,7 @@ const App = () => {
     dispatch(asyncCheckAuth());
     dispatch(asyncFetchCategories());
     dispatch(asyncFetchAnnouncements());
-  });
+  }, []);
 
   return (
     <BrowserRouter>

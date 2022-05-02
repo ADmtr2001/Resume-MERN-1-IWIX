@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { $authHost, $host } from "../../../http";
 import { GetAnnouncementsResponse, IAnnouncement, IUser } from "../../../types";
+import { asyncGetSingleUser } from "../user/userActionCreators";
 
 export const asyncFetchAnnouncements = createAsyncThunk(
   "announcement/fetchAnnouncements",
@@ -35,15 +36,29 @@ export const asyncCreateAnnouncement = createAsyncThunk(
 
 export const asyncGetSingleAnnouncement = createAsyncThunk(
   "announcement/getSingleAnnouncement",
-  async (announcementId: string, { rejectWithValue }) => {
+  async (announcementId: string, { dispatch, rejectWithValue }) => {
     try {
-      const { data: announcement } = await $host.get<IAnnouncement>(
+      const { data } = await $host.get<IAnnouncement>(
         `/announcement/${announcementId}`
       );
-      const { data: user } = await $host.get<IUser>(
-        `/user/${announcement.creator}`
+      dispatch(asyncGetSingleUser(data.creator));
+      dispatch(asyncGetUserAnnouncements(data.creator));
+      return data;
+    } catch (error: any) {
+      console.log(error.response.data.message);
+      return rejectWithValue("Failed");
+    }
+  }
+);
+
+export const asyncGetUserAnnouncements = createAsyncThunk(
+  "announcement/getUserAnnouncements",
+  async (userId: string, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await $host.get<IAnnouncement[]>(
+        `announcement/user/${userId}`
       );
-      return { announcement, user };
+      return data;
     } catch (error: any) {
       console.log(error.response.data.message);
       return rejectWithValue("Failed");

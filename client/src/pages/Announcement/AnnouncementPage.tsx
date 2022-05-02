@@ -8,11 +8,21 @@ import { Wrapper } from "./AnnouncementPage.styles";
 import userPreview from "../../assets/user.png";
 import { BsStarFill } from "react-icons/bs";
 import AnnouncementList from "../../components/Announcements/AnnouncementList";
+import Loader from "../../components/UI/Loader/Loader";
 
 const AnnouncementPage = () => {
   const { id: announcementId } = useParams();
-  const { currentAnnouncement, currentAnnouncementUser, announcements } =
-    useAppSelector((state) => state.announcement);
+  const {
+    announcements,
+    isAnnouncementsLoading,
+    currentAnnouncement,
+    isCurrentAnnouncementLoading,
+    currentUserAnnouncements,
+    isCurrentUserAnnouncementsLoading,
+  } = useAppSelector((state) => state.announcement);
+  const { currentUser, isCurrentUserLoading } = useAppSelector(
+    (state) => state.user
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -21,7 +31,9 @@ const AnnouncementPage = () => {
     dispatch(asyncGetSingleAnnouncement(announcementId));
   }, [announcementId, dispatch]);
 
-  if (!currentAnnouncement || !currentAnnouncementUser) return null;
+  if (isCurrentAnnouncementLoading) return <Loader />;
+
+  if (!currentAnnouncement || !currentUser) return null;
 
   return (
     <Wrapper>
@@ -42,16 +54,16 @@ const AnnouncementPage = () => {
               <img src={userPreview} alt='user' />
             </div>
             <div className='info'>
-              <h3 className='name'>{currentAnnouncementUser.name}</h3>
+              <h3 className='name'>{currentUser.name}</h3>
               <p className='register-date'>
-                on WIX since {currentAnnouncementUser.createdAt}
+                on WIX since {currentUser.createdAt}
               </p>
               <p className='rating'>
-                {currentAnnouncementUser.averageRating}
+                {currentUser.averageRating}
                 <span className='star'>
                   <BsStarFill />
                 </span>
-                ({currentAnnouncementUser.numOfComments})
+                ({currentUser.numOfComments})
               </p>
             </div>
           </div>
@@ -72,15 +84,15 @@ const AnnouncementPage = () => {
       <div className='announcements'>
         <AnnouncementList
           title='Other user posts'
-          announcements={announcements}
-          isLoading={false}
+          announcements={currentUserAnnouncements}
+          isLoading={isCurrentUserAnnouncementsLoading}
           limit={4}
           exceptions={[currentAnnouncement._id]}
         />
         <AnnouncementList
           title='Other posts'
           announcements={announcements}
-          isLoading={false}
+          isLoading={isAnnouncementsLoading}
           limit={4}
           exceptions={[currentAnnouncement._id]}
         />

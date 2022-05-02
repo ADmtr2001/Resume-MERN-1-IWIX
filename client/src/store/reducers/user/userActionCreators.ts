@@ -1,7 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import { $authHost, $host } from "../../../http";
-import { IAuthResponse, ILoginData, IRegisterData } from "../../../types";
+import {
+  IAuthResponse,
+  ILoginData,
+  IRegisterData,
+  IUser,
+} from "../../../types";
 
 export const asyncRegister = createAsyncThunk(
   "user/register",
@@ -64,6 +69,19 @@ export const asyncCheckAuth = createAsyncThunk(
       });
       localStorage.setItem("token", data.accessToken);
       return data.user;
+    } catch (error: any) {
+      console.log(error.response.data.message);
+      return rejectWithValue("Failed");
+    }
+  }
+);
+
+export const asyncGetSingleUser = createAsyncThunk(
+  "user/getSingleUser",
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await $host.get<IUser>(`/user/${userId}`);
+      return data;
     } catch (error: any) {
       console.log(error.response.data.message);
       return rejectWithValue("Failed");
