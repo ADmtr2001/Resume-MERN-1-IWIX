@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
+import Loader from "../../components/UI/Loader/Loader";
 import Select from "../../components/UI/Select/Select";
-import { useAppDispatch } from "../../hooks/redux";
-import { createAsyncAnnouncement } from "../../store/reducers/announcement/announcementActionCreators";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { asyncCreateAnnouncement } from "../../store/reducers/announcement/announcementActionCreators";
+import { asyncFetchCategories } from "../../store/reducers/category/categoryActionCreators";
+import { IOption } from "../../types";
 import { ICreationFormData } from "../../types/IFormData";
 
 import { Wrapper } from "./CreationPage.styles";
@@ -19,18 +22,35 @@ const initialState: ICreationFormData = {
   phoneNumber: "",
 };
 
-const categories = [
-  { label: "Transport", value: "626342f5451af261488363eb" },
-  { label: "Food", value: "626342f5451af261488363ec" },
-  { label: "Sport", value: "626342f5451af261488363ex" },
-];
-
 const CreationPage = () => {
   const [formData, setFormData] = useState({
     ...initialState,
-    category: categories[0].value,
   });
+  const { categories, isCategoriesLoading } = useAppSelector(
+    (state) => state.category
+  );
   const dispatch = useAppDispatch();
+
+  let selectOptions: IOption[] = useMemo(
+    () =>
+      categories.map((category) => {
+        return { label: category.name, value: category._id };
+      }),
+    [categories]
+  );
+
+  useEffect(() => {
+    if (categories.length === 0) {
+      dispatch(asyncFetchCategories());
+    }
+  }, []);
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      category: selectOptions[0].value,
+    }));
+  }, [selectOptions]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,7 +67,7 @@ const CreationPage = () => {
     announcementData.append("phoneNumber", formData.phoneNumber);
     announcementData.append("image", formData.image);
 
-    dispatch(createAsyncAnnouncement(announcementData));
+    dispatch(asyncCreateAnnouncement(announcementData));
   };
 
   const handleInputChange = (
@@ -65,6 +85,10 @@ const CreationPage = () => {
     setFormData((prev) => ({ ...prev, image: e.target!.files[0]! }));
   };
 
+  if (isCategoriesLoading) {
+    return <Loader />;
+  }
+
   return (
     <Wrapper>
       <form onSubmit={handleSubmit}>
@@ -78,7 +102,7 @@ const CreationPage = () => {
         <Select
           name='category'
           label='Category'
-          options={categories}
+          options={selectOptions}
           fullWidth
           value={formData.category}
           onChange={handleInputChange}

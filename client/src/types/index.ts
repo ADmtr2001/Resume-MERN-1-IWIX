@@ -9,6 +9,7 @@ import {
 } from "./IFormData";
 import IAuthResponse from "./IAuthResponse";
 import { GetAnnouncementsResponse, IAnnouncement } from "./IAnnouncement";
+import ICategory from "./ICategory";
 
 export type {
   IOption,
@@ -21,4 +22,5 @@ export type {
   ICreationFormData,
   IAnnouncement,
   GetAnnouncementsResponse,
+  ICategory,
 };

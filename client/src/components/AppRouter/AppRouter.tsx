@@ -4,17 +4,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux";
 import { privateRoutes, publicRoutes } from "../../router";
 import Loader from "../UI/Loader/Loader";
-import { Wrapper } from "./AppRouter.styles";
 
 const AppRouter = () => {
   const { user, isUserLoading } = useAppSelector((state) => state.user);
 
   if (isUserLoading) {
-    return (
-      <Wrapper>
-        <Loader />
-      </Wrapper>
-    );
+    return <Loader />;
   }
 
   return (

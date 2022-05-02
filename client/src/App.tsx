@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer";
 import NavBar from "./components/NavBar/NavBar";
 import ScrollToTopButton from "./components/UI/ScrollToTopButton/ScrollToTopButton";
 import { useAppDispatch } from "./hooks/redux";
+import { asyncFetchCategories } from "./store/reducers/category/categoryActionCreators";
 import { asyncCheckAuth } from "./store/reducers/user/userActionCreators";
 
 import { Wrapper } from "./styles/App.styles";
@@ -15,6 +16,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(asyncCheckAuth());
+    dispatch(asyncFetchCategories());
   });
 
   return (

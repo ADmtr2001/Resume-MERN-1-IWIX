@@ -31,11 +31,14 @@ export const userSlice = createSlice({
     [asyncLogout.fulfilled.type]: (state) => {
       state.user = null;
     },
-    [asyncCheckAuth.pending.type]: (state, action: PayloadAction<IUser>) => {
+    [asyncCheckAuth.pending.type]: (state) => {
       state.isUserLoading = true;
     },
     [asyncCheckAuth.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
       state.user = action.payload;
+      state.isUserLoading = false;
+    },
+    [asyncCheckAuth.rejected.type]: (state) => {
       state.isUserLoading = false;
     },
   },

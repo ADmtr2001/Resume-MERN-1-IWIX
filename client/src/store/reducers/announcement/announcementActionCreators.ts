@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { $authHost, $host } from "../../../http";
 import { GetAnnouncementsResponse, IAnnouncement } from "../../../types";
 
-export const fetchAsyncAnnouncements = createAsyncThunk(
+export const asyncFetchAnnouncements = createAsyncThunk(
   "announcement/fetchAnnouncements",
   async (_, { rejectWithValue }) => {
     try {
@@ -17,7 +17,7 @@ export const fetchAsyncAnnouncements = createAsyncThunk(
   }
 );
 
-export const createAsyncAnnouncement = createAsyncThunk(
+export const asyncCreateAnnouncement = createAsyncThunk(
   "announcement/createAnnouncement",
   async (announcementData: FormData, { rejectWithValue }) => {
     try {

@@ -3,28 +3,28 @@ import React, { FC, PropsWithChildren, useState } from "react";
 import { Wrapper } from "./AnnouncementList.styles";
 import { IAnnouncement } from "../../types";
 import Announcement from "./Announcement/Announcement";
+import Loader from "../UI/Loader/Loader";
 
 interface AnnouncementListProps {
   title: string;
   announcements: IAnnouncement[];
+  isLoading: boolean;
 }
 
 const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   title,
   announcements,
+  isLoading,
 }) => {
   const isGridView = true;
 
-  // let listAnnouncements: JSX.Element[];
-  // if (isGridView) {
-  //   listAnnouncements = announcements.map((announcement) => (
-  //     <BoxAnnouncement key={announcement._id} />
-  //   ));
-  // } else {
-  //   listAnnouncements = announcements.map((announcement) => (
-  //     <LineAnnouncement key={announcement._id} />
-  //   ));
-  // }
+  if (isLoading) {
+    return (
+      <Wrapper>
+        <Loader />
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>

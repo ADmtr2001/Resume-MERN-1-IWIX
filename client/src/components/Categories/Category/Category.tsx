@@ -1,17 +1,23 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
+import { ICategory } from "../../../types";
 
 import { Wrapper } from "./Category.styles";
 
-const Category = () => {
+interface CategoryProps {
+  category: ICategory;
+}
+
+const Category: FC<CategoryProps> = ({ category }) => {
   return (
     <Wrapper>
       <Link to='/user'>
         <img
-          src='https://as1.ftcdn.net/v2/jpg/01/92/21/40/1000_F_192214085_QnQ58x0ZKRLSUEgarcjVHNWrnmH8uWTA.jpg'
+          crossOrigin='anonymous'
+          src={`http://localhost:5000/${category.image}`}
           alt='category icon'
         />
-        <h3>Category</h3>
+        <h3>{category.name}</h3>
       </Link>
     </Wrapper>
   );
