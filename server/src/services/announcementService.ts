@@ -7,12 +7,56 @@ class AnnouncementService {
   async getAllAnnouncements(
     limit: number,
     startIndex: number,
-    searchQuery: RegExp = new RegExp("", "i")
+    searchQuery: string,
+    category: string,
+    sort: string,
+    from: string,
+    to: string
   ) {
-    const total = await Announcement.countDocuments({ title: searchQuery });
-    const announcements = await Announcement.find({ title: searchQuery })
+    const conditions: {
+      [index: string]: string | RegExp | { [index: string]: string | number };
+    }[] = [];
+    if (searchQuery) {
+      const searchQueryReg = new RegExp(searchQuery, "i");
+      conditions.push({ title: searchQueryReg });
+    }
+    if (category) {
+      conditions.push({ category });
+    }
+    if (from) {
+      conditions.push({ price: { $gte: Number(from) } });
+    }
+    if (to) {
+      conditions.push({ price: { $lte: Number(to) } });
+    }
+    const finalConditions = conditions.length ? { $and: conditions } : {};
+
+    let sortCondition: { [index: string]: number } = {};
+    if (sort) {
+      switch (sort) {
+        case "asc":
+          sortCondition = { price: 1 };
+          break;
+        case "dsc":
+          sortCondition = { price: -1 };
+          break;
+        case "new":
+          sortCondition = { createdAt: 1 };
+          break;
+        case "old":
+          sortCondition = { createdAt: -1 };
+          break;
+        default:
+          break;
+      }
+    }
+
+    const total = await Announcement.countDocuments(finalConditions);
+    const announcements = await Announcement.find(finalConditions)
+      .sort(sortCondition)
       .limit(limit)
       .skip(startIndex);
+
     return { announcements, total };
   }
 

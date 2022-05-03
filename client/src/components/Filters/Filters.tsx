@@ -21,6 +21,7 @@ const Filters = () => {
         <Select
           name='sort'
           options={[
+            { label: "Best Match", value: "" },
             { label: "Price: lowest first", value: "asc" },
             { label: "Price: highest first", value: "des" },
             { label: "Time: new first", value: "new" },

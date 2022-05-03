@@ -11,27 +11,28 @@ import {
 
 class AnnouncementController {
   async getAllAnnouncements(req: Request, res: Response) {
-    const { page = 1, searchQuery = "" } = req.query;
+    const {
+      page = 1,
+      searchQuery = "",
+      category = "",
+      from = "",
+      to = "",
+      sort = "",
+    } = req.query;
 
     const limit = 8;
     const startIndex = (Number(page) - 1) * limit;
 
-    let announcements: any;
-    let total: any;
-
-    if (searchQuery) {
-      const searchQueryReg = new RegExp(searchQuery as string, "i");
-      ({ announcements, total } = await announcementService.getAllAnnouncements(
+    const { announcements, total } =
+      await announcementService.getAllAnnouncements(
         limit,
         startIndex,
-        searchQueryReg
-      ));
-    } else {
-      ({ announcements, total } = await announcementService.getAllAnnouncements(
-        limit,
-        startIndex
-      ));
-    }
+        searchQuery as string,
+        category as string,
+        sort as string,
+        from as string,
+        to as string
+      );
 
     res.status(StatusCodes.OK).json({
       announcements,

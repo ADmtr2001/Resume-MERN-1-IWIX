@@ -9,6 +9,7 @@ import userPreview from "../../assets/user.png";
 import { BsStarFill } from "react-icons/bs";
 import AnnouncementList from "../../components/Announcements/AnnouncementList";
 import Loader from "../../components/UI/Loader/Loader";
+import { scrollToTop } from "../../utils";
 
 const AnnouncementPage = () => {
   const { id: announcementId } = useParams();
@@ -24,6 +25,10 @@ const AnnouncementPage = () => {
     (state) => state.user
   );
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    scrollToTop();
+  }, [announcementId]);
 
   useEffect(() => {
     if (!announcementId) return;
@@ -50,22 +55,28 @@ const AnnouncementPage = () => {
         </div>
         <div className='right'>
           <div className='user'>
-            <div className='user-image'>
-              <img src={userPreview} alt='user' />
-            </div>
-            <div className='info'>
-              <h3 className='name'>{currentUser.name}</h3>
-              <p className='register-date'>
-                on WIX since {currentUser.createdAt}
-              </p>
-              <p className='rating'>
-                {currentUser.averageRating}
-                <span className='star'>
-                  <BsStarFill />
-                </span>
-                ({currentUser.numOfComments})
-              </p>
-            </div>
+            {isCurrentUserLoading ? (
+              <Loader />
+            ) : (
+              <>
+                <div className='user-image'>
+                  <img src={userPreview} alt='user' />
+                </div>
+                <div className='info'>
+                  <h3 className='name'>{currentUser.name}</h3>
+                  <p className='register-date'>
+                    on WIX since {currentUser.createdAt}
+                  </p>
+                  <p className='rating'>
+                    {currentUser.averageRating}
+                    <span className='star'>
+                      <BsStarFill />
+                    </span>
+                    ({currentUser.numOfComments})
+                  </p>
+                </div>
+              </>
+            )}
           </div>
           <div className='description'>
             <p className='publish-time'>
