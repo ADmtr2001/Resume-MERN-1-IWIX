@@ -25,6 +25,7 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   if (isLoading) {
     return (
       <Wrapper>
+        <h2 className='announcement-title'>{title}</h2>
         <Loader />
       </Wrapper>
     );

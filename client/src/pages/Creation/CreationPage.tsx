@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import CategorySelect from "../../components/Categories/CategorySelect/CategorySelect";
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 import Loader from "../../components/UI/Loader/Loader";
@@ -31,14 +32,6 @@ const CreationPage = () => {
   );
   const dispatch = useAppDispatch();
 
-  let selectOptions: IOption[] = useMemo(
-    () =>
-      categories.map((category) => {
-        return { label: category.name, value: category._id };
-      }),
-    [categories]
-  );
-
   useEffect(() => {
     if (categories.length === 0) {
       dispatch(asyncFetchCategories());
@@ -48,9 +41,9 @@ const CreationPage = () => {
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
-      category: selectOptions[0].value,
+      category: categories[0]._id,
     }));
-  }, [selectOptions]);
+  }, [categories]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -99,14 +92,19 @@ const CreationPage = () => {
           value={formData.title}
           onChange={handleInputChange}
         />
-        <Select
+        <CategorySelect
+          categories={categories}
+          value={formData.category}
+          onChange={handleInputChange}
+        />
+        {/* <Select
           name='category'
           label='Category'
           options={selectOptions}
           fullWidth
           value={formData.category}
           onChange={handleInputChange}
-        />
+        /> */}
         <Input
           name='price'
           label='Price'

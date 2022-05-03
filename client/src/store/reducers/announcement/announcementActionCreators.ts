@@ -5,10 +5,10 @@ import { asyncGetSingleUser } from "../user/userActionCreators";
 
 export const asyncFetchAnnouncements = createAsyncThunk(
   "announcement/fetchAnnouncements",
-  async (_, { rejectWithValue }) => {
+  async (searchParams: string, { rejectWithValue }) => {
     try {
       const { data } = await $host.get<GetAnnouncementsResponse>(
-        "/announcement"
+        `/announcement${searchParams}`
       );
       return data;
     } catch (error: any) {

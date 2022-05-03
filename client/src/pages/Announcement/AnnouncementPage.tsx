@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Search from "../../components/Search/Search";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { asyncGetSingleAnnouncement } from "../../store/reducers/announcement/announcementActionCreators";
+import {
+  asyncFetchAnnouncements,
+  asyncGetSingleAnnouncement,
+} from "../../store/reducers/announcement/announcementActionCreators";
 
 import { Wrapper } from "./AnnouncementPage.styles";
 import userPreview from "../../assets/user.png";
@@ -10,6 +13,10 @@ import { BsStarFill } from "react-icons/bs";
 import AnnouncementList from "../../components/Announcements/AnnouncementList";
 import Loader from "../../components/UI/Loader/Loader";
 import { scrollToTop } from "../../utils";
+import {
+  clearAnnouncements,
+  clearCurrentAnnouncement,
+} from "../../store/reducers/announcement/announcementSlice";
 
 const AnnouncementPage = () => {
   const { id: announcementId } = useParams();
@@ -34,6 +41,12 @@ const AnnouncementPage = () => {
     if (!announcementId) return;
 
     dispatch(asyncGetSingleAnnouncement(announcementId));
+    dispatch(asyncFetchAnnouncements(""));
+
+    return () => {
+      dispatch(clearAnnouncements());
+      dispatch(clearCurrentAnnouncement());
+    };
   }, [announcementId, dispatch]);
 
   if (isCurrentAnnouncementLoading) return <Loader />;

@@ -34,7 +34,15 @@ const initialState: AnnouncementState = {
 export const announcementSlice = createSlice({
   name: "announcement",
   initialState,
-  reducers: {},
+  reducers: {
+    clearAnnouncements(state) {
+      state.announcements = [];
+    },
+    clearCurrentAnnouncement(state) {
+      state.currentAnnouncement = null;
+      state.currentUserAnnouncements = [];
+    },
+  },
   extraReducers: {
     [asyncFetchAnnouncements.pending.type]: (state) => {
       state.isAnnouncementsLoading = true;
@@ -109,3 +117,6 @@ export const announcementSlice = createSlice({
     },
   },
 });
+
+export const { clearAnnouncements, clearCurrentAnnouncement } =
+  announcementSlice.actions;

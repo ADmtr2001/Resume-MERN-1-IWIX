@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import AppRouter from "./components/AppRouter/AppRouter";
 import Footer from "./components/Footer/Footer";
 import NavBar from "./components/NavBar/NavBar";
@@ -18,20 +18,17 @@ const App = () => {
   useEffect(() => {
     dispatch(asyncCheckAuth());
     dispatch(asyncFetchCategories());
-    dispatch(asyncFetchAnnouncements());
   }, []);
 
   return (
-    <BrowserRouter>
-      <Wrapper>
-        <NavBar />
-        <div className='content'>
-          <AppRouter />
-        </div>
-        <Footer />
-        <ScrollToTopButton />
-      </Wrapper>
-    </BrowserRouter>
+    <Wrapper>
+      <NavBar />
+      <div className='content'>
+        <AppRouter />
+      </div>
+      <Footer />
+      <ScrollToTopButton />
+    </Wrapper>
   );
 };
 

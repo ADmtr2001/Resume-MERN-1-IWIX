@@ -8,6 +8,7 @@ import { setupStore } from "./store/store";
 import { GlobalStyles } from "./styles/globalStyles";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "./styles/themes/themes";
+import { BrowserRouter } from "react-router-dom";
 
 const store = setupStore();
 
@@ -19,8 +20,10 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={defaultTheme}>
       <Provider store={store}>
-        <GlobalStyles />
-        <App />
+        <BrowserRouter>
+          <GlobalStyles />
+          <App />
+        </BrowserRouter>
       </Provider>
     </ThemeProvider>
   </React.StrictMode>
