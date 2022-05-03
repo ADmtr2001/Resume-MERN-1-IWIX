@@ -22,24 +22,39 @@ const initialState = {
 const Filters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [formData, setFormData] = useState({
-    ...initialState,
     category: searchParams.get("category") || "",
+    from: searchParams.get("from") || "",
+    to: searchParams.get("to") || "",
+    sort: searchParams.get("sort") || "",
   });
   const location = useLocation();
   const dispatch = useAppDispatch();
   const { categories } = useAppSelector((state) => state.category);
 
-  console.log(formData.category);
+  // useEffect(() => {
+  //   const param = searchParams.get("searchQuery");
+
+  //   if (param) {
+  //     searchParams.delete("searchQuery");
+  //     setSearchParams(searchParams);
+  //   }
+  // }, []);
 
   useEffect(() => {
+    console.log(1);
+    const searchQuery = searchParams.get("searchQuery");
     const params: { [index: string]: string } = {};
     for (const [key, value] of Object.entries(formData)) {
       if (value !== "") {
         params[key] = value;
       }
     }
-    setSearchParams(params);
-  }, [formData]);
+    if (searchQuery) {
+      setSearchParams({ ...params, searchQuery });
+    } else {
+      setSearchParams({ ...params });
+    }
+  }, [formData, setSearchParams, searchParams]);
 
   useEffect(() => {
     const timer = setTimeout(

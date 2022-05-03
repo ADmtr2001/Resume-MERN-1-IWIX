@@ -15,32 +15,37 @@ export const Wrapper = styled.section`
   width: 60%;
   height: 8rem;
 
-  ${setFlex({})}
-
-  input {
+  form {
+    width: 100%;
     height: 100%;
 
-    border-right: none;
-  }
+    ${setFlex({})}
 
-  button {
-    width: 15rem;
+    input {
+      height: 100%;
 
-    font-size: 2.1rem;
-
-    background-color: transparent;
-    border: 2px solid ${(props) => props.theme.dark1};
-
-    ${setFlex({ justify: "center", align: "center" })}
-
-    transition: background-color ${(props) => props.theme.fastTransition};
-
-    span {
-      margin-right: 0.5rem;
+      /* border-right: none; */
     }
 
-    &:hover {
-      background-color: ${(props) => props.theme.dark1};
+    button {
+      width: 15rem;
+
+      font-size: 2.1rem;
+
+      background-color: transparent;
+      border: 2px solid ${(props) => props.theme.dark1};
+
+      ${setFlex({ justify: "center", align: "center" })}
+
+      transition: background-color ${(props) => props.theme.fastTransition};
+
+      span {
+        margin-right: 0.5rem;
+      }
+
+      &:hover {
+        background-color: ${(props) => props.theme.dark1};
+      }
     }
   }
 `;
