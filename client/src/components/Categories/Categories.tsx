@@ -10,6 +10,16 @@ const Categories = () => {
     (state) => state.category
   );
 
+  const allCategory = (
+    <Category
+      category={{
+        _id: "",
+        name: "All",
+        image: "/uploads/categoryImages/all-category-icon.jpg",
+      }}
+    />
+  );
+
   return (
     <Wrapper>
       <h2 className='title'>Categories</h2>
@@ -20,6 +30,7 @@ const Categories = () => {
           {categories.map((category) => (
             <Category key={category._id} category={category} />
           ))}
+          {allCategory}
         </div>
       )}
     </Wrapper>

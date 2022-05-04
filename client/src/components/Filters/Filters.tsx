@@ -31,15 +31,6 @@ const Filters = () => {
   const dispatch = useAppDispatch();
   const { categories } = useAppSelector((state) => state.category);
 
-  // useEffect(() => {
-  //   const param = searchParams.get("searchQuery");
-
-  //   if (param) {
-  //     searchParams.delete("searchQuery");
-  //     setSearchParams(searchParams);
-  //   }
-  // }, []);
-
   useEffect(() => {
     console.log(1);
     const searchQuery = searchParams.get("searchQuery");
@@ -62,7 +53,7 @@ const Filters = () => {
       400
     );
     return () => clearTimeout(timer);
-  }, [searchParams]);
+  }, [searchParams, dispatch]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
