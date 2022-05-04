@@ -35,14 +35,14 @@ const Filters = () => {
 
   useEffect(() => {
     const page = searchParams.get("page");
-    console.log(page);
     if (page) {
       dispatch(setCurrentPage(+page));
+    } else {
+      dispatch(setCurrentPage(1));
     }
   }, []);
 
   useEffect(() => {
-    // console.log(1);
     const searchQuery = searchParams.get("searchQuery");
     const params: { [index: string]: string } = {};
     for (const [key, value] of Object.entries(formData)) {
@@ -56,10 +56,6 @@ const Filters = () => {
     if (currentPage) {
       params.page = currentPage.toString();
     }
-    // if (page) {
-    //   params.page = page;
-    // }
-    // console.log(params);
     setSearchParams(params);
   }, [formData, setSearchParams, searchParams, currentPage]);
 
@@ -77,7 +73,9 @@ const Filters = () => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChangeWithPageReset = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     dispatch(setCurrentPage(1));
   };
@@ -87,7 +85,7 @@ const Filters = () => {
       <div className='category'>
         <CategorySelect
           categories={categories}
-          onChange={handleCategoryChange}
+          onChange={handleChangeWithPageReset}
           value={formData.category}
         />
       </div>
@@ -97,13 +95,13 @@ const Filters = () => {
           name='from'
           placeholder='From'
           value={formData.from}
-          onChange={handleChange}
+          onChange={handleChangeWithPageReset}
         />
         <Input
           name='to'
           placeholder='To'
           value={formData.to}
-          onChange={handleChange}
+          onChange={handleChangeWithPageReset}
         />
       </div>
       <div className='sort'>
