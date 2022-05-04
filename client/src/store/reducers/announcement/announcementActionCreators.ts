@@ -65,3 +65,16 @@ export const asyncGetUserAnnouncements = createAsyncThunk(
     }
   }
 );
+
+export const asyncGetVipAnnouncements = createAsyncThunk(
+  "announcement/getVipAnnouncements",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await $host.get<IAnnouncement[]>(`announcement/vip`);
+      return data;
+    } catch (error: any) {
+      console.log(error.response.data.message);
+      return rejectWithValue("Failed");
+    }
+  }
+);

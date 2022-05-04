@@ -9,12 +9,12 @@ router
   .route("/")
   .get(announcementController.getAllAnnouncements)
   .post(authMiddleware, announcementController.createAnnouncement);
+router.get("/vip", announcementController.getVipAnnouncements);
 router
   .route("/:id")
   .get(announcementController.getSingleAnnouncement)
   .patch(authMiddleware, announcementController.updateAnnouncement)
   .delete(authMiddleware, announcementController.deleteAnnouncement);
 router.get("/user/:id", announcementController.getAllUserAnnouncements);
-router.get("/vip", announcementController.getVipAnnouncements);
 
 export default router;

@@ -5,6 +5,7 @@ import {
   asyncFetchAnnouncements,
   asyncGetSingleAnnouncement,
   asyncGetUserAnnouncements,
+  asyncGetVipAnnouncements,
 } from "./announcementActionCreators";
 
 interface AnnouncementState {
@@ -14,6 +15,8 @@ interface AnnouncementState {
   isCurrentAnnouncementLoading: boolean;
   currentUserAnnouncements: IAnnouncement[];
   isCurrentUserAnnouncementsLoading: boolean;
+  vipAnnouncements: IAnnouncement[];
+  isVipAnnouncementsLoading: boolean;
   isAnnouncementCreating: boolean;
   currentPage: number;
   numberOfPages: number;
@@ -26,6 +29,8 @@ const initialState: AnnouncementState = {
   isCurrentAnnouncementLoading: false,
   currentUserAnnouncements: [],
   isCurrentUserAnnouncementsLoading: false,
+  vipAnnouncements: [],
+  isVipAnnouncementsLoading: false,
   isAnnouncementCreating: false,
   currentPage: 0,
   numberOfPages: 0,
@@ -119,6 +124,19 @@ export const announcementSlice = createSlice({
       action: PayloadAction<IAnnouncement[]>
     ) => {
       state.isCurrentUserAnnouncementsLoading = false;
+    },
+    [asyncGetVipAnnouncements.pending.type]: (state) => {
+      state.isVipAnnouncementsLoading = true;
+    },
+    [asyncGetVipAnnouncements.fulfilled.type]: (
+      state,
+      action: PayloadAction<IAnnouncement[]>
+    ) => {
+      state.vipAnnouncements = action.payload;
+      state.isVipAnnouncementsLoading = false;
+    },
+    [asyncGetVipAnnouncements.rejected.type]: (state) => {
+      state.isVipAnnouncementsLoading = false;
     },
   },
 });
