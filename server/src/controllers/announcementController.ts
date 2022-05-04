@@ -133,6 +133,11 @@ class AnnouncementController {
     const announcements = await announcementService.getAllUserAnnouncements(id);
     res.status(StatusCodes.OK).json(announcements);
   }
+
+  async getVipAnnouncements(req: Request, res: Response) {
+    const announcements = await announcementService.getVipAnnouncements();
+    res.status(StatusCodes.OK).json(announcements);
+  }
 }
 
 export default new AnnouncementController();

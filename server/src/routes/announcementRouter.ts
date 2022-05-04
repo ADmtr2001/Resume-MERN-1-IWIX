@@ -15,5 +15,6 @@ router
   .patch(authMiddleware, announcementController.updateAnnouncement)
   .delete(authMiddleware, announcementController.deleteAnnouncement);
 router.get("/user/:id", announcementController.getAllUserAnnouncements);
+router.get("/vip", announcementController.getVipAnnouncements);
 
 export default router;

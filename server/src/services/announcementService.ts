@@ -133,6 +133,11 @@ class AnnouncementService {
     const announcements = await Announcement.find({ creator: userId });
     return announcements;
   }
+
+  async getVipAnnouncements() {
+    const announcements = await Announcement.find({ isVip: true });
+    return announcements;
+  }
 }
 
 export default new AnnouncementService();
