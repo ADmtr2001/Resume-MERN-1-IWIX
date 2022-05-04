@@ -6,24 +6,43 @@ import { Wrapper } from "./Search.styles";
 
 import { BsSearch } from "react-icons/bs";
 import { useSearchParams } from "react-router-dom";
+import { setCurrentPage } from "../../store/reducers/announcement/announcementSlice";
+import { useAppDispatch } from "../../hooks/redux";
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(
     searchParams.get("searchQuery") || ""
   );
+  const dispatch = useAppDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
   useEffect(() => {
-    setSearchParams({ ...searchParams, searchQuery });
-  }, [searchQuery, searchParams, setSearchParams]);
+    const param = searchParams.get("searchQuery");
+    if (param) {
+      searchParams.delete("searchQuery");
+      setSearchParams(searchParams);
+    }
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (searchQuery) {
+      setSearchParams({ ...searchParams, searchQuery });
+    } else {
+      searchParams.delete("searchQuery");
+      setSearchParams(searchParams);
+    }
+    dispatch(setCurrentPage(1));
+  };
 
   return (
     <Wrapper>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Input
           name='search'
           fullWidth
@@ -31,6 +50,9 @@ const Search = () => {
           onChange={handleChange}
           value={searchQuery}
         />
+        <button>
+          <span>Search</span> <BsSearch />
+        </button>
       </form>
     </Wrapper>
   );

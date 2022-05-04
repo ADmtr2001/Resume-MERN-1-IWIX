@@ -17,6 +17,7 @@ const UserPage = () => {
         title='My Announcements'
         announcements={announcements}
         isLoading={isAnnouncementsLoading}
+        isPaginationVisible={true}
       />
     </>
   );

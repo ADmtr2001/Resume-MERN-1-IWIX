@@ -11,6 +11,7 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { asyncFetchAnnouncements } from "../../store/reducers/announcement/announcementActionCreators";
 import CategorySelect from "../Categories/CategorySelect/CategorySelect";
+import { setCurrentPage } from "../../store/reducers/announcement/announcementSlice";
 
 const initialState = {
   category: "",
@@ -30,9 +31,18 @@ const Filters = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const { categories } = useAppSelector((state) => state.category);
+  const { currentPage } = useAppSelector((state) => state.announcement);
 
   useEffect(() => {
-    console.log(1);
+    const page = searchParams.get("page");
+    console.log(page);
+    if (page) {
+      dispatch(setCurrentPage(+page));
+    }
+  }, []);
+
+  useEffect(() => {
+    // console.log(1);
     const searchQuery = searchParams.get("searchQuery");
     const params: { [index: string]: string } = {};
     for (const [key, value] of Object.entries(formData)) {
@@ -41,11 +51,17 @@ const Filters = () => {
       }
     }
     if (searchQuery) {
-      setSearchParams({ ...params, searchQuery });
-    } else {
-      setSearchParams({ ...params });
+      params.searchQuery = searchQuery;
     }
-  }, [formData, setSearchParams, searchParams]);
+    if (currentPage) {
+      params.page = currentPage.toString();
+    }
+    // if (page) {
+    //   params.page = page;
+    // }
+    // console.log(params);
+    setSearchParams(params);
+  }, [formData, setSearchParams, searchParams, currentPage]);
 
   useEffect(() => {
     const timer = setTimeout(
@@ -61,12 +77,17 @@ const Filters = () => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    dispatch(setCurrentPage(1));
+  };
+
   return (
     <Wrapper>
       <div className='category'>
         <CategorySelect
           categories={categories}
-          onChange={handleChange}
+          onChange={handleCategoryChange}
           value={formData.category}
         />
       </div>

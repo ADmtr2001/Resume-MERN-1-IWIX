@@ -27,9 +27,10 @@ const HomePage = () => {
       <Search />
       <Categories />
       <AnnouncementList
-        title='Announcements'
+        title='VIP Announcements'
         announcements={announcements}
         isLoading={isAnnouncementsLoading}
+        limit={4}
       />
     </>
   );

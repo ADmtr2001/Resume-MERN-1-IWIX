@@ -4,6 +4,7 @@ import { Wrapper } from "./AnnouncementList.styles";
 import { IAnnouncement } from "../../types";
 import Announcement from "./Announcement/Announcement";
 import Loader from "../UI/Loader/Loader";
+import Pagination from "../Pagination/Pagination";
 
 interface AnnouncementListProps {
   title: string;
@@ -11,6 +12,7 @@ interface AnnouncementListProps {
   isLoading: boolean;
   limit?: number;
   exceptions?: string[];
+  isPaginationVisible?: boolean;
 }
 
 const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
@@ -19,6 +21,7 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   isLoading,
   limit,
   exceptions,
+  isPaginationVisible = false,
 }) => {
   const isGridView = true;
 
@@ -57,6 +60,7 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
       <div className={isGridView ? "announcements-grid" : "announcements-line"}>
         {listContent}
       </div>
+      {isPaginationVisible && <Pagination />}
     </Wrapper>
   );
 };

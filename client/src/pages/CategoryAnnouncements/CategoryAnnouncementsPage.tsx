@@ -17,6 +17,7 @@ const CategoryAnnouncementsPage = () => {
         title='Announcements'
         announcements={announcements}
         isLoading={isAnnouncementsLoading}
+        isPaginationVisible={true}
       />
     </>
   );

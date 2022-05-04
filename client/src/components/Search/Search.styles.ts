@@ -24,7 +24,7 @@ export const Wrapper = styled.section`
     input {
       height: 100%;
 
-      /* border-right: none; */
+      border-right: none;
     }
 
     button {

@@ -37,10 +37,15 @@ export const announcementSlice = createSlice({
   reducers: {
     clearAnnouncements(state) {
       state.announcements = [];
+      state.currentPage = 0;
+      state.numberOfPages = 0;
     },
     clearCurrentAnnouncement(state) {
       state.currentAnnouncement = null;
       state.currentUserAnnouncements = [];
+    },
+    setCurrentPage(state, action: PayloadAction<number>) {
+      state.currentPage = action.payload;
     },
   },
   extraReducers: {
@@ -118,5 +123,5 @@ export const announcementSlice = createSlice({
   },
 });
 
-export const { clearAnnouncements, clearCurrentAnnouncement } =
+export const { clearAnnouncements, clearCurrentAnnouncement, setCurrentPage } =
   announcementSlice.actions;
