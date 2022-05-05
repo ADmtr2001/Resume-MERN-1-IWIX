@@ -13,6 +13,7 @@ interface AnnouncementListProps {
   limit?: number;
   exceptions?: string[];
   isPaginationVisible?: boolean;
+  isGridView: boolean;
 }
 
 const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
@@ -22,9 +23,8 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   limit,
   exceptions,
   isPaginationVisible = false,
+  isGridView,
 }) => {
-  const isGridView = true;
-
   if (isLoading) {
     return (
       <Wrapper>

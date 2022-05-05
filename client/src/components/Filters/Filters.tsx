@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { asyncFetchAnnouncements } from "../../store/reducers/announcement/announcementActionCreators";
 import CategorySelect from "../Categories/CategorySelect/CategorySelect";
 import { setCurrentPage } from "../../store/reducers/announcement/announcementSlice";
+import DisplayButtons from "./DisplayButtons/DisplayButtons";
 
 const initialState = {
   category: "",
@@ -125,14 +126,7 @@ const Filters = () => {
       </div>
       <div className='display'>
         <p>Display</p>
-        <div className='buttons'>
-          <Button isActive>
-            <IoGridSharp />
-          </Button>
-          <Button>
-            <AiOutlineBars />
-          </Button>
-        </div>
+        <DisplayButtons />
       </div>
     </Wrapper>
   );

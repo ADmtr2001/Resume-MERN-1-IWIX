@@ -10,6 +10,7 @@ const UserPage = () => {
   const { announcements, isAnnouncementsLoading } = useAppSelector(
     (state) => state.announcement
   );
+  const { isGridView } = useAppSelector((state) => state.appState);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const UserPage = () => {
         announcements={announcements}
         isLoading={isAnnouncementsLoading}
         isPaginationVisible={true}
+        isGridView={isGridView}
       />
     </>
   );

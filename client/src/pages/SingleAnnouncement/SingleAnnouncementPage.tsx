@@ -112,6 +112,7 @@ const AnnouncementPage = () => {
           isLoading={isCurrentUserAnnouncementsLoading}
           limit={4}
           exceptions={[currentAnnouncement._id]}
+          isGridView={true}
         />
         <AnnouncementList
           title='Other posts'
@@ -119,6 +120,7 @@ const AnnouncementPage = () => {
           isLoading={isAnnouncementsLoading}
           limit={4}
           exceptions={[currentAnnouncement._id]}
+          isGridView={true}
         />
       </div>
     </Wrapper>

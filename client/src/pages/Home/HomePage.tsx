@@ -38,6 +38,7 @@ const HomePage = () => {
         announcements={vipAnnouncements}
         isLoading={isVipAnnouncementsLoading}
         limit={4}
+        isGridView={true}
       />
     </>
   );
