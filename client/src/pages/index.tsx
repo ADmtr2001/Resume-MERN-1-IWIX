@@ -1,10 +1,10 @@
 import AdminPage from "./Admin/AdminPage";
-import AnnouncementPage from "./Announcement/AnnouncementPage";
+import AnnouncementPage from "./SingleAnnouncement/SingleAnnouncementPage";
 import AuthPage from "./Auth/AuthPage";
 import CreationPage from "./Creation/CreationPage";
 import HomePage from "./Home/HomePage";
 import UserPage from "./User/UserPage";
-import CategoryAnnouncementsPage from "./CategoryAnnouncements/CategoryAnnouncementsPage";
+import CategoryAnnouncementsPage from "./Announcements/AnnouncementsPage";
 
 export {
   AdminPage,

@@ -38,13 +38,6 @@ const CreationPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      category: categories[0]._id,
-    }));
-  }, [categories]);
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -97,14 +90,6 @@ const CreationPage = () => {
           value={formData.category}
           onChange={handleInputChange}
         />
-        {/* <Select
-          name='category'
-          label='Category'
-          options={selectOptions}
-          fullWidth
-          value={formData.category}
-          onChange={handleInputChange}
-        /> */}
         <Input
           name='price'
           label='Price'

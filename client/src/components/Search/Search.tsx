@@ -5,7 +5,7 @@ import Input from "../UI/Input/Input";
 import { Wrapper } from "./Search.styles";
 
 import { BsSearch } from "react-icons/bs";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { setCurrentPage } from "../../store/reducers/announcement/announcementSlice";
 import { useAppDispatch } from "../../hooks/redux";
 
@@ -15,6 +15,8 @@ const Search = () => {
     searchParams.get("searchQuery") || ""
   );
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -40,6 +42,12 @@ const Search = () => {
     dispatch(setCurrentPage(1));
   };
 
+  const onClick = (e: any) => {
+    if (location.pathname === "/" && !searchQuery) {
+      navigate("/announcements");
+    }
+  };
+
   return (
     <Wrapper>
       <form onSubmit={handleSubmit}>
@@ -50,7 +58,7 @@ const Search = () => {
           onChange={handleChange}
           value={searchQuery}
         />
-        <button>
+        <button onClick={onClick}>
           <span>Search</span> <BsSearch />
         </button>
       </form>

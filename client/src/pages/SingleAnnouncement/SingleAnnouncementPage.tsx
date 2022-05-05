@@ -7,7 +7,7 @@ import {
   asyncGetSingleAnnouncement,
 } from "../../store/reducers/announcement/announcementActionCreators";
 
-import { Wrapper } from "./AnnouncementPage.styles";
+import { Wrapper } from "./SingleAnnouncementPage.styles";
 import userPreview from "../../assets/user.png";
 import { BsStarFill } from "react-icons/bs";
 import AnnouncementList from "../../components/Announcements/AnnouncementList";

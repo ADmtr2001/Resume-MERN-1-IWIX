@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import AnnouncementList from "../../components/Announcements/AnnouncementList";
 import Categories from "../../components/Categories/Categories";
 import Search from "../../components/Search/Search";
@@ -16,10 +16,18 @@ const HomePage = () => {
   const { vipAnnouncements, isVipAnnouncementsLoading } = useAppSelector(
     (state) => state.announcement
   );
+  const searchParams = useSearchParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(asyncGetVipAnnouncements());
   }, []);
+
+  useEffect(() => {
+    if (location.pathname === "/" && location.search !== "") {
+      navigate(`/announcements${location.search}`);
+    }
+  }, [searchParams]);
 
   return (
     <>

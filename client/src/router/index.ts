@@ -16,7 +16,7 @@ export const publicRoutes: IRoute[] = [
   { path: RoutesNames.ANNOUNCEMENT, element: AnnouncementPage },
   { path: RoutesNames.AUTH, element: AuthPage },
   {
-    path: RoutesNames.CATEGORY_ANNOUNCEMENTS,
+    path: RoutesNames.ANNOUNCEMENTS,
     element: CategoryAnnouncementsPage,
   },
 ];
@@ -28,7 +28,7 @@ export const privateRoutes: IRoute[] = [
   { path: RoutesNames.ADMIN, element: AdminPage },
   { path: RoutesNames.CREATION, element: CreationPage },
   {
-    path: RoutesNames.CATEGORY_ANNOUNCEMENTS,
+    path: RoutesNames.ANNOUNCEMENTS,
     element: CategoryAnnouncementsPage,
   },
 ];

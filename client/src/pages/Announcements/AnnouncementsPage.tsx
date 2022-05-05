@@ -5,7 +5,7 @@ import Search from "../../components/Search/Search";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { clearAnnouncements } from "../../store/reducers/announcement/announcementSlice";
 
-const CategoryAnnouncementsPage = () => {
+const AnnouncementsPage = () => {
   const { announcements, isAnnouncementsLoading } = useAppSelector(
     (state) => state.announcement
   );
@@ -31,4 +31,4 @@ const CategoryAnnouncementsPage = () => {
   );
 };
 
-export default CategoryAnnouncementsPage;
+export default AnnouncementsPage;
