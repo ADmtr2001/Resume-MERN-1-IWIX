@@ -9,6 +9,7 @@ export interface IAnnouncement {
   phoneNumber: string;
   creator: string;
   createdAt: string;
+  isVip: boolean;
 }
 
 export interface GetAnnouncementsResponse {

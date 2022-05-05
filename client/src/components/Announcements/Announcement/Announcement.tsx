@@ -5,11 +5,12 @@ import { Wrapper } from "./Announcement.styles";
 
 export interface AnnouncementProps {
   announcement: IAnnouncement;
+  className?: string;
 }
 
-const Announcement: FC<AnnouncementProps> = ({ announcement }) => {
+const Announcement: FC<AnnouncementProps> = ({ announcement, className }) => {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Link to={`/announcement/${announcement._id}`}>
         <div className='announcement-top'>
           <img

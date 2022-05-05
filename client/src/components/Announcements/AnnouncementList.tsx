@@ -46,11 +46,19 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
     listContent = filteredAnnouncements
       .slice(0, limit)
       .map((announcement) => (
-        <Announcement key={announcement._id} announcement={announcement} />
+        <Announcement
+          className={announcement.isVip ? "vip" : ""}
+          key={announcement._id}
+          announcement={announcement}
+        />
       ));
   } else {
     listContent = filteredAnnouncements.map((announcement) => (
-      <Announcement key={announcement._id} announcement={announcement} />
+      <Announcement
+        className={announcement.isVip ? "vip" : ""}
+        key={announcement._id}
+        announcement={announcement}
+      />
     ));
   }
 
