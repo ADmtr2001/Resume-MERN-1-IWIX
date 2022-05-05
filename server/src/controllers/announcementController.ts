@@ -18,6 +18,7 @@ class AnnouncementController {
       from = "",
       to = "",
       sort = "",
+      creator = "",
     } = req.query;
 
     const limit = 8;
@@ -31,7 +32,8 @@ class AnnouncementController {
         category as string,
         sort as string,
         from as string,
-        to as string
+        to as string,
+        creator as string
       );
 
     res.status(StatusCodes.OK).json({

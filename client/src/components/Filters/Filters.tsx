@@ -32,6 +32,7 @@ const Filters = () => {
   const dispatch = useAppDispatch();
   const { categories } = useAppSelector((state) => state.category);
   const { currentPage } = useAppSelector((state) => state.announcement);
+  const { user } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     const page = searchParams.get("page");
@@ -56,8 +57,11 @@ const Filters = () => {
     if (currentPage) {
       params.page = currentPage.toString();
     }
+    if (location.pathname === "/user" && user) {
+      params.creator = user._id;
+    }
     setSearchParams(params);
-  }, [formData, setSearchParams, searchParams, currentPage]);
+  }, [formData, setSearchParams, searchParams, currentPage, user]);
 
   useEffect(() => {
     const timer = setTimeout(

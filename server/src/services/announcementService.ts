@@ -11,7 +11,8 @@ class AnnouncementService {
     category: string,
     sort: string,
     from: string,
-    to: string
+    to: string,
+    creator: string
   ) {
     const conditions: {
       [index: string]: string | RegExp | { [index: string]: string | number };
@@ -28,6 +29,9 @@ class AnnouncementService {
     }
     if (to) {
       conditions.push({ price: { $lte: Number(to) } });
+    }
+    if (creator) {
+      conditions.push({ creator });
     }
     const finalConditions = conditions.length ? { $and: conditions } : {};
 
