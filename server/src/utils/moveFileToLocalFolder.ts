@@ -13,6 +13,7 @@ const moveFileToLocalFolder = (image: any, folderName: FolderType) => {
     folderName,
     fileName
   );
+  console.log(filePath);
   // @ts-ignore
   image.mv(filePath);
 

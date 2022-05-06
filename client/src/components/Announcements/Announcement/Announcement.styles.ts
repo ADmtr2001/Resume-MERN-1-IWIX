@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { setFlex } from "../../../styles/mixins/mixins.styles";
 
 export const Wrapper = styled.article`
   background: ${(props) => props.theme.dark1};
@@ -6,6 +7,24 @@ export const Wrapper = styled.article`
   cursor: pointer;
   transition: all ${(props) => props.theme.fastTransition};
   position: relative;
+
+  .action-buttons {
+    position: absolute;
+    margin: 0;
+    top: 0;
+    right: 0;
+    ${setFlex({ direction: "column" })};
+
+    button {
+      width: 4rem;
+      height: 4rem;
+      box-shadow: none;
+    }
+
+    button + button {
+      margin-top: 0.5rem;
+    }
+  }
 
   &.vip::after {
     content: "VIP";

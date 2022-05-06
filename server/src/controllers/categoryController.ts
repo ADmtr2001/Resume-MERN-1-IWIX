@@ -35,7 +35,7 @@ class CategoryController {
 
     const category = await categoryService.getSingleCategory(id);
 
-    deleteFileFromLocalFolder("categoryImages", category.image);
+    deleteFileFromLocalFolder(category.image);
 
     await categoryService.deleteCategory(id);
     res

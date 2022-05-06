@@ -3,19 +3,9 @@ import path from "path";
 import { BadRequestError } from "../errors";
 import { FolderType } from "../types/local";
 
-const deleteFileFromLocalFolder = (
-  folderName: FolderType,
-  fileName: string
-) => {
-  const filePath = path.resolve(
-    __dirname,
-    "..",
-    "public",
-    "uploads",
-    folderName,
-    fileName
-  );
-  
+const deleteFileFromLocalFolder = (fileName: string) => {
+  const filePath = path.resolve(__dirname, "..", "public", fileName.slice(1));
+
   fs.unlink(filePath, (error) => {
     if (error) {
       throw new BadRequestError(

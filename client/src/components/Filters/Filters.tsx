@@ -105,6 +105,7 @@ const Filters = () => {
   const reset = () => {
     setFormData(initialState);
     setSearchParams({});
+    dispatch(setCurrentPage(1));
   };
 
   return (

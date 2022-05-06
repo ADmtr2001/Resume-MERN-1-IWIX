@@ -4,6 +4,7 @@ import { BrowserRouter, useLocation } from "react-router-dom";
 import AppRouter from "./components/AppRouter/AppRouter";
 import Footer from "./components/Footer/Footer";
 import NavBar from "./components/NavBar/NavBar";
+import DeleteModal from "./components/UI/Modal/DeleteModal/DeleteModal";
 import ScrollToTopButton from "./components/UI/ScrollToTopButton/ScrollToTopButton";
 import { useAppDispatch } from "./hooks/redux";
 import { asyncFetchAnnouncements } from "./store/reducers/announcement/announcementActionCreators";
@@ -32,6 +33,7 @@ const App = () => {
       </div>
       <Footer />
       <ScrollToTopButton />
+      <DeleteModal />
     </Wrapper>
   );
 };

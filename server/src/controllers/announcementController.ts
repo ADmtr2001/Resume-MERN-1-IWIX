@@ -99,7 +99,7 @@ class AnnouncementController {
 
     const fileName = moveFileToLocalFolder(image, "announcementImages");
 
-    deleteFileFromLocalFolder("announcementImages", previousAnnouncement.image);
+    deleteFileFromLocalFolder(previousAnnouncement.image);
 
     const announcement = await announcementService.updateAnnouncement(
       id,
@@ -123,7 +123,7 @@ class AnnouncementController {
     checkPermission(req.user, announcement.creator);
     await announcementService.deleteAnnouncement(id);
 
-    deleteFileFromLocalFolder("announcementImages", announcement.image);
+    deleteFileFromLocalFolder(announcement.image);
 
     res
       .status(StatusCodes.OK)

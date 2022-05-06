@@ -52,6 +52,11 @@ export const announcementSlice = createSlice({
     setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload;
     },
+    deleteAnnouncement(state, action: PayloadAction<string>) {
+      state.announcements = state.announcements.filter(
+        (announcement) => announcement._id !== action.payload
+      );
+    },
   },
   extraReducers: {
     [asyncFetchAnnouncements.pending.type]: (state) => {
@@ -141,5 +146,9 @@ export const announcementSlice = createSlice({
   },
 });
 
-export const { clearAnnouncements, clearCurrentAnnouncement, setCurrentPage } =
-  announcementSlice.actions;
+export const {
+  clearAnnouncements,
+  clearCurrentAnnouncement,
+  setCurrentPage,
+  deleteAnnouncement,
+} = announcementSlice.actions;

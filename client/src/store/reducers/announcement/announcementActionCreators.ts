@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { $authHost, $host } from "../../../http";
 import { GetAnnouncementsResponse, IAnnouncement, IUser } from "../../../types";
 import { asyncGetSingleUser } from "../user/userActionCreators";
+import { deleteAnnouncement } from "./announcementSlice";
 
 export const asyncFetchAnnouncements = createAsyncThunk(
   "announcement/fetchAnnouncements",
@@ -71,6 +72,20 @@ export const asyncGetVipAnnouncements = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await $host.get<IAnnouncement[]>(`announcement/vip`);
+      return data;
+    } catch (error: any) {
+      console.log(error.response.data.message);
+      return rejectWithValue("Failed");
+    }
+  }
+);
+
+export const asyncDeleteAnnouncement = createAsyncThunk(
+  "announcement/",
+  async (announcementId: string, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await $authHost.delete(`announcement/${announcementId}`);
+      dispatch(deleteAnnouncement(announcementId));
       return data;
     } catch (error: any) {
       console.log(error.response.data.message);
