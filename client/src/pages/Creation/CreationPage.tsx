@@ -4,6 +4,7 @@ import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 import Loader from "../../components/UI/Loader/Loader";
 import Select from "../../components/UI/Select/Select";
+import TextArea from "../../components/UI/TextArea/TextArea";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { asyncCreateAnnouncement } from "../../store/reducers/announcement/announcementActionCreators";
 import { asyncFetchCategories } from "../../store/reducers/category/categoryActionCreators";
@@ -104,15 +105,13 @@ const CreationPage = () => {
           type='file'
           onChange={handleImageChange}
         />
-        <label>
-          Description
-          <textarea
-            rows={5}
-            name='description'
-            value={formData.description}
-            onChange={handleInputChange}
-          />
-        </label>
+        <TextArea
+          label='Description'
+          rows={5}
+          name='description'
+          value={formData.description}
+          onChange={handleInputChange}
+        />
         <Input
           name='location'
           label='Location'

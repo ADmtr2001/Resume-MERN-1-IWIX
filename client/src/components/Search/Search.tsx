@@ -30,11 +30,20 @@ const Search = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const param = searchParams.get("searchQuery");
+    if (param) {
+      setSearchQuery(param);
+    } else {
+      setSearchQuery("");
+    }
+  }, [searchParams]);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (searchQuery) {
-      setSearchParams({ ...searchParams, searchQuery });
+      setSearchParams({ ...searchParams, searchQuery }, { replace: true });
     } else {
       searchParams.delete("searchQuery");
       setSearchParams(searchParams);
@@ -43,7 +52,11 @@ const Search = () => {
   };
 
   const onClick = (e: any) => {
-    if (location.pathname === "/" && !searchQuery) {
+    if (
+      (location.pathname === "/" ||
+        location.pathname.startsWith("/announcement")) &&
+      !searchQuery
+    ) {
       navigate("/announcements");
     }
   };

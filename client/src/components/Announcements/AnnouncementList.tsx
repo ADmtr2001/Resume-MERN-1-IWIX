@@ -14,6 +14,7 @@ interface AnnouncementListProps {
   exceptions?: string[];
   isPaginationVisible?: boolean;
   isGridView: boolean;
+  Button?: JSX.Element;
 }
 
 const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
@@ -24,6 +25,7 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   exceptions,
   isPaginationVisible = false,
   isGridView,
+  Button,
 }) => {
   if (isLoading) {
     return (
@@ -69,6 +71,7 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
         {listContent}
       </div>
       {isPaginationVisible && <Pagination />}
+      {Button ? <div className='all-button'>{Button}</div> : null}
     </Wrapper>
   );
 };

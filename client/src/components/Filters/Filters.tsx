@@ -12,7 +12,10 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { asyncFetchAnnouncements } from "../../store/reducers/announcement/announcementActionCreators";
 import CategorySelect from "../Categories/CategorySelect/CategorySelect";
 import { setCurrentPage } from "../../store/reducers/announcement/announcementSlice";
-import DisplayButtons from "./DisplayButtons/DisplayButtons";
+import UserInfo from "../UserInfo/UserInfo";
+import { MdDelete } from "react-icons/md";
+import { asyncGetSingleUser } from "../../store/reducers/user/userActionCreators";
+import ActionButtons from "./DisplayButtons/ActionButtons";
 
 const initialState = {
   category: "",
@@ -33,19 +36,25 @@ const Filters = () => {
   const dispatch = useAppDispatch();
   const { categories } = useAppSelector((state) => state.category);
   const { currentPage } = useAppSelector((state) => state.announcement);
-  const { user } = useAppSelector((state) => state.user);
+  const { user, currentUser } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     const page = searchParams.get("page");
+    const creator = searchParams.get("creator");
     if (page) {
       dispatch(setCurrentPage(+page));
     } else {
       dispatch(setCurrentPage(1));
     }
+
+    if (creator) {
+      dispatch(asyncGetSingleUser(creator));
+    }
   }, []);
 
   useEffect(() => {
     const searchQuery = searchParams.get("searchQuery");
+    const creator = searchParams.get("creator");
     const params: { [index: string]: string } = {};
     for (const [key, value] of Object.entries(formData)) {
       if (value !== "") {
@@ -58,10 +67,13 @@ const Filters = () => {
     if (currentPage) {
       params.page = currentPage.toString();
     }
+    if (creator) {
+      params.creator = creator;
+    }
     if (location.pathname === "/user" && user) {
       params.creator = user._id;
     }
-    setSearchParams(params);
+    setSearchParams(params, { replace: true });
   }, [formData, setSearchParams, searchParams, currentPage, user]);
 
   useEffect(() => {
@@ -71,6 +83,11 @@ const Filters = () => {
     );
     return () => clearTimeout(timer);
   }, [searchParams, dispatch]);
+
+  const deleleCreatorFromSearch = () => {
+    searchParams.delete("creator");
+    setSearchParams(searchParams, { replace: true });
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -85,6 +102,11 @@ const Filters = () => {
     dispatch(setCurrentPage(1));
   };
 
+  const reset = () => {
+    setFormData(initialState);
+    setSearchParams({});
+  };
+
   return (
     <Wrapper>
       <div className='category'>
@@ -96,18 +118,20 @@ const Filters = () => {
       </div>
       <div className='price'>
         <p>Price</p>
-        <Input
-          name='from'
-          placeholder='From'
-          value={formData.from}
-          onChange={handleChangeWithPageReset}
-        />
-        <Input
-          name='to'
-          placeholder='To'
-          value={formData.to}
-          onChange={handleChangeWithPageReset}
-        />
+        <div>
+          <Input
+            name='from'
+            placeholder='From'
+            value={formData.from}
+            onChange={handleChangeWithPageReset}
+          />
+          <Input
+            name='to'
+            placeholder='To'
+            value={formData.to}
+            onChange={handleChangeWithPageReset}
+          />
+        </div>
       </div>
       <div className='sort'>
         <p>Sort</p>
@@ -122,11 +146,21 @@ const Filters = () => {
           ]}
           value={formData.sort}
           onChange={handleChange}
+          fullWidth
         />
       </div>
-      <div className='display'>
-        <p>Display</p>
-        <DisplayButtons />
+      {location.pathname !== "/user" &&
+        searchParams.get("creator") &&
+        currentUser && (
+          <div className='user'>
+            <UserInfo user={currentUser} short />
+            <Button onClick={deleleCreatorFromSearch}>
+              <MdDelete />
+            </Button>
+          </div>
+        )}
+      <div className='action-buttons'>
+        <ActionButtons reset={reset} />
       </div>
     </Wrapper>
   );

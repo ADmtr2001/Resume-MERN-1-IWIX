@@ -6,6 +6,7 @@ export interface IAnnouncement {
   image: string;
   description: string;
   location: string;
+  email: string;
   phoneNumber: string;
   creator: string;
   createdAt: string;

@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import Search from "../../components/Search/Search";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
@@ -17,6 +22,8 @@ import {
   clearAnnouncements,
   clearCurrentAnnouncement,
 } from "../../store/reducers/announcement/announcementSlice";
+import UserInfo from "../../components/UserInfo/UserInfo";
+import Button from "../../components/UI/Button/Button";
 
 const AnnouncementPage = () => {
   const { id: announcementId } = useParams();
@@ -32,6 +39,9 @@ const AnnouncementPage = () => {
     (state) => state.user
   );
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const searchParams = useSearchParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     scrollToTop();
@@ -48,6 +58,12 @@ const AnnouncementPage = () => {
       dispatch(clearCurrentAnnouncement());
     };
   }, [announcementId, dispatch]);
+
+  useEffect(() => {
+    if (location.search !== "") {
+      navigate(`/announcements${location.search}`);
+    }
+  }, [searchParams]);
 
   if (isCurrentAnnouncementLoading) return <Loader />;
 
@@ -71,24 +87,7 @@ const AnnouncementPage = () => {
             {isCurrentUserLoading ? (
               <Loader />
             ) : (
-              <>
-                <div className='user-image'>
-                  <img src={userPreview} alt='user' />
-                </div>
-                <div className='info'>
-                  <h3 className='name'>{currentUser.name}</h3>
-                  <p className='register-date'>
-                    on WIX since {currentUser.createdAt}
-                  </p>
-                  <p className='rating'>
-                    {currentUser.averageRating}
-                    <span className='star'>
-                      <BsStarFill />
-                    </span>
-                    ({currentUser.numOfComments})
-                  </p>
-                </div>
-              </>
+              <UserInfo user={currentUser} />
             )}
           </div>
           <div className='description'>
@@ -101,11 +100,13 @@ const AnnouncementPage = () => {
             <p className='description-text'>
               {currentAnnouncement.description}
             </p>
+            <h3>Contacts</h3>
+            <p>Email: {currentAnnouncement.email}</p>
+            <p>Phone number: {currentAnnouncement.phoneNumber}</p>
           </div>
         </div>
       </div>
-      <div className='comments'>Commnets</div>
-      <div className='announcements'>
+      <section className='announcements'>
         <AnnouncementList
           title='Other user posts'
           announcements={currentUserAnnouncements}
@@ -113,6 +114,15 @@ const AnnouncementPage = () => {
           limit={4}
           exceptions={[currentAnnouncement._id]}
           isGridView={true}
+          Button={
+            <Button
+              onClick={() =>
+                navigate(`/announcements?creator=${currentUser._id}`)
+              }
+            >
+              Show All
+            </Button>
+          }
         />
         <AnnouncementList
           title='Other posts'
@@ -121,8 +131,11 @@ const AnnouncementPage = () => {
           limit={4}
           exceptions={[currentAnnouncement._id]}
           isGridView={true}
+          Button={
+            <Button onClick={() => navigate(`/announcements`)}>Search</Button>
+          }
         />
-      </div>
+      </section>
     </Wrapper>
   );
 };

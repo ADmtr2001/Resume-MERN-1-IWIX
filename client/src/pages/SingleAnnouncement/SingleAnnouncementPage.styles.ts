@@ -44,7 +44,7 @@ export const Wrapper = styled.main`
         ${setFlex({ align: "center" })}
         padding: 1rem;
 
-        .user-image {
+        /* .user-image {
           width: 8rem;
           height: 8rem;
           border-radius: 50%;
@@ -79,7 +79,7 @@ export const Wrapper = styled.main`
               top: 0.1rem;
             }
           }
-        }
+        } */
       }
 
       .description {
@@ -105,15 +105,7 @@ export const Wrapper = styled.main`
     }
   }
 
-  .comments {
-    margin-top: 2rem;
-    background-color: ${(props) => props.theme.light2};
-    ${setShadowForSection()};
-    padding: 1rem;
-  }
-
   .announcements {
-    div {
-    }
+    padding: 0;
   }
 `;

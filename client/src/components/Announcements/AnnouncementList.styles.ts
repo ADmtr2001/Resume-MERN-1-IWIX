@@ -111,4 +111,11 @@ export const Wrapper = styled.section`
       }
     }
   }
+
+  .all-button {
+    button {
+      display: block;
+      margin: 2rem auto 0;
+    }
+  }
 `;
