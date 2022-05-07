@@ -3,6 +3,7 @@ export enum RoutesNames {
   ADMIN = "/admin",
   AUTH = "/auth",
   CREATION = "/creation",
+  UPDATE = "/update/:id",
   USER = "/user",
   ANNOUNCEMENT = "/announcement/:id",
   ANNOUNCEMENTS = "/announcements",

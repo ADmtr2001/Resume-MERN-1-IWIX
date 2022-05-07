@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import CategorySelect from "../../components/Categories/CategorySelect/CategorySelect";
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
@@ -6,7 +7,15 @@ import Loader from "../../components/UI/Loader/Loader";
 import Select from "../../components/UI/Select/Select";
 import TextArea from "../../components/UI/TextArea/TextArea";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { asyncCreateAnnouncement } from "../../store/reducers/announcement/announcementActionCreators";
+import {
+  asyncCreateAnnouncement,
+  asyncGetSingleAnnouncement,
+  asyncUpdateAnnouncement,
+} from "../../store/reducers/announcement/announcementActionCreators";
+import {
+  clearCurrentAnnouncement,
+  clearUpdatedAndCreatedAnnouncement,
+} from "../../store/reducers/announcement/announcementSlice";
 import { asyncFetchCategories } from "../../store/reducers/category/categoryActionCreators";
 import { IOption } from "../../types";
 import { ICreationFormData } from "../../types/IFormData";
@@ -25,6 +34,7 @@ const initialState: ICreationFormData = {
 };
 
 const CreationPage = () => {
+  const { id: announcementId } = useParams();
   const [formData, setFormData] = useState({
     ...initialState,
   });
@@ -32,17 +42,53 @@ const CreationPage = () => {
     (state) => state.category
   );
   const dispatch = useAppDispatch();
+  const {
+    currentAnnouncement,
+    isCurrentAnnouncementLoading,
+    updatedAnnouncement,
+    createdAnnouncement,
+  } = useAppSelector((state) => state.announcement);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (categories.length === 0) {
       dispatch(asyncFetchCategories());
     }
+    if (announcementId) {
+      dispatch(asyncGetSingleAnnouncement(announcementId));
+    }
+    return () => {
+      dispatch(clearCurrentAnnouncement());
+      dispatch(clearUpdatedAndCreatedAnnouncement());
+    };
   }, []);
+
+  useEffect(() => {
+    if (currentAnnouncement) {
+      setFormData({
+        title: currentAnnouncement.title,
+        category: currentAnnouncement.category,
+        price: currentAnnouncement.price.toString(),
+        description: currentAnnouncement.description,
+        location: currentAnnouncement.location,
+        email: currentAnnouncement.email,
+        phoneNumber: currentAnnouncement.phoneNumber,
+        image: null,
+      });
+    }
+  }, [currentAnnouncement]);
+
+  useEffect(() => {
+    if (updatedAnnouncement) {
+      navigate(`/announcement/${updatedAnnouncement._id}`);
+    }
+    if (createdAnnouncement) {
+      navigate(`/announcement/${createdAnnouncement._id}`);
+    }
+  }, [updatedAnnouncement, createdAnnouncement]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!formData.image) return;
 
     const announcementData = new FormData();
     announcementData.append("title", formData.title);
@@ -52,9 +98,17 @@ const CreationPage = () => {
     announcementData.append("location", formData.location);
     announcementData.append("email", formData.email);
     announcementData.append("phoneNumber", formData.phoneNumber);
-    announcementData.append("image", formData.image);
+    if (formData.image) {
+      announcementData.append("image", formData.image);
+    }
 
-    dispatch(asyncCreateAnnouncement(announcementData));
+    if (announcementId) {
+      dispatch(
+        asyncUpdateAnnouncement({ data: announcementData, id: announcementId })
+      );
+    } else {
+      dispatch(asyncCreateAnnouncement(announcementData));
+    }
   };
 
   const handleInputChange = (
@@ -134,7 +188,7 @@ const CreationPage = () => {
           value={formData.phoneNumber}
           onChange={handleInputChange}
         />
-        <Button>Create</Button>
+        <Button>{announcementId ? "Create" : "Update"}</Button>
       </form>
     </Wrapper>
   );

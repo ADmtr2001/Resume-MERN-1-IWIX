@@ -6,6 +6,7 @@ import {
   asyncGetSingleAnnouncement,
   asyncGetUserAnnouncements,
   asyncGetVipAnnouncements,
+  asyncUpdateAnnouncement,
 } from "./announcementActionCreators";
 
 interface AnnouncementState {
@@ -17,7 +18,10 @@ interface AnnouncementState {
   isCurrentUserAnnouncementsLoading: boolean;
   vipAnnouncements: IAnnouncement[];
   isVipAnnouncementsLoading: boolean;
+  createdAnnouncement: IAnnouncement | null;
   isAnnouncementCreating: boolean;
+  updatedAnnouncement: IAnnouncement | null;
+  isAnnouncementUpdating: boolean;
   currentPage: number;
   numberOfPages: number;
 }
@@ -31,7 +35,10 @@ const initialState: AnnouncementState = {
   isCurrentUserAnnouncementsLoading: false,
   vipAnnouncements: [],
   isVipAnnouncementsLoading: false,
+  createdAnnouncement: null,
   isAnnouncementCreating: false,
+  updatedAnnouncement: null,
+  isAnnouncementUpdating: false,
   currentPage: 0,
   numberOfPages: 0,
 };
@@ -57,6 +64,15 @@ export const announcementSlice = createSlice({
         (announcement) => announcement._id !== action.payload
       );
     },
+    updateAnnouncement(state, action: PayloadAction<IAnnouncement>) {
+      state.announcements = state.announcements.map((announcement) =>
+        announcement._id === action.payload._id ? action.payload : announcement
+      );
+    },
+    clearUpdatedAndCreatedAnnouncement(state) {
+      state.createdAnnouncement = null;
+      state.updatedAnnouncement = null;
+    },
   },
   extraReducers: {
     [asyncFetchAnnouncements.pending.type]: (state) => {
@@ -79,18 +95,21 @@ export const announcementSlice = createSlice({
       action: PayloadAction<IAnnouncement>
     ) => {
       state.isAnnouncementCreating = true;
+      state.createdAnnouncement = null;
     },
     [asyncCreateAnnouncement.fulfilled.type]: (
       state,
       action: PayloadAction<IAnnouncement>
     ) => {
       state.isAnnouncementCreating = false;
+      state.createdAnnouncement = action.payload;
     },
     [asyncCreateAnnouncement.rejected.type]: (
       state,
       action: PayloadAction<IAnnouncement>
     ) => {
       state.isAnnouncementCreating = false;
+      state.createdAnnouncement = null;
     },
     [asyncGetSingleAnnouncement.pending.type]: (
       state,
@@ -143,6 +162,21 @@ export const announcementSlice = createSlice({
     [asyncGetVipAnnouncements.rejected.type]: (state) => {
       state.isVipAnnouncementsLoading = false;
     },
+    [asyncUpdateAnnouncement.pending.type]: (state) => {
+      state.isAnnouncementUpdating = true;
+      state.updatedAnnouncement = null;
+    },
+    [asyncUpdateAnnouncement.fulfilled.type]: (
+      state,
+      action: PayloadAction<IAnnouncement>
+    ) => {
+      state.isAnnouncementUpdating = false;
+      state.updatedAnnouncement = action.payload;
+    },
+    [asyncUpdateAnnouncement.rejected.type]: (state) => {
+      state.isAnnouncementUpdating = false;
+      state.updatedAnnouncement = null;
+    },
   },
 });
 
@@ -151,4 +185,6 @@ export const {
   clearCurrentAnnouncement,
   setCurrentPage,
   deleteAnnouncement,
+  updateAnnouncement,
+  clearUpdatedAndCreatedAnnouncement,
 } = announcementSlice.actions;

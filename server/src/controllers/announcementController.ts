@@ -90,16 +90,20 @@ class AnnouncementController {
       phoneNumber,
       price,
     } = req.body;
-    // @ts-ignore
-    const { image } = req.files;
+    let fileName = "";
 
-    const previousAnnouncement =
-      await announcementService.getSingleAnnouncement(id);
-    checkPermission(req.user, previousAnnouncement.creator);
+    if (req.files) {
+      // @ts-ignore
+      const { image } = req.files;
 
-    const fileName = moveFileToLocalFolder(image, "announcementImages");
+      const previousAnnouncement =
+        await announcementService.getSingleAnnouncement(id);
+      checkPermission(req.user, previousAnnouncement.creator);
 
-    deleteFileFromLocalFolder(previousAnnouncement.image);
+      fileName = moveFileToLocalFolder(image, "announcementImages");
+
+      deleteFileFromLocalFolder(previousAnnouncement.image);
+    }
 
     const announcement = await announcementService.updateAnnouncement(
       id,

@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { $authHost, $host } from "../../../http";
 import { GetAnnouncementsResponse, IAnnouncement, IUser } from "../../../types";
 import { asyncGetSingleUser } from "../user/userActionCreators";
-import { deleteAnnouncement } from "./announcementSlice";
+import { deleteAnnouncement, updateAnnouncement } from "./announcementSlice";
 
 export const asyncFetchAnnouncements = createAsyncThunk(
   "announcement/fetchAnnouncements",
@@ -81,11 +81,31 @@ export const asyncGetVipAnnouncements = createAsyncThunk(
 );
 
 export const asyncDeleteAnnouncement = createAsyncThunk(
-  "announcement/",
+  "announcement/deleteAnnouncement",
   async (announcementId: string, { dispatch, rejectWithValue }) => {
     try {
       const { data } = await $authHost.delete(`announcement/${announcementId}`);
       dispatch(deleteAnnouncement(announcementId));
+      return data;
+    } catch (error: any) {
+      console.log(error.response.data.message);
+      return rejectWithValue("Failed");
+    }
+  }
+);
+
+export const asyncUpdateAnnouncement = createAsyncThunk(
+  "announcement/updateAnnouncement",
+  async (
+    announcementData: { data: FormData; id: string },
+    { dispatch, rejectWithValue }
+  ) => {
+    try {
+      const { data } = await $authHost.patch<IAnnouncement>(
+        `announcement/${announcementData.id}`,
+        announcementData.data
+      );
+      dispatch(updateAnnouncement(data));
       return data;
     } catch (error: any) {
       console.log(error.response.data.message);

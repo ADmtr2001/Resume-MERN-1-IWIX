@@ -45,10 +45,10 @@ class AnnouncementService {
           sortCondition = { price: -1 };
           break;
         case "new":
-          sortCondition = { createdAt: 1 };
+          sortCondition = { createdAt: -1 };
           break;
         case "old":
-          sortCondition = { createdAt: -1 };
+          sortCondition = { createdAt: 1 };
           break;
         default:
           break;
@@ -108,18 +108,23 @@ class AnnouncementService {
     price: number,
     image: string
   ) {
+    const data: { [index: string]: string | number | Types.ObjectId } = {
+      title,
+      category,
+      description,
+      location,
+      email,
+      phoneNumber,
+      price,
+    };
+
+    if (image) {
+      data.image = image;
+    }
+
     const announcement = await Announcement.findOneAndUpdate(
       { _id: announcementId },
-      {
-        title,
-        category,
-        description,
-        location,
-        email,
-        phoneNumber,
-        price,
-        image,
-      },
+      data,
       {
         new: true,
         runValidators: true,
