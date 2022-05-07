@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IAnnouncement } from "../../../types";
 import Button from "../../UI/Button/Button";
 import { Wrapper } from "./Announcement.styles";
@@ -17,6 +17,7 @@ const Announcement: FC<AnnouncementProps> = ({ announcement, className }) => {
   const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const confirmDeletion = () => {
     dispatch(setDeleteModal({ visible: true, announcement: announcement._id }));
@@ -46,7 +47,7 @@ const Announcement: FC<AnnouncementProps> = ({ announcement, className }) => {
           <p className='price'>{announcement.price} грн</p>
         </div>
       </Link>
-      {user?._id === announcement.creator && (
+      {user?._id === announcement.creator && location.pathname === "/user" && (
         <div className='action-buttons'>
           <Button onClick={moveToUpdate}>
             <GrEdit />

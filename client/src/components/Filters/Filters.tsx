@@ -93,12 +93,6 @@ const Filters = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleChangeWithPageReset = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     dispatch(setCurrentPage(1));
   };
 
@@ -113,7 +107,7 @@ const Filters = () => {
       <div className='category'>
         <CategorySelect
           categories={categories}
-          onChange={handleChangeWithPageReset}
+          onChange={handleChange}
           value={formData.category}
         />
       </div>
@@ -124,13 +118,13 @@ const Filters = () => {
             name='from'
             placeholder='From'
             value={formData.from}
-            onChange={handleChangeWithPageReset}
+            onChange={handleChange}
           />
           <Input
             name='to'
             placeholder='To'
             value={formData.to}
-            onChange={handleChangeWithPageReset}
+            onChange={handleChange}
           />
         </div>
       </div>
