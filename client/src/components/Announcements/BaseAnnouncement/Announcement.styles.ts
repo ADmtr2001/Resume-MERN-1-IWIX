@@ -17,7 +17,7 @@ export const AnnouncementWrapper = styled.article`
     margin: 0;
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
 
     button {
       width: 4rem;
@@ -46,6 +46,12 @@ export const AnnouncementWrapper = styled.article`
   @media (min-width: 900px) {
     &:hover {
       transform: scale(1.1);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .action-buttons {
+      left: 0;
     }
   }
 `;
