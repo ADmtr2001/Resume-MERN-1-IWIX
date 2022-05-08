@@ -21,7 +21,7 @@ class AnnouncementController {
       creator = "",
     } = req.query;
 
-    const limit = 8;
+    const limit = 12;
     const startIndex = (Number(page) - 1) * limit;
 
     const { announcements, total } =

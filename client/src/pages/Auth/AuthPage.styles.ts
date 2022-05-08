@@ -24,4 +24,8 @@ export const Wrapper = styled.section`
     background-color: transparent;
     border: none;
   }
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;

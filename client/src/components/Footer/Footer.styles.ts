@@ -6,39 +6,59 @@ import {
 
 export const Wrapper = styled.footer`
   background-color: ${(props) => props.theme.light2};
-  height: 15rem;
-  margin-top: 2rem;
-  ${setShadowForSection()};
 
-  width: 100%;
   ${setFlex({ direction: "column", align: "center" })}
 
-  a {
-    transition: color ${(props) => props.theme.fastTransition};
-  }
+  width: 100%;
+  margin-top: 2rem;
+
+  ${setShadowForSection()};
 
   .content {
-    padding-top: 1rem;
-    ${setFlex({ justify: "space-around" })}
-    width: 100%;
+    padding: 2rem;
+    ${setFlex({ justify: "space-around" })};
+    flex-wrap: wrap;
+    width: fit-content;
 
-    a {
-      color: ${(props) => props.theme.dark2};
-      display: block;
+    div {
+      margin: 1rem 2rem;
+      width: 20rem;
 
-      margin-bottom: 0.3rem;
-    }
+      a {
+        color: ${(props) => props.theme.dark2};
 
-    a:hover {
-      color: #000;
+        display: block;
+        margin-bottom: 0.3rem;
+
+        transition: color ${(props) => props.theme.fastTransition};
+      }
     }
   }
 
-  .my-socials {
-    font-size: 4rem;
+  @media (min-width: 900px) {
+    .content {
+      div {
+        a:hover {
+          color: #000;
+        }
+      }
+    }
+  }
 
-    a:hover {
-      color: green;
+  @media (max-width: 700px) {
+    .content {
+      line-height: 2;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .content {
+      font-size: 2rem;
+
+      div {
+        width: 100%;
+      }
     }
   }
 `;

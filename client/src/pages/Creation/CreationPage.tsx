@@ -75,6 +75,8 @@ const CreationPage = () => {
         phoneNumber: currentAnnouncement.phoneNumber,
         image: null,
       });
+    } else {
+      setFormData(initialState);
     }
   }, [currentAnnouncement]);
 
@@ -188,7 +190,7 @@ const CreationPage = () => {
           value={formData.phoneNumber}
           onChange={handleInputChange}
         />
-        <Button>{announcementId ? "Create" : "Update"}</Button>
+        <Button>{announcementId ? "Update" : "Create"}</Button>
       </form>
     </Wrapper>
   );

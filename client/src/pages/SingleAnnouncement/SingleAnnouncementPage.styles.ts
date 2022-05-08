@@ -43,43 +43,6 @@ export const Wrapper = styled.main`
         ${setShadowForSection()};
         ${setFlex({ align: "center" })}
         padding: 1rem;
-
-        /* .user-image {
-          width: 8rem;
-          height: 8rem;
-          border-radius: 50%;
-          margin-right: 1rem;
-
-          img {
-            height: 100%;
-            width: 100%;
-            border-radius: 50%;
-            position: relative;
-            top: 0.5rem;
-            border: 0.2rem solid ${(props) => props.theme.dark1};
-          }
-        }
-
-        .info {
-          .name {
-            text-transform: capitalize;
-          }
-
-          .register-date {
-            font-weight: 300;
-          }
-
-          .rating {
-            ${setFlex({ align: "center" })}
-            gap: 0.2rem;
-
-            .star {
-              color: ${(props) => props.theme.dark1};
-              position: relative;
-              top: 0.1rem;
-            }
-          }
-        } */
       }
 
       .description {
@@ -96,6 +59,7 @@ export const Wrapper = styled.main`
         .title {
           font-size: 3rem;
           margin: 0;
+          word-break: break-all;
         }
 
         .price {
@@ -107,5 +71,21 @@ export const Wrapper = styled.main`
 
   .announcements {
     padding: 0;
+  }
+
+  @media (max-width: 700px) {
+    .top-info {
+      ${setFlex({ direction: "column" })};
+
+      .left {
+        width: 100%;
+        max-height: 100%;
+      }
+
+      .right {
+        width: 100%;
+        margin-top: 2rem;
+      }
+    }
   }
 `;

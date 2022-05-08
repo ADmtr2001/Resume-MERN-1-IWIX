@@ -23,4 +23,8 @@ export const Wrapper = styled.section`
     display: block;
     margin: 2rem 0 0 auto;
   }
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;

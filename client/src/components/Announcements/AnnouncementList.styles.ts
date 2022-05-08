@@ -5,8 +5,9 @@ import {
 } from "../../styles/mixins/mixins.styles";
 
 export const Wrapper = styled.section`
-  margin-top: 2rem;
   background-color: ${(props) => props.theme.light2};
+
+  margin-top: 2rem;
   padding: 2rem;
 
   ${setShadowForSection()};
@@ -20,102 +21,54 @@ export const Wrapper = styled.section`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 2rem;
-
-    article {
-      width: 100%;
-      height: 35rem;
-
-      ${setFlex({ direction: "column" })};
-
-      .announcement-top {
-        width: 100%;
-        height: auto;
-        ${setFlex({ justify: "center" })};
-
-        img {
-          width: 20rem;
-          height: 20rem;
-          object-fit: cover;
-        }
-      }
-
-      .announcement-bot {
-        ${setFlex({ direction: "column" })}
-        height: 50%;
-
-        .title {
-          flex: 1;
-          font-weight: 400;
-          font-size: 1.6rem;
-        }
-
-        .location-time {
-          font-size: 1.4rem;
-          font-weight: 300;
-        }
-
-        .price {
-          font-size: 1.9rem;
-        }
-      }
-    }
   }
 
   .announcements-line {
-    ${setFlex({ direction: "column" })}
-    padding: 0 5rem;
+    ${setFlex({ direction: "column" })};
     gap: 2rem;
 
-    article {
-      a {
-        ${setFlex({})}
-        height: 20rem;
-        heigth: 20rem;
-      }
-
-      .announcement-top {
-        width: 20rem;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-
-      .announcement-bot {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-
-        ${setFlex({ justify: "space-between" })};
-
-        .title-location {
-          ${setFlex({ direction: "column" })};
-          padding: 0.5rem 1rem;
-          h3 {
-            flex: 1;
-          }
-        }
-
-        .title {
-          font-size: 2rem;
-        }
-
-        .location-time {
-          font-size: 1.7rem;
-          font-weight: 300;
-        }
-
-        .price {
-          font-size: 2.2rem;
-        }
-      }
-    }
+    padding: 0 5rem;
   }
 
   .all-button {
     button {
       display: block;
+
       margin: 2rem auto 0;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .an4 {
+      display: none !important;
+    }
+
+    .announcements-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .announcements-line {
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .an4 {
+      display: flex !important;
+    }
+
+    .announcements-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .announcement-title {
+      font-size: 3rem;
+    }
+
+    .announcements-grid {
+      grid-template-columns: 1fr;
     }
   }
 `;

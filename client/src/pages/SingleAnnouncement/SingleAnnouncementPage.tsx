@@ -17,13 +17,14 @@ import userPreview from "../../assets/user.png";
 import { BsStarFill } from "react-icons/bs";
 import AnnouncementList from "../../components/Announcements/AnnouncementList";
 import Loader from "../../components/UI/Loader/Loader";
-import { scrollToTop } from "../../utils";
+import { formatDate, scrollToTop } from "../../utils";
 import {
   clearAnnouncements,
   clearCurrentAnnouncement,
 } from "../../store/reducers/announcement/announcementSlice";
 import UserInfo from "../../components/UserInfo/UserInfo";
 import Button from "../../components/UI/Button/Button";
+import dayjs from "dayjs";
 
 const AnnouncementPage = () => {
   const { id: announcementId } = useParams();
@@ -92,7 +93,7 @@ const AnnouncementPage = () => {
           </div>
           <div className='description'>
             <p className='publish-time'>
-              Published: ${currentAnnouncement.createdAt}
+              {`Published: ${formatDate(currentAnnouncement.createdAt)}`}
             </p>
             <h2 className='title'>{currentAnnouncement.title}</h2>
             <p className='price'>{currentAnnouncement.price}$</p>

@@ -1,3 +1,4 @@
 import scrollToTop from "./scrollToTop";
+import formatDate from "./formatDate";
 
-export { scrollToTop };
+export { scrollToTop, formatDate };

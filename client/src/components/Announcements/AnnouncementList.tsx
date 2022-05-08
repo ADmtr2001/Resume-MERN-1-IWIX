@@ -2,9 +2,10 @@ import React, { FC, PropsWithChildren, useState } from "react";
 
 import { Wrapper } from "./AnnouncementList.styles";
 import { IAnnouncement } from "../../types";
-import Announcement from "./Announcement/Announcement";
 import Loader from "../UI/Loader/Loader";
 import Pagination from "../Pagination/Pagination";
+import BoxAnnouncement from "./BoxAnnouncement/BoxAnnouncement";
+import LineAnnouncement from "./LineAnnouncement/LineAnnouncement";
 
 interface AnnouncementListProps {
   title: string;
@@ -37,6 +38,7 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   }
 
   let filteredAnnouncements = announcements;
+
   if (exceptions) {
     filteredAnnouncements = filteredAnnouncements.filter(
       (announcement) => !exceptions.includes(announcement._id)
@@ -47,21 +49,51 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   if (limit) {
     listContent = filteredAnnouncements
       .slice(0, limit)
-      .map((announcement) => (
-        <Announcement
-          className={announcement.isVip ? "vip" : ""}
+      .map((announcement, index) => {
+        if (isGridView) {
+          return (
+            <BoxAnnouncement
+              className={
+                announcement.isVip ? `an${index + 1} vip` : `an${index + 1}`
+              }
+              key={announcement._id}
+              announcement={announcement}
+            />
+          );
+        }
+        return (
+          <LineAnnouncement
+            className={
+              announcement.isVip ? `an${index + 1} vip` : `an${index + 1}`
+            }
+            key={announcement._id}
+            announcement={announcement}
+          />
+        );
+      });
+  } else {
+    listContent = filteredAnnouncements.map((announcement, index) => {
+      if (isGridView) {
+        return (
+          <BoxAnnouncement
+            className={
+              announcement.isVip ? `an${index + 1} vip` : `an${index + 1}`
+            }
+            key={announcement._id}
+            announcement={announcement}
+          />
+        );
+      }
+      return (
+        <LineAnnouncement
+          className={
+            announcement.isVip ? `an${index + 1} vip` : `an${index + 1}`
+          }
           key={announcement._id}
           announcement={announcement}
         />
-      ));
-  } else {
-    listContent = filteredAnnouncements.map((announcement) => (
-      <Announcement
-        className={announcement.isVip ? "vip" : ""}
-        key={announcement._id}
-        announcement={announcement}
-      />
-    ));
+      );
+    });
   }
 
   return (
