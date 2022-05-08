@@ -19,6 +19,7 @@ import {
 import { asyncFetchCategories } from "../../store/reducers/category/categoryActionCreators";
 import { IOption } from "../../types";
 import { ICreationFormData } from "../../types/IFormData";
+import { scrollToTop } from "../../utils";
 
 import { Wrapper } from "./CreationPage.styles";
 
@@ -51,6 +52,7 @@ const CreationPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    scrollToTop();
     if (categories.length === 0) {
       dispatch(asyncFetchCategories());
     }

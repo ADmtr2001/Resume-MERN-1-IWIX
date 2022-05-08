@@ -6,7 +6,7 @@ import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setDeleteModal } from "../../../store/reducers/appState/appStateSlice";
-import { formatDate } from "../../../utils";
+import { formatDate, scrollToTop } from "../../../utils";
 import { Wrapper } from "./BoxAnnouncement.styles";
 
 export interface AnnouncementProps {
@@ -33,7 +33,7 @@ const BoxAnnouncement: FC<AnnouncementProps> = ({
 
   return (
     <Wrapper className={className}>
-      <Link to={`/announcement/${announcement._id}`}>
+      <Link to={`/announcement/${announcement._id}`} onClick={scrollToTop}>
         <div className='announcement-top'>
           <img
             crossOrigin='anonymous'

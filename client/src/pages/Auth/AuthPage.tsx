@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 import { useAppDispatch } from "../../hooks/redux";
@@ -7,6 +7,7 @@ import {
   asyncRegister,
 } from "../../store/reducers/user/userActionCreators";
 import { IAuthFormData } from "../../types";
+import { scrollToTop } from "../../utils";
 
 import { Wrapper } from "./AuthPage.styles";
 
@@ -26,6 +27,10 @@ const AuthPage = () => {
     setFormData(initialState);
     setIsSignup((prev) => !prev);
   };
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

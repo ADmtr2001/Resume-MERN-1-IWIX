@@ -3,7 +3,9 @@ import { Category } from "../models";
 
 class CategoryService {
   async getAllCategories() {
-    const categories = await Category.find({}).sort({ createdAt: 1 });
+    const categories = await Category.find({ name: { $ne: "Any" } }).sort({
+      createdAt: 1,
+    });
     return categories;
   }
 
@@ -22,6 +24,14 @@ class CategoryService {
 
   async deleteCategory(categoryId: string) {
     const category = await Category.deleteOne({ _id: categoryId });
+    return category;
+  }
+
+  async getSingleCategoryByName(name: string) {
+    const category = await Category.findOne({ name });
+    if (!category) {
+      throw new NotFoundError(`No category with name: ${name}`);
+    }
     return category;
   }
 }

@@ -1,4 +1,3 @@
-import AdminPage from "./Admin/AdminPage";
 import AnnouncementPage from "./SingleAnnouncement/SingleAnnouncementPage";
 import AuthPage from "./Auth/AuthPage";
 import CreationPage from "./Creation/CreationPage";
@@ -7,7 +6,6 @@ import UserPage from "./User/UserPage";
 import CategoryAnnouncementsPage from "./Announcements/AnnouncementsPage";
 
 export {
-  AdminPage,
   AnnouncementPage,
   AuthPage,
   CreationPage,

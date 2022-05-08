@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 
 import { NotFoundError } from "../errors";
 import { Announcement } from "../models";
+import categoryService from "./categoryService";
 
 class AnnouncementService {
   async getAllAnnouncements(
@@ -75,9 +76,8 @@ class AnnouncementService {
     price: number,
     creator: Types.ObjectId
   ) {
-    const announcement = await Announcement.create({
+    const data: { [index: string]: string | number | Types.ObjectId } = {
       title,
-      category,
       description,
       location,
       email,
@@ -85,7 +85,14 @@ class AnnouncementService {
       image,
       price,
       creator,
-    });
+    };
+    if (category) {
+      data.category = category;
+    } else {
+      const anyCategory = await categoryService.getSingleCategoryByName("Any");
+      data.category = anyCategory._id;
+    }
+    const announcement = await Announcement.create(data);
     return announcement;
   }
 
@@ -110,7 +117,6 @@ class AnnouncementService {
   ) {
     const data: { [index: string]: string | number | Types.ObjectId } = {
       title,
-      category,
       description,
       location,
       email,
@@ -120,6 +126,13 @@ class AnnouncementService {
 
     if (image) {
       data.image = image;
+    }
+
+    if (category) {
+      data.category = category;
+    } else {
+      const anyCategory = await categoryService.getSingleCategoryByName("Any");
+      data.category = anyCategory._id;
     }
 
     const announcement = await Announcement.findOneAndUpdate(

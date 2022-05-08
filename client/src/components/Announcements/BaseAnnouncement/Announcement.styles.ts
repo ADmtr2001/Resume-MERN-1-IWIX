@@ -17,7 +17,7 @@ export const AnnouncementWrapper = styled.article`
     margin: 0;
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
 
     button {
       width: 4rem;

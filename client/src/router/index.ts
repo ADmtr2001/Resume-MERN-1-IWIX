@@ -1,5 +1,4 @@
 import {
-  AdminPage,
   AnnouncementPage,
   AuthPage,
   CreationPage,
@@ -25,7 +24,6 @@ export const privateRoutes: IRoute[] = [
   { path: RoutesNames.HOME, element: HomePage },
   { path: RoutesNames.ANNOUNCEMENT, element: AnnouncementPage },
   { path: RoutesNames.USER, element: UserPage },
-  { path: RoutesNames.ADMIN, element: AdminPage },
   { path: RoutesNames.CREATION, element: CreationPage },
   { path: RoutesNames.UPDATE, element: CreationPage },
   {
