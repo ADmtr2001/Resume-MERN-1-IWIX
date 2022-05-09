@@ -18,16 +18,23 @@ const userSchema = new Schema<IUser>(
   {
     email: {
       type: String,
+      trim: true,
       required: [true, "Please provide rating"],
+      match: [
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        "Please add a valid email address.",
+      ],
     },
     password: {
       type: String,
+      trim: true,
       required: [true, "Please provide password"],
       minlength: 6,
       maxlength: 20,
     },
     name: {
       type: String,
+      trim: true,
       required: [true, "Please provide name"],
     },
     numOfComments: {

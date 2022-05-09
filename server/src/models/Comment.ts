@@ -19,6 +19,9 @@ const commentSchema = new Schema<IComment>(
     },
     text: {
       type: String,
+      trim: true,
+      minlength: 5,
+      maxlength: 100,
       required: [true, "Please provide text"],
     },
     rating: {
