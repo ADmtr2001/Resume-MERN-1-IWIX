@@ -59,7 +59,7 @@ const LineAnnouncement: FC<AnnouncementProps> = ({
             <p className='time'>{formatDate(announcement.createdAt)}</p>
             <p className='location'>{announcement.location}</p>
           </div>
-          <p className='price'>{announcement.price} грн</p>
+          <p className='price'>{announcement.price}$</p>
         </div>
       </Link>
       {user?._id === announcement.creator && location.pathname === "/user" && (

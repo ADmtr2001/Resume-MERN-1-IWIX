@@ -16,6 +16,7 @@ import UserInfo from "../UserInfo/UserInfo";
 import { MdDelete } from "react-icons/md";
 import { asyncGetSingleUser } from "../../store/reducers/user/userActionCreators";
 import ActionButtons from "./DisplayButtons/ActionButtons";
+import Loader from "../UI/Loader/Loader";
 
 const initialState = {
   category: "",
@@ -34,9 +35,12 @@ const Filters = () => {
   });
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const { categories } = useAppSelector((state) => state.category);
+  const { categories, isCategoriesLoading } = useAppSelector(
+    (state) => state.category
+  );
   const { currentPage } = useAppSelector((state) => state.announcement);
-  const { user, currentUser } = useAppSelector((state) => state.user);
+  const { user, currentUser, isUserLoading, isCurrentUserLoading } =
+    useAppSelector((state) => state.user);
 
   useEffect(() => {
     const page = searchParams.get("page");
@@ -101,6 +105,9 @@ const Filters = () => {
     setSearchParams({});
     dispatch(setCurrentPage(1));
   };
+
+  if (isCategoriesLoading || isUserLoading || isCurrentUserLoading)
+    return <Loader />;
 
   return (
     <Wrapper>

@@ -14,14 +14,16 @@ interface UserState {
   currentUser: IUser | null;
   isCurrentUserLoading: boolean;
   isLogin: boolean;
+  isSignup: boolean;
 }
 
 const initialState: UserState = {
   user: null,
   isUserLoading: true,
   currentUser: null,
-  isCurrentUserLoading: true,
+  isCurrentUserLoading: false,
   isLogin: false,
+  isSignup: false,
 };
 
 export const userSlice = createSlice({
@@ -29,14 +31,22 @@ export const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [asyncRegister.pending.type]: (state, action: PayloadAction<IUser>) => {
+      state.isSignup = true;
+    },
     [asyncRegister.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
       state.user = action.payload;
+      state.isSignup = false;
+    },
+    [asyncRegister.rejected.type]: (state, action: PayloadAction<IUser>) => {
+      state.isSignup = false;
     },
     [asyncLogin.pending.type]: (state) => {
       state.isLogin = true;
     },
     [asyncLogin.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
       state.user = action.payload;
+      state.isLogin = false;
     },
     [asyncLogin.rejected.type]: (state) => {
       state.isLogin = false;

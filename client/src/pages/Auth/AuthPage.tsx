@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
-import { useAppDispatch } from "../../hooks/redux";
+import Loader from "../../components/UI/Loader/Loader";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
   asyncLogin,
   asyncRegister,
@@ -20,12 +21,13 @@ const initialState: IAuthFormData = {
 
 const AuthPage = () => {
   const [formData, setFormData] = useState(initialState);
-  const [isSignup, setIsSignup] = useState(false);
+  const [isSignupForm, setIsSignupForm] = useState(false);
   const dispatch = useAppDispatch();
+  const { isLogin, isSignup } = useAppSelector((state) => state.user);
 
   const switchMode = () => {
     setFormData(initialState);
-    setIsSignup((prev) => !prev);
+    setIsSignupForm((prev) => !prev);
   };
 
   useEffect(() => {
@@ -35,7 +37,7 @@ const AuthPage = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (isSignup) {
+    if (isSignupForm) {
       dispatch(asyncRegister(formData));
     } else {
       dispatch(asyncLogin(formData));
@@ -51,7 +53,7 @@ const AuthPage = () => {
   return (
     <Wrapper>
       <form onSubmit={handleSubmit}>
-        {isSignup && (
+        {isSignupForm && (
           <Input
             name='name'
             label='Name'
@@ -76,7 +78,7 @@ const AuthPage = () => {
           value={formData.password}
           onChange={handleChange}
         />
-        {isSignup && (
+        {isSignupForm && (
           <Input
             name='confirmPassword'
             type='password'
@@ -86,10 +88,14 @@ const AuthPage = () => {
             onChange={handleChange}
           />
         )}
-        <Button>{isSignup ? "Sign Up" : "Sign In"}</Button>
+        {isLogin || isSignup ? (
+          <Loader />
+        ) : (
+          <Button>{isSignupForm ? "Sign Up" : "Sign In"}</Button>
+        )}
       </form>
       <button onClick={switchMode}>
-        {isSignup
+        {isSignupForm
           ? "Already have an account? Sign in"
           : "Don't have an account? Sign Up"}
       </button>

@@ -48,6 +48,8 @@ const CreationPage = () => {
     isCurrentAnnouncementLoading,
     updatedAnnouncement,
     createdAnnouncement,
+    isAnnouncementCreating,
+    isAnnouncementUpdating,
   } = useAppSelector((state) => state.announcement);
   const navigate = useNavigate();
 
@@ -130,7 +132,7 @@ const CreationPage = () => {
     setFormData((prev) => ({ ...prev, image: e.target!.files[0]! }));
   };
 
-  if (isCategoriesLoading) {
+  if (isCategoriesLoading || isCurrentAnnouncementLoading) {
     return <Loader />;
   }
 
@@ -192,7 +194,11 @@ const CreationPage = () => {
           value={formData.phoneNumber}
           onChange={handleInputChange}
         />
-        <Button>{announcementId ? "Update" : "Create"}</Button>
+        {isAnnouncementCreating || isAnnouncementUpdating ? (
+          <Loader />
+        ) : (
+          <Button>{announcementId ? "Update" : "Create"}</Button>
+        )}
       </form>
     </Wrapper>
   );

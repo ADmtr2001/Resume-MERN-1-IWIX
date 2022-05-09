@@ -50,7 +50,7 @@ const BoxAnnouncement: FC<AnnouncementProps> = ({
           <div className='info'>
             <p className='time'>{formatDate(announcement.createdAt)}</p>
             <p className='location'>{announcement.location}</p>
-            <p className='price'>{announcement.price} грн</p>
+            <p className='price'>{announcement.price}$</p>
           </div>
         </div>
       </Link>
