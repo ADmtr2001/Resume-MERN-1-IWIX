@@ -15,6 +15,8 @@ interface UserState {
   isCurrentUserLoading: boolean;
   isLogin: boolean;
   isSignup: boolean;
+  loginError: string;
+  signupError: string;
 }
 
 const initialState: UserState = {
@@ -24,6 +26,8 @@ const initialState: UserState = {
   isCurrentUserLoading: false,
   isLogin: false,
   isSignup: false,
+  loginError: "",
+  signupError: "",
 };
 
 export const userSlice = createSlice({
@@ -31,25 +35,37 @@ export const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [asyncRegister.pending.type]: (state, action: PayloadAction<IUser>) => {
+    [asyncRegister.pending.type]: (state, action: PayloadAction<string>) => {
       state.isSignup = true;
+      state.signupError = "";
+      state.loginError = "";
     },
     [asyncRegister.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
       state.user = action.payload;
       state.isSignup = false;
+      state.signupError = "";
+      state.loginError = "";
     },
-    [asyncRegister.rejected.type]: (state, action: PayloadAction<IUser>) => {
+    [asyncRegister.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isSignup = false;
+      state.signupError = action.payload;
+      state.loginError = "";
     },
     [asyncLogin.pending.type]: (state) => {
       state.isLogin = true;
+      state.loginError = "";
+      state.signupError = "";
     },
     [asyncLogin.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
       state.user = action.payload;
       state.isLogin = false;
+      state.loginError = "";
+      state.signupError = "";
     },
-    [asyncLogin.rejected.type]: (state) => {
+    [asyncLogin.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLogin = false;
+      state.loginError = action.payload;
+      state.signupError = "";
     },
     [asyncLogout.fulfilled.type]: (state) => {
       state.user = null;

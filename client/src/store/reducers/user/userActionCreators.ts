@@ -21,8 +21,7 @@ export const asyncRegister = createAsyncThunk(
       localStorage.setItem("token", data.accessToken);
       return data.user;
     } catch (error: any) {
-      console.log(error.response.data.message);
-      return rejectWithValue("Failed");
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -40,7 +39,7 @@ export const asyncLogin = createAsyncThunk(
       return data.user;
     } catch (error: any) {
       console.log(error.response.data.message);
-      return rejectWithValue("Failed");
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -49,7 +48,7 @@ export const asyncLogout = createAsyncThunk(
   "user/logout",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await $host.post("/user/logout", _, {
+      await $host.post("/user/logout", _, {
         withCredentials: true,
       });
       localStorage.removeItem("token");

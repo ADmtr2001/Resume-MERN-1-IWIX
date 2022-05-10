@@ -30,6 +30,14 @@ export const Wrapper = styled.section`
     padding: 0 5rem;
   }
 
+  .empty-message {
+    text-align: center;
+
+    button {
+      margin-top: 2rem;
+    }
+  }
+
   .all-button {
     button {
       display: block;

@@ -20,7 +20,7 @@ interface ICreationFormData {
   title: string;
   category: string;
   price: string;
-  image: Blob | null;
+  image: Blob;
   description: string;
   location: string;
   email: string;

@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import CategorySelect from "../../components/Categories/CategorySelect/CategorySelect";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/UI/Button/Button";
-import Input from "../../components/UI/Input/Input";
+import FormInput from "../../components/UI/Input/FormInput";
 import Loader from "../../components/UI/Loader/Loader";
-import Select from "../../components/UI/Select/Select";
-import TextArea from "../../components/UI/TextArea/TextArea";
+import FormSelect from "../../components/UI/Select/FormSelect";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
   asyncCreateAnnouncement,
@@ -22,23 +21,13 @@ import { ICreationFormData } from "../../types/IFormData";
 import { scrollToTop } from "../../utils";
 
 import { Wrapper } from "./CreationPage.styles";
-
-const initialState: ICreationFormData = {
-  title: "",
-  category: "",
-  price: "",
-  image: null,
-  description: "",
-  location: "",
-  email: "",
-  phoneNumber: "",
-};
+import FormTextArea from "../../components/UI/TextArea/FormTextArea";
 
 const CreationPage = () => {
   const { id: announcementId } = useParams();
-  const [formData, setFormData] = useState({
-    ...initialState,
-  });
+  const [defaultValues, setDefaultValues] = useState<{
+    [index: string]: string | FileList;
+  }>({});
   const { categories, isCategoriesLoading } = useAppSelector(
     (state) => state.category
   );
@@ -52,6 +41,17 @@ const CreationPage = () => {
     isAnnouncementUpdating,
   } = useAppSelector((state) => state.announcement);
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+  } = useForm<ICreationFormData>({
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues,
+  });
+  const location = useLocation();
 
   useEffect(() => {
     scrollToTop();
@@ -69,7 +69,8 @@ const CreationPage = () => {
 
   useEffect(() => {
     if (currentAnnouncement) {
-      setFormData({
+      console.log(currentAnnouncement);
+      setDefaultValues({
         title: currentAnnouncement.title,
         category: currentAnnouncement.category,
         price: currentAnnouncement.price.toString(),
@@ -77,10 +78,8 @@ const CreationPage = () => {
         location: currentAnnouncement.location,
         email: currentAnnouncement.email,
         phoneNumber: currentAnnouncement.phoneNumber,
-        image: null,
       });
-    } else {
-      setFormData(initialState);
+      reset(defaultValues);
     }
   }, [currentAnnouncement]);
 
@@ -93,19 +92,18 @@ const CreationPage = () => {
     }
   }, [updatedAnnouncement, createdAnnouncement]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit: SubmitHandler<ICreationFormData> = (data) => {
     const announcementData = new FormData();
-    announcementData.append("title", formData.title);
-    announcementData.append("category", formData.category);
-    announcementData.append("price", formData.price);
-    announcementData.append("description", formData.description);
-    announcementData.append("location", formData.location);
-    announcementData.append("email", formData.email);
-    announcementData.append("phoneNumber", formData.phoneNumber);
-    if (formData.image) {
-      announcementData.append("image", formData.image);
+    announcementData.append("title", data.title);
+    announcementData.append("category", data.category);
+    announcementData.append("price", data.price);
+    announcementData.append("description", data.description);
+    announcementData.append("location", data.location);
+    announcementData.append("email", data.email);
+    announcementData.append("phoneNumber", data.phoneNumber);
+    if (data.image) {
+      // @ts-ignore
+      announcementData.append("image", data.image[0]);
     }
 
     if (announcementId) {
@@ -117,20 +115,12 @@ const CreationPage = () => {
     }
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-
-    // @ts-ignore
-    setFormData((prev) => ({ ...prev, image: e.target!.files[0]! }));
-  };
+  let selectOptions: IOption[] = useMemo(() => {
+    const options = categories.map((category) => {
+      return { label: category.name, value: category._id };
+    });
+    return [{ label: "Any", value: "62782d01909cc2389eb9e4c5" }, ...options];
+  }, [categories]);
 
   if (isCategoriesLoading || isCurrentAnnouncementLoading) {
     return <Loader />;
@@ -138,61 +128,102 @@ const CreationPage = () => {
 
   return (
     <Wrapper>
-      <form onSubmit={handleSubmit}>
-        <Input
-          name='title'
-          label='Title'
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormInput<ICreationFormData>
+          label="Title"
+          name="title"
+          register={register}
+          options={{
+            required: "Please provide title",
+            minLength: { value: 3, message: "Min length: 3" },
+            maxLength: { value: 50, message: "Max length: 50" },
+          }}
+          error={errors.title?.message}
           fullWidth
-          value={formData.title}
-          onChange={handleInputChange}
         />
-        <CategorySelect
-          categories={categories}
-          value={formData.category}
-          onChange={handleInputChange}
-        />
-        <Input
-          name='price'
-          label='Price'
+        <FormSelect<ICreationFormData>
+          label="Category"
+          name="category"
+          options={selectOptions}
+          register={register}
           fullWidth
-          value={formData.price}
-          onChange={handleInputChange}
         />
-        <Input
-          name='image'
-          label='Image'
+        <FormInput<ICreationFormData>
+          label="Price"
+          name="price"
+          type="number"
+          register={register}
+          options={{
+            required: "Please provide price",
+            min: { value: 1, message: "Min: 1" },
+            max: { value: 999_999, message: "Max: 999 999" },
+          }}
+          error={errors.price?.message}
           fullWidth
-          type='file'
-          onChange={handleImageChange}
         />
-        <TextArea
-          label='Description'
+        <FormInput<ICreationFormData>
+          type="file"
+          label="Image"
+          name="image"
+          register={register}
+          options={
+            location.pathname.startsWith("/update")
+              ? {}
+              : { required: "Please provide image" }
+          }
+          // @ts-ignore
+          error={errors.image?.message}
+          fullWidth
+        />
+        <FormTextArea<ICreationFormData>
+          label="Description"
+          name="description"
+          register={register}
+          options={{
+            required: "Please provide description",
+            maxLength: { value: 600, message: "Max length: 600" },
+          }}
+          error={errors.description?.message}
           rows={5}
-          name='description'
-          value={formData.description}
-          onChange={handleInputChange}
         />
-        <Input
-          name='location'
-          label='Location'
+        <FormInput<ICreationFormData>
+          label="Location"
+          name="location"
+          register={register}
+          options={{
+            required: "Please provide location",
+            minLength: { value: 2, message: "Min length: 2" },
+            maxLength: { value: 60, message: "Max length: 60" },
+          }}
+          error={errors.location?.message}
           fullWidth
-          value={formData.location}
-          onChange={handleInputChange}
         />
-        <Input
-          name='email'
-          label='Email'
+        <FormInput<ICreationFormData>
+          label="Email"
+          name="email"
+          register={register}
+          options={{
+            required: "Please provide email",
+            pattern: {
+              value:
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: "Please provide a valid email",
+            },
+          }}
+          error={errors.email?.message}
           fullWidth
-          type='email'
-          value={formData.email}
-          onChange={handleInputChange}
         />
-        <Input
-          name='phoneNumber'
-          label='Phone Number'
+        <FormInput<ICreationFormData>
+          label="Phone Number"
+          name="phoneNumber"
+          register={register}
+          options={{
+            required: "Please provide phone number",
+            minLength: { value: 10, message: "Min length: 10" },
+            maxLength: { value: 13, message: "Max length: 13" },
+          }}
+          error={errors.phoneNumber?.message}
           fullWidth
-          value={formData.phoneNumber}
-          onChange={handleInputChange}
         />
         {isAnnouncementCreating || isAnnouncementUpdating ? (
           <Loader />

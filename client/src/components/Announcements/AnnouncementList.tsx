@@ -6,6 +6,8 @@ import Loader from "../UI/Loader/Loader";
 import Pagination from "../Pagination/Pagination";
 import BoxAnnouncement from "./BoxAnnouncement/BoxAnnouncement";
 import LineAnnouncement from "./LineAnnouncement/LineAnnouncement";
+import Button from "../UI/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 interface AnnouncementListProps {
   title: string;
@@ -15,7 +17,7 @@ interface AnnouncementListProps {
   exceptions?: string[];
   isPaginationVisible?: boolean;
   isGridView: boolean;
-  Button?: JSX.Element;
+  ListButton?: JSX.Element;
 }
 
 const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
@@ -26,8 +28,10 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   exceptions,
   isPaginationVisible = false,
   isGridView,
-  Button,
+  ListButton,
 }) => {
+  const navigate = useNavigate();
+
   if (isLoading) {
     return (
       <Wrapper>
@@ -100,10 +104,17 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
     <Wrapper>
       <h2 className='announcement-title'>{title}</h2>
       <div className={isGridView ? "announcements-grid" : "announcements-line"}>
-        {listContent}
+        {listContent.length === 0 ? (
+          <div className='empty-message'>
+            <p>There're no announcements yet</p>
+            <Button onClick={() => navigate("/creation")}>Create</Button>
+          </div>
+        ) : (
+          listContent
+        )}
       </div>
       {isPaginationVisible && <Pagination />}
-      {Button ? <div className='all-button'>{Button}</div> : null}
+      {ListButton ? <div className='all-button'>{ListButton}</div> : null}
     </Wrapper>
   );
 };

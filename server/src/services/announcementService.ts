@@ -99,7 +99,7 @@ class AnnouncementService {
   async getSingleAnnouncement(announcementId: string) {
     const announcement = await Announcement.findOne({ _id: announcementId });
     if (!announcement) {
-      throw new NotFoundError(`No announcement with id: ${announcementId}`);
+      throw new NotFoundError(`Announcement doesn't exist: ${announcementId}`);
     }
     return announcement;
   }

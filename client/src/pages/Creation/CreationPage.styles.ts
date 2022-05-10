@@ -8,20 +8,17 @@ export const Wrapper = styled.section`
   padding: 1rem;
   ${setShadowForSection()};
 
-  label {
-    display: block;
-    margin-top: 0.5rem;
-  }
+  form {
+    .input-error {
+      text-align: right;
+      color: #ff3333;
+      height: 2.5rem;
+    }
 
-  textarea {
-    border: 2px solid ${(props) => props.theme.dark1};
-    width: 100%;
-    resize: none;
-  }
-
-  button {
-    display: block;
-    margin: 2rem 0 0 auto;
+    button {
+      display: block;
+      margin: 2rem 0 0 auto;
+    }
   }
 
   @media (max-width: 600px) {

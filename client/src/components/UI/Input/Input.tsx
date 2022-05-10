@@ -5,7 +5,7 @@ import { Wrapper } from "./Input.styles";
 interface InputProps {
   name: string;
   label?: string;
-  type?: "text" | "file" | "password" | "email";
+  type?: "text" | "file" | "password" | "email" | "number";
   placeholder?: string;
   fullWidth?: boolean;
   value?: string;
@@ -31,7 +31,8 @@ const Input: FC<InputProps> = ({
         fullWidth={fullWidth}
         value={value}
         onChange={onChange}
-        autoComplete='off'
+        autoComplete="off"
+        accept={type === "file" ? ".jpg,.jpeg,.png" : ""}
       />
     </label>
   ) : (
@@ -42,7 +43,8 @@ const Input: FC<InputProps> = ({
       fullWidth={fullWidth}
       value={value}
       onChange={onChange}
-      autoComplete='off'
+      autoComplete="off"
+      accept={type === "file" ? ".jpg,.jpeg,.png" : ""}
     />
   );
 };

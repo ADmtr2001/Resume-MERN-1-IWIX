@@ -19,9 +19,7 @@ class UserService {
   async register(req: Request, name: string, email: string, password: string) {
     const candidate = await User.findOne({ email });
     if (candidate) {
-      throw new BadRequestError(
-        `User with this email already exists: ${email}`
-      );
+      throw new BadRequestError(`User already exists: ${email}`);
     }
 
     const activationLink = uuidv4();
@@ -44,7 +42,7 @@ class UserService {
   async login(email: string, password: string) {
     const user = await User.findOne({ email });
     if (!user) {
-      throw new BadRequestError(`There's no user with this email: ${email}`);
+      throw new BadRequestError(`User doesn't exist: ${email}`);
     }
 
     const isPasswordCorrect = await comparePassword(password, user.password);
@@ -85,7 +83,7 @@ class UserService {
       { password: 0, activationLink: 0 }
     );
     if (!user) {
-      throw new NotFoundError(`No user with id: ${userId}`);
+      throw new NotFoundError(`User doesn't exist: ${userId}`);
     }
     return user;
   }

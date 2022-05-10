@@ -36,6 +36,8 @@ const userSchema = new Schema<IUser>(
       type: String,
       trim: true,
       required: [true, "Please provide name"],
+      minlength: 2,
+      maxlength: 30,
     },
     numOfComments: {
       type: Number,

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "../../components/UI/Button/Button";
-import Input from "../../components/UI/Input/Input";
+import FormInput from "../../components/UI/Input/FormInput";
 import Loader from "../../components/UI/Loader/Loader";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
@@ -23,7 +24,15 @@ const AuthPage = () => {
   const [formData, setFormData] = useState(initialState);
   const [isSignupForm, setIsSignupForm] = useState(false);
   const dispatch = useAppDispatch();
-  const { isLogin, isSignup } = useAppSelector((state) => state.user);
+  const { isLogin, isSignup, loginError, signupError } = useAppSelector(
+    (state) => state.user
+  );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    getValues,
+  } = useForm<IAuthFormData>({ mode: "onChange" });
 
   const switchMode = () => {
     setFormData(initialState);
@@ -34,64 +43,83 @@ const AuthPage = () => {
     scrollToTop();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit: SubmitHandler<IAuthFormData> = (data) => {
     if (isSignupForm) {
-      dispatch(asyncRegister(formData));
+      dispatch(asyncRegister(data));
     } else {
-      dispatch(asyncLogin(formData));
+      dispatch(asyncLogin(data));
     }
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
     <Wrapper>
-      <form onSubmit={handleSubmit}>
+      <h2>{isSignupForm ? "Signup" : "Login"}</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {isSignupForm && (
-          <Input
-            name='name'
+          <FormInput<IAuthFormData>
             label='Name'
+            name='name'
+            register={register}
+            options={{
+              required: "Please provide name",
+              minLength: { value: 2, message: "Name min length: 2" },
+              maxLength: { value: 30, message: "Name max length: 30" },
+            }}
+            error={errors.name?.message}
             fullWidth
-            value={formData.name}
-            onChange={handleChange}
           />
         )}
-        <Input
-          name='email'
-          type='email'
+        <FormInput<IAuthFormData>
           label='Email'
+          type='email'
+          name='email'
+          register={register}
+          options={{
+            required: "Please provide email",
+            pattern: {
+              value:
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: "Please provide a valid email",
+            },
+          }}
+          error={errors.email?.message}
           fullWidth
-          value={formData.email}
-          onChange={handleChange}
         />
-        <Input
-          name='password'
-          type='password'
+        <FormInput<IAuthFormData>
           label='Password'
+          type='password'
+          name='password'
+          register={register}
+          options={{
+            required: "Please provide password",
+            minLength: { value: 6, message: "Password min length: 6" },
+            maxLength: { value: 20, message: "Password max length: 20" },
+          }}
+          error={errors.password?.message}
           fullWidth
-          value={formData.password}
-          onChange={handleChange}
         />
         {isSignupForm && (
-          <Input
-            name='confirmPassword'
+          <FormInput
+            label='Confirm Password'
             type='password'
-            label='Confirm Passowrd'
+            name='confirmPassword'
+            register={register}
+            options={{
+              required: "Please confirm password",
+              validate: (value) =>
+                value === getValues("password") || "Password mismatch",
+            }}
+            error={errors.confirmPassword?.message}
             fullWidth
-            value={formData.confirmPassword}
-            onChange={handleChange}
           />
         )}
+        <div className='request-error'>{loginError || signupError || null}</div>
         {isLogin || isSignup ? (
           <Loader />
         ) : (
-          <Button>{isSignupForm ? "Sign Up" : "Sign In"}</Button>
+          <Button disabled={!isValid}>
+            {isSignupForm ? "Sign Up" : "Sign In"}
+          </Button>
         )}
       </form>
       <button onClick={switchMode}>
