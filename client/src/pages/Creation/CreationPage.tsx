@@ -26,7 +26,7 @@ import FormTextArea from "../../components/UI/TextArea/FormTextArea";
 const CreationPage = () => {
   const { id: announcementId } = useParams();
   const [defaultValues, setDefaultValues] = useState<{
-    [index: string]: string | FileList;
+    [index: string]: string;
   }>({});
   const { categories, isCategoriesLoading } = useAppSelector(
     (state) => state.category
@@ -52,6 +52,7 @@ const CreationPage = () => {
     defaultValues,
   });
   const location = useLocation();
+  const { user } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     scrollToTop();
@@ -124,6 +125,16 @@ const CreationPage = () => {
 
   if (isCategoriesLoading || isCurrentAnnouncementLoading) {
     return <Loader />;
+  }
+
+  if (!user?.isActivated) {
+    return (
+      <Wrapper>
+        <p className="activation-message">
+          Check your email to activate your account!
+        </p>
+      </Wrapper>
+    );
   }
 
   return (

@@ -30,7 +30,6 @@ const userSchema = new Schema<IUser>(
       trim: true,
       required: [true, "Please provide password"],
       minlength: 6,
-      maxlength: 20,
     },
     name: {
       type: String,
