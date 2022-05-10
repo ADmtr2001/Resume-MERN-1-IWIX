@@ -1,5 +1,4 @@
 import React, { FC, PropsWithChildren } from "react";
-import { string } from "yup";
 
 import { Wrapper } from "./StyledLink.styles";
 

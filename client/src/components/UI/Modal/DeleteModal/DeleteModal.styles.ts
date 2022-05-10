@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { setFlex } from "../../../../styles/mixins/mixins.styles";
 
 export const Wrapper = styled.div`
@@ -15,7 +16,7 @@ export const Wrapper = styled.div`
     font-size: 2rem;
   }
 
-  .buttons {
+  .modal-buttons {
     ${setFlex({ justify: "space-around" })};
 
     width: 100%;

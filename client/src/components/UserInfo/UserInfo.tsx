@@ -1,8 +1,11 @@
 import React, { FC } from "react";
-import { IUser } from "../../types";
+
+import { formatDate } from "../../utils";
+
 import { Wrapper } from "./UserInfo.styles";
 import userPreview from "../../assets/user.png";
-import { formatDate } from "../../utils";
+
+import { IUser } from "../../types";
 
 interface UserInfoProps {
   user: IUser;
@@ -15,21 +18,21 @@ const UserInfo: FC<UserInfoProps> = ({ user, short = false }) => {
       {short ? (
         <p>User</p>
       ) : (
-        <div className='image'>
-          <img src={userPreview} alt='user' />
+        <div className="user-image">
+          <img src={userPreview} alt="user" />
         </div>
       )}
-      <div className='info'>
-        <h3 className='name'>
+      <div className="user-info">
+        <h3 className="user-name">
           {user.name.length < 20 ? user.name : user.name.slice(0, 19) + "..."}
         </h3>
-        <p className='email'>
+        <p className="user-email">
           {user.email.length < 20
             ? user.email
             : user.email.slice(0, 21) + "..."}
         </p>
         {!short && (
-          <p className='register-date'>
+          <p className="user-register-date">
             on WIX since {formatDate(user.createdAt)}
           </p>
         )}

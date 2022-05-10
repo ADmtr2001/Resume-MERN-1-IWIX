@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 import { setFlex } from "../../../styles/mixins/mixins.styles";
 
 export const Wrapper = styled(Link)`

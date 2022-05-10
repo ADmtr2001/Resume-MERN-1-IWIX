@@ -10,6 +10,7 @@ import {
 import IAuthResponse from "./IAuthResponse";
 import { GetAnnouncementsResponse, IAnnouncement } from "./IAnnouncement";
 import ICategory from "./ICategory";
+import IFormFieldOptions from "./IFormFieldOptions";
 
 export type {
   IOption,
@@ -23,4 +24,5 @@ export type {
   IAnnouncement,
   GetAnnouncementsResponse,
   ICategory,
+  IFormFieldOptions,
 };

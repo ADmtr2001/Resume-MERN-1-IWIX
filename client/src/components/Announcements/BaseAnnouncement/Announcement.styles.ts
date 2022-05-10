@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { setFlex } from "../../../styles/mixins/mixins.styles";
 
 export const AnnouncementWrapper = styled.article`
@@ -11,7 +12,7 @@ export const AnnouncementWrapper = styled.article`
 
   transition: all ${(props) => props.theme.fastTransition};
 
-  .action-buttons {
+  .announcement-action-buttons {
     ${setFlex({ direction: "column" })};
 
     margin: 0;

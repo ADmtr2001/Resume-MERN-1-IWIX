@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import {
   setFlex,
   setShadowForSection,
@@ -12,7 +13,7 @@ export const Wrapper = styled.section`
 
   ${setShadowForSection()};
 
-  .announcement-title {
+  .list-title {
     font-size: 4rem;
     text-align: center;
   }
@@ -38,7 +39,7 @@ export const Wrapper = styled.section`
     }
   }
 
-  .all-button {
+  .show-all-button {
     button {
       display: block;
 
@@ -71,7 +72,7 @@ export const Wrapper = styled.section`
   }
 
   @media (max-width: 500px) {
-    .announcement-title {
+    .list-title {
       font-size: 3rem;
     }
 

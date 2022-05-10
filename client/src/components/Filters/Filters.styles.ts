@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import {
   setFlex,
   setShadowForSection,
@@ -25,7 +26,7 @@ export const Wrapper = styled.section`
     font-size: 1.8rem;
   }
 
-  .price {
+  .filter-price {
     > div {
       ${setFlex({ justify: "space-between" })};
 
@@ -35,7 +36,7 @@ export const Wrapper = styled.section`
     }
   }
 
-  .user {
+  .filter-user {
     position: relative;
 
     button {
@@ -60,7 +61,7 @@ export const Wrapper = styled.section`
       width: 35rem;
     }
 
-    .price {
+    .filter-price {
       > div {
         ${setFlex({ justify: "space-between" })};
 

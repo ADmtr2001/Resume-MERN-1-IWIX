@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import {
   setFlex,
   setShadowForSection,
@@ -11,7 +12,7 @@ export const Wrapper = styled.section`
 
   ${setShadowForSection()};
 
-  .title {
+  .categories-title {
     text-align: center;
     font-size: 4rem;
   }

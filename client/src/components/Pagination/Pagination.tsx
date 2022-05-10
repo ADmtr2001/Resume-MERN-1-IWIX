@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React from "react";
+
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setCurrentPage } from "../../store/reducers/announcement/announcementSlice";
-import Button from "../UI/Button/Button";
 
 import { Wrapper } from "./Pagination.styles";
 
@@ -10,13 +9,14 @@ const Pagination = () => {
   const { currentPage, numberOfPages } = useAppSelector(
     (state) => state.announcement
   );
+
   const dispatch = useAppDispatch();
-  const step = 2;
 
   if (numberOfPages <= 1) {
     return null;
   }
 
+  const step = 2;
   const handlePageChange = (page: number) => {
     dispatch(setCurrentPage(page));
   };

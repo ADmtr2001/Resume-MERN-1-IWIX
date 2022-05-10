@@ -15,11 +15,11 @@ export const Wrapper = styled.nav`
 
   ${setShadowForSection()};
 
-  .logo {
+  .navbar-logo {
     width: 10rem;
   }
 
-  .buttons {
+  .navbar-buttons {
     ${setFlex({})};
 
     > a {
@@ -101,7 +101,7 @@ export const Wrapper = styled.nav`
   }
 
   @media (max-width: 560px) {
-    .buttons {
+    .navbar-buttons {
       button {
         width: 5rem;
         height: 5rem;

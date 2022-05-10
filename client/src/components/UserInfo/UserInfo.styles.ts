@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { setFlex } from "../../styles/mixins/mixins.styles";
 
 interface WrapperProps {
@@ -8,7 +9,7 @@ interface WrapperProps {
 export const Wrapper = styled.div<WrapperProps>`
   ${(props) => (props.short ? "" : setFlex({ align: "center" }))};
 
-  .image {
+  .user-image {
     width: 8rem;
     height: 8rem;
 
@@ -25,25 +26,13 @@ export const Wrapper = styled.div<WrapperProps>`
     }
   }
 
-  .info {
-    .name {
+  .user-info {
+    .user-name {
       text-transform: capitalize;
     }
 
-    .register-date {
+    .user-register-date {
       font-weight: 300;
-    }
-
-    .rating {
-      ${setFlex({ align: "center" })}
-      gap: 0.2rem;
-
-      .star {
-        color: ${(props) => props.theme.dark1};
-
-        position: relative;
-        top: 0.1rem;
-      }
     }
   }
 `;

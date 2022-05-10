@@ -1,7 +1,8 @@
 import React, { FC } from "react";
-import { IOption } from "../../../types";
 
 import { Wrapper } from "./Select.styles";
+
+import { IOption } from "../../../types";
 
 interface SelectProps {
   name: string;

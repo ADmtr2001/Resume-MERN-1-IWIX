@@ -1,9 +1,10 @@
 import React, { FC } from "react";
+
 import { Link } from "react-router-dom";
-import { ICategory } from "../../../types";
-import { scrollToTop } from "../../../utils";
 
 import { Wrapper } from "./Category.styles";
+
+import { ICategory } from "../../../types";
 
 interface CategoryProps {
   category: ICategory;
@@ -14,9 +15,9 @@ const Category: FC<CategoryProps> = ({ category }) => {
     <Wrapper>
       <Link to={`/announcements?category=${category._id}`}>
         <img
-          crossOrigin='anonymous'
+          crossOrigin="anonymous"
           src={`http://localhost:5000/${category.image}`}
-          alt='category icon'
+          alt="category icon"
         />
         <h3>{category.name}</h3>
       </Link>

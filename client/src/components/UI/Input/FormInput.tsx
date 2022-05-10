@@ -1,24 +1,17 @@
 import React from "react";
+
 import { Path, UseFormRegister } from "react-hook-form";
 
 import { Wrapper } from "./Input.styles";
 
-interface FormInputOptions {
-  required?: string;
-  minLength?: { value: number; message: string };
-  maxLength?: { value: number; message: string };
-  min?: { value: number; message: string };
-  max?: { value: number; message: string };
-  pattern?: { value: RegExp; message: string };
-  validate?: (value: string) => boolean | string;
-}
+import IFormFieldOptions from "../../../types/IFormFieldOptions";
 
 interface FormInputProps<T> {
   label: string;
   type?: "text" | "file" | "password" | "email" | "number";
   name: Path<T>;
   register: UseFormRegister<T>;
-  options: FormInputOptions;
+  options: IFormFieldOptions;
   error: string | undefined;
   fullWidth: boolean;
 }

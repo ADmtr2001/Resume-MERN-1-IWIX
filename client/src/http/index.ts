@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { IAuthResponse } from "../types";
 
 const $host = axios.create({
@@ -22,12 +23,14 @@ $host.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
+
     if (
       error.response.status == 401 &&
       error.config &&
       !error.config._isRetry
     ) {
       originalRequest._isRetry = true;
+
       try {
         const response = await axios.get<IAuthResponse>(
           `${process.env.REACT_APP_API_URL}/user/refresh`,
@@ -35,12 +38,14 @@ $host.interceptors.response.use(
             withCredentials: true,
           }
         );
+
         localStorage.setItem("token", response.data.accessToken);
         return $host.request(originalRequest);
       } catch (e) {
         console.log("Not Authorized");
       }
     }
+
     throw error;
   }
 );
@@ -50,7 +55,6 @@ $authHost.interceptors.response.use(
     return config;
   },
   async (error) => {
-    console.log("here 1");
     console.log(error);
     const originalRequest = error.config;
     if (
@@ -59,21 +63,22 @@ $authHost.interceptors.response.use(
       !error.config._isRetry
     ) {
       originalRequest._isRetry = true;
+
       try {
-        console.log("here 2");
         const response = await axios.get<IAuthResponse>(
           `${process.env.REACT_APP_API_URL}/user/refresh`,
           {
             withCredentials: true,
           }
         );
+
         localStorage.setItem("token", response.data.accessToken);
         return $authHost.request(originalRequest);
       } catch (e) {
-        console.log("here 3");
         console.log("Not Authorized");
       }
     }
+
     throw error;
   }
 );

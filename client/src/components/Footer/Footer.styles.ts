@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import {
   setFlex,
   setShadowForSection,
@@ -14,7 +15,7 @@ export const Wrapper = styled.footer`
 
   ${setShadowForSection()};
 
-  .content {
+  .footer-content {
     padding: 2rem;
     ${setFlex({ justify: "space-around" })};
     flex-wrap: wrap;
@@ -36,7 +37,7 @@ export const Wrapper = styled.footer`
   }
 
   @media (min-width: 900px) {
-    .content {
+    .footer-content {
       div {
         a:hover {
           color: #000;
@@ -46,14 +47,14 @@ export const Wrapper = styled.footer`
   }
 
   @media (max-width: 700px) {
-    .content {
+    .footer-content {
       line-height: 2;
       text-align: center;
     }
   }
 
   @media (max-width: 560px) {
-    .content {
+    .footer-content {
       font-size: 2rem;
 
       div {

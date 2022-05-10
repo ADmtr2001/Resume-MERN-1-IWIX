@@ -3,26 +3,24 @@ import React from "react";
 
 import { Wrapper } from "./Footer.styles";
 
-import { BsGithub } from "react-icons/bs";
-
 const Footer = () => {
   return (
     <Wrapper>
-      <div className='content'>
-        <div className='col col1'>
-          <a href='#'>Як продавати й купувати?</a>
-          <a href='#'>Правила безпеки</a>
-          <a href='#'>Популярні запити</a>
+      <div className="footer-content">
+        <div className="col col1">
+          <a href="#">Як продавати й купувати?</a>
+          <a href="#">Правила безпеки</a>
+          <a href="#">Популярні запити</a>
         </div>
-        <div className='col col2'>
-          <a href='#'>Бізнес на OLX</a>
-          <a href='#'>Для преси</a>
-          <a href='#'>Реклама на сайті</a>
+        <div className="col col2">
+          <a href="#">Бізнес на OLX</a>
+          <a href="#">Для преси</a>
+          <a href="#">Реклама на сайті</a>
         </div>
-        <div className='col col3'>
-          <a href='#'>Блог OLX</a>
-          <a href='#'>Умови користування</a>
-          <a href='#'>Політика конфіденційності</a>
+        <div className="col col3">
+          <a href="#">Блог OLX</a>
+          <a href="#">Умови користування</a>
+          <a href="#">Політика конфіденційності</a>
         </div>
       </div>
     </Wrapper>

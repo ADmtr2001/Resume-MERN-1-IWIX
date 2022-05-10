@@ -9,10 +9,10 @@ interface ButtonProps {
 }
 
 const Button: FC<PropsWithChildren<ButtonProps>> = ({
-  children,
   onClick,
   isActive,
   disabled,
+  children,
 }) => {
   return (
     <Wrapper onClick={onClick} isActive={isActive} disabled={disabled}>

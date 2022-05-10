@@ -1,31 +1,32 @@
 import styled, { keyframes } from "styled-components";
+
 import { setFlex } from "../../../styles/mixins/mixins.styles";
 
 const ellipsis1 = keyframes`
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
 `;
 
 const ellipsis2 = keyframes`
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(24px, 0);
-    }
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
 `;
 
 const ellipsis3 = keyframes`
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
 `;
 
 export const Wrapper = styled.div`

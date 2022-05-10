@@ -1,6 +1,8 @@
 import React, { FC, useMemo } from "react";
-import { ICategory, IOption } from "../../../types";
+
 import Select from "../../UI/Select/Select";
+
+import { ICategory, IOption } from "../../../types";
 
 interface CategorySelectProps {
   categories: ICategory[];
@@ -10,8 +12,8 @@ interface CategorySelectProps {
 
 const CategorySelect: FC<CategorySelectProps> = ({
   categories,
-  onChange,
   value,
+  onChange,
 }) => {
   let selectOptions: IOption[] = useMemo(() => {
     const options = categories.map((category) => {
@@ -22,12 +24,12 @@ const CategorySelect: FC<CategorySelectProps> = ({
 
   return (
     <Select
-      name='category'
-      label='Category'
+      name="category"
+      label="Category"
       options={selectOptions}
-      fullWidth
       value={value}
       onChange={onChange}
+      fullWidth
     />
   );
 };

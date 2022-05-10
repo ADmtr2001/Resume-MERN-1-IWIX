@@ -1,14 +1,10 @@
-import React, { FC } from "react";
-import { Wrapper } from "./TextAra.styles";
+import React from "react";
+
 import { Path, UseFormRegister } from "react-hook-form";
 
-interface FormInputOptions {
-  required?: string;
-  minLength?: { value: number; message: string };
-  maxLength?: { value: number; message: string };
-  pattern?: { value: RegExp; message: string };
-  validate?: (value: string) => boolean | string;
-}
+import { Wrapper } from "./TextAra.styles";
+
+import FormInputOptions from "../../../types/IFormFieldOptions";
 
 interface TextAreaProps<T> {
   label: string;

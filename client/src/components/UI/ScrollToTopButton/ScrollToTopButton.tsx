@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+
 import { scrollToTop } from "../../../utils";
 
-import { AiOutlineArrowUp } from "react-icons/ai";
-
 import { Wrapper } from "./ScrollToTopButton.styles";
+import { AiOutlineArrowUp } from "../../../common/icons";
 
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);

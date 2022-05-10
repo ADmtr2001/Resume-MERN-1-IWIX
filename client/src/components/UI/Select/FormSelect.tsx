@@ -1,8 +1,10 @@
-import React, { FC } from "react";
+import React from "react";
+
 import { Path, UseFormRegister } from "react-hook-form";
-import { IOption } from "../../../types";
 
 import { Wrapper } from "./Select.styles";
+
+import { IOption } from "../../../types";
 
 interface FormSelectProps<T> {
   label: string;

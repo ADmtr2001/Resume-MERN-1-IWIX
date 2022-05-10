@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+
 import { Wrapper } from "./TextAra.styles";
 
 interface TextAreaProps {
@@ -12,11 +13,11 @@ interface TextAreaProps {
 
 const TextArea: FC<TextAreaProps> = ({
   name,
-  rows,
   label,
-  onChange,
   placeholder,
   value,
+  onChange,
+  rows,
 }) => {
   return label ? (
     <label>
@@ -27,7 +28,7 @@ const TextArea: FC<TextAreaProps> = ({
         rows={rows}
         value={value}
         onChange={onChange}
-        autoComplete='off'
+        autoComplete="off"
       />
     </label>
   ) : (
@@ -37,7 +38,7 @@ const TextArea: FC<TextAreaProps> = ({
       rows={rows}
       value={value}
       onChange={onChange}
-      autoComplete='off'
+      autoComplete="off"
     />
   );
 };

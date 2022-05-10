@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { setFlex } from "../../../styles/mixins/mixins.styles";
 
 interface WrapperProps {
   isActive?: boolean;

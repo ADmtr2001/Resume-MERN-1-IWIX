@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { setFlex } from "../../../styles/mixins/mixins.styles";
 import { AnnouncementWrapper } from "../BaseAnnouncement/Announcement.styles";
+
+import { setFlex } from "../../../styles/mixins/mixins.styles";
 
 export const Wrapper = styled(AnnouncementWrapper)`
   > a {
@@ -10,7 +11,7 @@ export const Wrapper = styled(AnnouncementWrapper)`
     width: 100%;
   }
 
-  .announcement-left {
+  .left-content {
     width: 20rem;
 
     img {
@@ -19,7 +20,7 @@ export const Wrapper = styled(AnnouncementWrapper)`
     }
   }
 
-  .announcement-right {
+  .right-content {
     ${setFlex({ justify: "space-between" })};
 
     width: 100%;
@@ -33,35 +34,32 @@ export const Wrapper = styled(AnnouncementWrapper)`
 
       padding-right: 3rem;
 
-      h3 {
+      .announcement-title {
+        font-size: 2rem;
+        word-break: break-all;
         flex: 1;
+
+        .overflow-on {
+          display: inline;
+        }
+
+        .overflow-off {
+          display: none;
+        }
+      }
+
+      .announcement-time {
+        font-size: 1.4rem;
+        font-weight: 300;
+      }
+
+      .announcement-location {
+        font-size: 1.4rem;
+        font-weight: 300;
       }
     }
 
-    .title {
-      font-size: 2rem;
-      word-break: break-all;
-
-      .overflow-on {
-        display: inline;
-      }
-
-      .overflow-off {
-        display: none;
-      }
-    }
-
-    .location {
-      font-size: 1.4rem;
-      font-weight: 300;
-    }
-
-    .time {
-      font-size: 1.4rem;
-      font-weight: 300;
-    }
-
-    .price {
+    .announcement-price {
       min-width: 12rem;
       margin-top: auto;
 
@@ -77,26 +75,26 @@ export const Wrapper = styled(AnnouncementWrapper)`
   }
 
   @media (max-width: 700px) {
-    .announcement-right {
+    .right-content {
       ${setFlex({ direction: "column" })};
 
       .title-location {
         padding-right: 0;
 
-        h3 {
+        .announcement-title {
           flex: 0;
         }
       }
 
-      .price {
+      .announcement-price {
         margin-top: auto;
       }
     }
   }
 
   @media (max-width: 600px) {
-    .announcement-right {
-      .title {
+    .right-content {
+      .announcement-title {
         .overflow-on {
           display: none;
         }
@@ -109,12 +107,12 @@ export const Wrapper = styled(AnnouncementWrapper)`
   }
 
   @media (max-width: 500px) {
-    .announcement-right {
+    .right-content {
       .title {
         font-size: 1.6rem;
       }
 
-      .price {
+      .announcement-price {
         font-size: 1.5rem;
         font-weight: 700;
       }
@@ -122,8 +120,8 @@ export const Wrapper = styled(AnnouncementWrapper)`
   }
 
   @media (max-width: 350px) {
-    .announcement-right {
-      .location {
+    .right-content {
+      .announcement-location {
         display: none;
       }
     }

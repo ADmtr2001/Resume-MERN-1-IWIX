@@ -1,19 +1,25 @@
 import React, { FC } from "react";
+
 import Button from "../../UI/Button/Button";
-import { IoGridSharp } from "react-icons/io5";
-import { AiOutlineBars } from "react-icons/ai";
+
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setIsGridView } from "../../../store/reducers/appState/appStateSlice";
-import { GrPowerReset } from "react-icons/gr";
+
 import { Wrapper } from "./ActionButtons.styles";
+import {
+  GrPowerReset,
+  IoGridSharp,
+  AiOutlineBars,
+} from "../../../common/icons";
 
 interface ActionButtonsProps {
   reset: () => void;
 }
 
 const ActionButtons: FC<ActionButtonsProps> = ({ reset }) => {
-  const dispatch = useAppDispatch();
   const { isGridView } = useAppSelector((state) => state.appState);
+
+  const dispatch = useAppDispatch();
 
   const setGridView = () => {
     dispatch(setIsGridView(true));
@@ -25,9 +31,9 @@ const ActionButtons: FC<ActionButtonsProps> = ({ reset }) => {
 
   return (
     <Wrapper>
-      <div className='display'>
+      <div className="display-section">
         <p>Display</p>
-        <div className='buttons'>
+        <div className="buttons">
           <Button isActive={isGridView} onClick={setGridView}>
             <IoGridSharp />
           </Button>
@@ -36,9 +42,9 @@ const ActionButtons: FC<ActionButtonsProps> = ({ reset }) => {
           </Button>
         </div>
       </div>
-      <div className='reset'>
+      <div className="reset-section">
         <p>Reset</p>
-        <div className='buttons'>
+        <div className="buttons">
           <Button onClick={reset}>
             <GrPowerReset />
           </Button>

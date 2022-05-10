@@ -1,9 +1,11 @@
 import React from "react";
 
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useAppSelector } from "../../hooks/redux";
-import { privateRoutes, publicRoutes } from "../../router";
 import Loader from "../UI/Loader/Loader";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import { useAppSelector } from "../../hooks/redux";
+
+import { privateRoutes, publicRoutes } from "../../router";
 
 const AppRouter = () => {
   const { user, isUserLoading } = useAppSelector((state) => state.user);
@@ -29,7 +31,7 @@ const AppRouter = () => {
               element={<route.element />}
             />
           ))}
-      <Route path='*' element={<Navigate to='/' />} />
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };

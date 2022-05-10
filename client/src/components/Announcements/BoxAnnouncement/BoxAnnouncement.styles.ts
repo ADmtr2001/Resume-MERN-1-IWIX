@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { setFlex } from "../../../styles/mixins/mixins.styles";
 import { AnnouncementWrapper } from "../BaseAnnouncement/Announcement.styles";
+
+import { setFlex } from "../../../styles/mixins/mixins.styles";
 
 export const Wrapper = styled(AnnouncementWrapper)`
   ${setFlex({ direction: "column" })};
@@ -8,7 +9,7 @@ export const Wrapper = styled(AnnouncementWrapper)`
   width: 100%;
   height: 35rem;
 
-  .announcement-top {
+  .top-content {
     ${setFlex({ justify: "center" })};
 
     width: 100%;
@@ -21,30 +22,30 @@ export const Wrapper = styled(AnnouncementWrapper)`
     }
   }
 
-  .announcement-bot {
+  .bot-content {
     ${setFlex({ direction: "column" })};
 
     height: 13rem;
 
-    .title {
+    .announcement-title {
       font-weight: 400;
       word-break: break-all;
     }
 
-    .info {
+    .announcement-info {
       margin-top: auto;
-      
-      .location {
+
+      .announcement-location {
         font-size: 1.4rem;
         font-weight: 300;
       }
 
-      .time {
+      .announcement-time {
         font-size: 1.4rem;
         font-weight: 300;
       }
 
-      .price {
+      .announcement-price {
         font-size: 1.9rem;
       }
     }

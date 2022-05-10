@@ -1,13 +1,16 @@
 import React, { FC } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { IAnnouncement } from "../../../types";
+
 import Button from "../../UI/Button/Button";
-import { GrEdit } from "react-icons/gr";
-import { MdDelete } from "react-icons/md";
+
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setDeleteModal } from "../../../store/reducers/appState/appStateSlice";
 import { formatDate, scrollToTop } from "../../../utils";
+
+import { IAnnouncement } from "../../../types";
+
 import { Wrapper } from "./BoxAnnouncement.styles";
+import { GrEdit, MdDelete } from "../../../common/icons";
 
 export interface AnnouncementProps {
   announcement: IAnnouncement;
@@ -19,6 +22,7 @@ const BoxAnnouncement: FC<AnnouncementProps> = ({
   className,
 }) => {
   const { user } = useAppSelector((state) => state.user);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,31 +35,36 @@ const BoxAnnouncement: FC<AnnouncementProps> = ({
     navigate(`/update/${announcement._id}`);
   };
 
+  const isActionButtonsVisible =
+    user?._id === announcement.creator && location.pathname === "/user";
+
   return (
     <Wrapper className={className}>
       <Link to={`/announcement/${announcement._id}`} onClick={scrollToTop}>
-        <div className='announcement-top'>
+        <div className="top-content">
           <img
-            crossOrigin='anonymous'
-            src={`http://localhost:5000/${announcement.image}`}
-            alt='announcement'
+            crossOrigin="anonymous"
+            src={`${process.env.REACT_APP_IMAGE_URL}${announcement.image}`}
+            alt="announcement"
           />
         </div>
-        <div className='announcement-bot'>
-          <h3 className='title'>
+        <div className="bot-content">
+          <h3 className="announcement-title">
             {announcement.title.length > 25
               ? announcement.title.slice(0, 25) + "..."
               : announcement.title}
           </h3>
-          <div className='info'>
-            <p className='time'>{formatDate(announcement.createdAt)}</p>
-            <p className='location'>{announcement.location}</p>
-            <p className='price'>{announcement.price}$</p>
+          <div className="announcement-info">
+            <p className="announcement-time">
+              {formatDate(announcement.createdAt)}
+            </p>
+            <p className="announcement-location">{announcement.location}</p>
+            <p className="announcement-price">{announcement.price}$</p>
           </div>
         </div>
       </Link>
-      {user?._id === announcement.creator && location.pathname === "/user" && (
-        <div className='action-buttons'>
+      {isActionButtonsVisible && (
+        <div className="announcement-action-buttons">
           <Button onClick={moveToUpdate}>
             <GrEdit />
           </Button>
