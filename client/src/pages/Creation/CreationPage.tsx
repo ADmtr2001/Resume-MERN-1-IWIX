@@ -1,11 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+
 import Button from "../../components/UI/Button/Button";
 import FormInput from "../../components/UI/Input/FormInput";
 import Loader from "../../components/UI/Loader/Loader";
 import FormSelect from "../../components/UI/Select/FormSelect";
+import FormTextArea from "../../components/UI/TextArea/FormTextArea";
+
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { asyncGetCategories } from "../../store/reducers/category/categoryActionCreators";
+import { scrollToTop } from "../../utils";
 import {
   asyncCreateAnnouncement,
   asyncGetSingleAnnouncement,
@@ -15,53 +20,55 @@ import {
   clearCurrentAnnouncement,
   clearUpdatedAndCreatedAnnouncement,
 } from "../../store/reducers/announcement/announcementSlice";
-import { asyncFetchCategories } from "../../store/reducers/category/categoryActionCreators";
-import { IOption } from "../../types";
-import { ICreationFormData } from "../../types/IFormData";
-import { scrollToTop } from "../../utils";
 
 import { Wrapper } from "./CreationPage.styles";
-import FormTextArea from "../../components/UI/TextArea/FormTextArea";
+
+import { IOption, ICreationFormData } from "../../types";
 
 const CreationPage = () => {
   const { id: announcementId } = useParams();
   const [defaultValues, setDefaultValues] = useState<{
     [index: string]: string;
   }>({});
+
+  const { user } = useAppSelector((state) => state.user);
   const { categories, isCategoriesLoading } = useAppSelector(
     (state) => state.category
   );
-  const dispatch = useAppDispatch();
   const {
-    currentAnnouncement,
-    isCurrentAnnouncementLoading,
+    singleAnnouncement,
+    isSingleAnnouncementLoading,
     updatedAnnouncement,
     createdAnnouncement,
     isAnnouncementCreating,
     isAnnouncementUpdating,
   } = useAppSelector((state) => state.announcement);
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     reset,
   } = useForm<ICreationFormData>({
     mode: "onSubmit",
     reValidateMode: "onChange",
     defaultValues,
   });
+
+  const dispatch = useAppDispatch();
   const location = useLocation();
-  const { user } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
 
   useEffect(() => {
     scrollToTop();
+
     if (categories.length === 0) {
-      dispatch(asyncFetchCategories());
+      dispatch(asyncGetCategories());
     }
+
     if (announcementId) {
       dispatch(asyncGetSingleAnnouncement(announcementId));
     }
+
     return () => {
       dispatch(clearCurrentAnnouncement());
       dispatch(clearUpdatedAndCreatedAnnouncement());
@@ -69,20 +76,19 @@ const CreationPage = () => {
   }, []);
 
   useEffect(() => {
-    if (currentAnnouncement) {
-      console.log(currentAnnouncement);
+    if (singleAnnouncement) {
       setDefaultValues({
-        title: currentAnnouncement.title,
-        category: currentAnnouncement.category,
-        price: currentAnnouncement.price.toString(),
-        description: currentAnnouncement.description,
-        location: currentAnnouncement.location,
-        email: currentAnnouncement.email,
-        phoneNumber: currentAnnouncement.phoneNumber,
+        title: singleAnnouncement.title,
+        category: singleAnnouncement.category,
+        price: singleAnnouncement.price.toString(),
+        description: singleAnnouncement.description,
+        location: singleAnnouncement.location,
+        email: singleAnnouncement.email,
+        phoneNumber: singleAnnouncement.phoneNumber,
       });
       reset(defaultValues);
     }
-  }, [currentAnnouncement]);
+  }, [singleAnnouncement]);
 
   useEffect(() => {
     if (updatedAnnouncement) {
@@ -92,6 +98,27 @@ const CreationPage = () => {
       navigate(`/announcement/${createdAnnouncement._id}`);
     }
   }, [updatedAnnouncement, createdAnnouncement]);
+
+  let selectOptions: IOption[] = useMemo(() => {
+    const options = categories.map((category) => {
+      return { label: category.name, value: category._id };
+    });
+    return [{ label: "Any", value: "62782d01909cc2389eb9e4c5" }, ...options];
+  }, [categories]);
+
+  if (isCategoriesLoading || isSingleAnnouncementLoading) {
+    return <Loader />;
+  }
+
+  if (!user?.isActivated) {
+    return (
+      <Wrapper>
+        <p className="activation-message">
+          Check your email to activate your account!
+        </p>
+      </Wrapper>
+    );
+  }
 
   const onSubmit: SubmitHandler<ICreationFormData> = (data) => {
     const announcementData = new FormData();
@@ -116,27 +143,6 @@ const CreationPage = () => {
     }
   };
 
-  let selectOptions: IOption[] = useMemo(() => {
-    const options = categories.map((category) => {
-      return { label: category.name, value: category._id };
-    });
-    return [{ label: "Any", value: "62782d01909cc2389eb9e4c5" }, ...options];
-  }, [categories]);
-
-  if (isCategoriesLoading || isCurrentAnnouncementLoading) {
-    return <Loader />;
-  }
-
-  if (!user?.isActivated) {
-    return (
-      <Wrapper>
-        <p className="activation-message">
-          Check your email to activate your account!
-        </p>
-      </Wrapper>
-    );
-  }
-
   return (
     <Wrapper>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -152,6 +158,7 @@ const CreationPage = () => {
           error={errors.title?.message}
           fullWidth
         />
+
         <FormSelect<ICreationFormData>
           label="Category"
           name="category"
@@ -159,6 +166,7 @@ const CreationPage = () => {
           register={register}
           fullWidth
         />
+
         <FormInput<ICreationFormData>
           label="Price"
           name="price"
@@ -172,6 +180,7 @@ const CreationPage = () => {
           error={errors.price?.message}
           fullWidth
         />
+
         <FormInput<ICreationFormData>
           type="file"
           label="Image"
@@ -186,6 +195,7 @@ const CreationPage = () => {
           error={errors.image?.message}
           fullWidth
         />
+
         <FormTextArea<ICreationFormData>
           label="Description"
           name="description"
@@ -197,6 +207,7 @@ const CreationPage = () => {
           error={errors.description?.message}
           rows={5}
         />
+
         <FormInput<ICreationFormData>
           label="Location"
           name="location"
@@ -209,6 +220,7 @@ const CreationPage = () => {
           error={errors.location?.message}
           fullWidth
         />
+
         <FormInput<ICreationFormData>
           label="Email"
           name="email"
@@ -224,6 +236,7 @@ const CreationPage = () => {
           error={errors.email?.message}
           fullWidth
         />
+
         <FormInput<ICreationFormData>
           label="Phone Number"
           name="phoneNumber"
@@ -236,6 +249,7 @@ const CreationPage = () => {
           error={errors.phoneNumber?.message}
           fullWidth
         />
+
         {isAnnouncementCreating || isAnnouncementUpdating ? (
           <Loader />
         ) : (

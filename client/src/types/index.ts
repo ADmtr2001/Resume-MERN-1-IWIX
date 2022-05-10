@@ -1,16 +1,16 @@
-import IOption from "./IOption";
-import IRoute from "./IRoute";
-import IUser from "./IUser";
+import IOption from "./Data/IOption";
+import IRoute from "./Others/IRoute";
+import IUser from "./User/IUser";
 import {
   IAuthFormData,
   ILoginData,
   IRegisterData,
   ICreationFormData,
-} from "./IFormData";
-import IAuthResponse from "./IAuthResponse";
-import { GetAnnouncementsResponse, IAnnouncement } from "./IAnnouncement";
-import ICategory from "./ICategory";
-import IFormFieldOptions from "./IFormFieldOptions";
+} from "./Data/IFormData";
+import IAuthResponse from "./User/IAuthResponse";
+import { GetAnnouncementsResponse, IAnnouncement } from "./Data/IAnnouncement";
+import ICategory from "./Data/ICategory";
+import IFormFieldOptions from "./Data/IFormFieldOptions";
 
 export type {
   IOption,

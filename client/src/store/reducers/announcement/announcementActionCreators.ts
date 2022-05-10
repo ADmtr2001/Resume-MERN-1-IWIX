@@ -1,10 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
 import { $authHost, $host } from "../../../http";
-import { GetAnnouncementsResponse, IAnnouncement, IUser } from "../../../types";
+
 import { asyncGetSingleUser } from "../user/userActionCreators";
 import { deleteAnnouncement, updateAnnouncement } from "./announcementSlice";
 
-export const asyncFetchAnnouncements = createAsyncThunk(
+import { GetAnnouncementsResponse, IAnnouncement } from "../../../types";
+
+export const asyncGetAnnouncements = createAsyncThunk(
   "announcement/fetchAnnouncements",
   async (searchParams: string, { rejectWithValue }) => {
     try {
@@ -13,7 +16,6 @@ export const asyncFetchAnnouncements = createAsyncThunk(
       );
       return data;
     } catch (error: any) {
-      console.log(error.response.data.message);
       return rejectWithValue("Failed");
     }
   }
@@ -29,7 +31,6 @@ export const asyncCreateAnnouncement = createAsyncThunk(
       );
       return data;
     } catch (error: any) {
-      console.log(error.response.data.message);
       return rejectWithValue("Failed");
     }
   }
@@ -46,7 +47,6 @@ export const asyncGetSingleAnnouncement = createAsyncThunk(
       dispatch(asyncGetUserAnnouncements(data.creator));
       return data;
     } catch (error: any) {
-      console.log(error.response.data.message);
       return rejectWithValue("Failed");
     }
   }
@@ -61,7 +61,6 @@ export const asyncGetUserAnnouncements = createAsyncThunk(
       );
       return data;
     } catch (error: any) {
-      console.log(error.response.data.message);
       return rejectWithValue("Failed");
     }
   }
@@ -74,7 +73,6 @@ export const asyncGetVipAnnouncements = createAsyncThunk(
       const { data } = await $host.get<IAnnouncement[]>(`announcement/vip`);
       return data;
     } catch (error: any) {
-      console.log(error.response.data.message);
       return rejectWithValue("Failed");
     }
   }
@@ -88,7 +86,6 @@ export const asyncDeleteAnnouncement = createAsyncThunk(
       dispatch(deleteAnnouncement(announcementId));
       return data;
     } catch (error: any) {
-      console.log(error.response.data.message);
       return rejectWithValue("Failed");
     }
   }
@@ -108,7 +105,6 @@ export const asyncUpdateAnnouncement = createAsyncThunk(
       dispatch(updateAnnouncement(data));
       return data;
     } catch (error: any) {
-      console.log(error.response.data.message);
       return rejectWithValue("Failed");
     }
   }

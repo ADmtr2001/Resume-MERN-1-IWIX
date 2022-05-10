@@ -1,23 +1,22 @@
 import React, { useEffect } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+
 import AnnouncementList from "../../components/Announcements/AnnouncementList";
 import Categories from "../../components/Categories/Categories";
 import Search from "../../components/Search/Search";
+
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import {
-  asyncFetchAnnouncements,
-  asyncGetVipAnnouncements,
-} from "../../store/reducers/announcement/announcementActionCreators";
-import { clearAnnouncements } from "../../store/reducers/announcement/announcementSlice";
+import { asyncGetVipAnnouncements } from "../../store/reducers/announcement/announcementActionCreators";
 
 const HomePage = () => {
-  const location = useLocation();
-  const dispatch = useAppDispatch();
   const { vipAnnouncements, isVipAnnouncementsLoading } = useAppSelector(
     (state) => state.announcement
   );
+
   const searchParams = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(asyncGetVipAnnouncements());
@@ -34,7 +33,7 @@ const HomePage = () => {
       <Search />
       <Categories />
       <AnnouncementList
-        title='VIP Announcements'
+        title="VIP Announcements"
         announcements={vipAnnouncements}
         isLoading={isVipAnnouncementsLoading}
         limit={4}

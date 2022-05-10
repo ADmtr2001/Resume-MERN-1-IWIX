@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 
+import App from "./App";
 import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./styles/globalStyles";
+import { BrowserRouter } from "react-router-dom";
 
 import { setupStore } from "./store/store";
-import { GlobalStyles } from "./styles/globalStyles";
-import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "./styles/themes/themes";
-import { BrowserRouter } from "react-router-dom";
 
 const store = setupStore();
 

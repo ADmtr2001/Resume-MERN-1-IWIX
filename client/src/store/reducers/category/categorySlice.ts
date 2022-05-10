@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { asyncGetCategories } from "./categoryActionCreators";
+
 import { ICategory } from "../../../types";
-import { asyncFetchCategories } from "./categoryActionCreators";
 
 interface CategoryState {
   categories: ICategory[];
@@ -17,23 +19,17 @@ export const categorySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [asyncFetchCategories.pending.type]: (
-      state,
-      action: PayloadAction<ICategory[]>
-    ) => {
+    [asyncGetCategories.pending.type]: (state) => {
       state.isCategoriesLoading = true;
     },
-    [asyncFetchCategories.fulfilled.type]: (
+    [asyncGetCategories.fulfilled.type]: (
       state,
       action: PayloadAction<ICategory[]>
     ) => {
       state.categories = action.payload;
       state.isCategoriesLoading = false;
     },
-    [asyncFetchCategories.rejected.type]: (
-      state,
-      action: PayloadAction<ICategory[]>
-    ) => {
+    [asyncGetCategories.rejected.type]: (state) => {
       state.isCategoriesLoading = false;
     },
   },

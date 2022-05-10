@@ -1,61 +1,49 @@
 import React, { useEffect } from "react";
+
+import Search from "../../components/Search/Search";
+import AnnouncementList from "../../components/Announcements/AnnouncementList";
+import Loader from "../../components/UI/Loader/Loader";
+import UserInfo from "../../components/UserInfo/UserInfo";
+import Button from "../../components/UI/Button/Button";
+
 import {
   useLocation,
   useNavigate,
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import Search from "../../components/Search/Search";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import {
-  asyncFetchAnnouncements,
-  asyncGetSingleAnnouncement,
-} from "../../store/reducers/announcement/announcementActionCreators";
-
-import { Wrapper } from "./SingleAnnouncementPage.styles";
-import AnnouncementList from "../../components/Announcements/AnnouncementList";
-import Loader from "../../components/UI/Loader/Loader";
-import { formatDate, scrollToTop } from "../../utils";
 import {
   clearAnnouncements,
   clearCurrentAnnouncement,
 } from "../../store/reducers/announcement/announcementSlice";
-import UserInfo from "../../components/UserInfo/UserInfo";
-import Button from "../../components/UI/Button/Button";
+import { formatDate, scrollToTop } from "../../utils";
+import {
+  asyncGetAnnouncements,
+  asyncGetSingleAnnouncement,
+} from "../../store/reducers/announcement/announcementActionCreators";
+
+import { Wrapper } from "./SingleAnnouncementPage.styles";
 
 const AnnouncementPage = () => {
   const { id: announcementId } = useParams();
+
   const {
     announcements,
     isAnnouncementsLoading,
-    currentAnnouncement,
-    isCurrentAnnouncementLoading,
-    currentUserAnnouncements,
-    isCurrentUserAnnouncementsLoading,
+    singleAnnouncement,
+    isSingleAnnouncementLoading,
+    singleUserAnnouncements,
+    isSingleUserAnnouncementsLoading,
   } = useAppSelector((state) => state.announcement);
-  const { currentUser, isCurrentUserLoading } = useAppSelector(
+  const { singleUser, isSingleUserLoading } = useAppSelector(
     (state) => state.user
   );
+
   const dispatch = useAppDispatch();
   const location = useLocation();
   const searchParams = useSearchParams();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    scrollToTop();
-  }, [announcementId]);
-
-  useEffect(() => {
-    if (!announcementId) return;
-
-    dispatch(asyncGetSingleAnnouncement(announcementId));
-    dispatch(asyncFetchAnnouncements(""));
-
-    return () => {
-      dispatch(clearAnnouncements());
-      dispatch(clearCurrentAnnouncement());
-    };
-  }, [announcementId, dispatch]);
 
   useEffect(() => {
     if (location.search !== "") {
@@ -63,60 +51,72 @@ const AnnouncementPage = () => {
     }
   }, [searchParams]);
 
-  if (isCurrentAnnouncementLoading) return <Loader />;
+  useEffect(() => {
+    if (!announcementId) return;
+    scrollToTop();
 
-  if (!currentAnnouncement || !currentUser) return null;
+    dispatch(asyncGetSingleAnnouncement(announcementId));
+    dispatch(asyncGetAnnouncements(""));
+
+    return () => {
+      dispatch(clearAnnouncements());
+      dispatch(clearCurrentAnnouncement());
+    };
+  }, [announcementId, dispatch]);
+
+  if (isSingleAnnouncementLoading || isSingleUserLoading) return <Loader />;
+
+  if (!singleAnnouncement || !singleUser) {
+    navigate("/");
+    return null;
+  }
 
   return (
     <Wrapper>
       <Search />
-      <div className="top-info">
-        <div className="left">
-          <div className="announcement-image">
+      <div className="top-content">
+        <div className="top-left-content">
+          <div className="left-announcement-image">
             <img
               crossOrigin="anonymous"
-              src={`http://localhost:5000${currentAnnouncement.image}`}
+              src={`http://localhost:5000${singleAnnouncement.image}`}
               alt="announcement"
             />
           </div>
         </div>
-        <div className="right">
-          <div className="user">
-            {isCurrentUserLoading ? (
-              <Loader />
-            ) : (
-              <UserInfo user={currentUser} />
-            )}
+        <div className="top-right-content">
+          <div className="right-user">
+            <UserInfo user={singleUser} />
           </div>
-          <div className="description">
-            <p className="publish-time">
-              {`Published: ${formatDate(currentAnnouncement.createdAt)}`}
+          <div className="right-description">
+            <p className="right-publish-time">
+              {`Published: ${formatDate(singleAnnouncement.createdAt)}`}
             </p>
-            <h2 className="title">{currentAnnouncement.title}</h2>
-            <p className="price">{currentAnnouncement.price}$</p>
+            <h2 className="right-title">{singleAnnouncement.title}</h2>
+            <p className="right-price">{singleAnnouncement.price}$</p>
             <h3>Description</h3>
-            <p className="description-text">
-              {currentAnnouncement.description}
+            <p className="right-description-text">
+              {singleAnnouncement.description}
             </p>
             <h3>Contacts</h3>
-            <p>Email: {currentAnnouncement.email}</p>
-            <p>Phone number: {currentAnnouncement.phoneNumber}</p>
+            <p>Email: {singleAnnouncement.email}</p>
+            <p>Phone number: {singleAnnouncement.phoneNumber}</p>
           </div>
         </div>
       </div>
-      <section className="announcements">
-        {currentUserAnnouncements.length > 1 && (
+      <section className="announcements-list">
+        {singleUserAnnouncements.length > 1 && (
           <AnnouncementList
             title="Other user posts"
-            announcements={currentUserAnnouncements}
-            isLoading={isCurrentUserAnnouncementsLoading}
+            announcements={singleUserAnnouncements}
+            isLoading={isSingleUserAnnouncementsLoading}
             limit={4}
-            exceptions={[currentAnnouncement._id]}
+            exceptions={[singleAnnouncement._id]}
             isGridView={true}
             ListButton={
               <Button
                 onClick={() =>
-                  navigate(`/announcements?creator=${currentUser._id}`)
+                  navigate(`/announcements?creator=${singleUser._id}`)
                 }
               >
                 Show All
@@ -124,13 +124,14 @@ const AnnouncementPage = () => {
             }
           />
         )}
+
         {announcements.length !== 0 && (
           <AnnouncementList
             title="Other posts"
             announcements={announcements}
             isLoading={isAnnouncementsLoading}
             limit={4}
-            exceptions={[currentAnnouncement._id]}
+            exceptions={[singleAnnouncement._id]}
             isGridView={true}
             ListButton={
               <Button onClick={() => navigate(`/announcements`)}>Search</Button>

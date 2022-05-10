@@ -21,7 +21,7 @@ export const Wrapper = styled.button<WrapperProps>`
   transition: all ${(props) => props.theme.fastTransition};
 
   @media (min-width: 900px) {
-    &:hover {
+    &:not([disabled]):hover {
       background-color: ${(props) => props.theme.dark1};
 
       box-shadow: none;

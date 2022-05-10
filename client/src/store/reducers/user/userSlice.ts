@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { IUser } from "../../../types";
+
 import {
   asyncCheckAuth,
   asyncGetSingleUser,
@@ -11,8 +13,8 @@ import {
 interface UserState {
   user: IUser | null;
   isUserLoading: boolean;
-  currentUser: IUser | null;
-  isCurrentUserLoading: boolean;
+  singleUser: IUser | null;
+  isSingleUserLoading: boolean;
   isLogin: boolean;
   isSignup: boolean;
   loginError: string;
@@ -22,8 +24,8 @@ interface UserState {
 const initialState: UserState = {
   user: null,
   isUserLoading: true,
-  currentUser: null,
-  isCurrentUserLoading: false,
+  singleUser: null,
+  isSingleUserLoading: false,
   isLogin: false,
   isSignup: false,
   loginError: "",
@@ -35,7 +37,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [asyncRegister.pending.type]: (state, action: PayloadAction<string>) => {
+    [asyncRegister.pending.type]: (state) => {
       state.isSignup = true;
       state.signupError = "";
       state.loginError = "";
@@ -81,17 +83,17 @@ export const userSlice = createSlice({
       state.isUserLoading = false;
     },
     [asyncGetSingleUser.pending.type]: (state) => {
-      state.isCurrentUserLoading = true;
+      state.isSingleUserLoading = true;
     },
     [asyncGetSingleUser.fulfilled.type]: (
       state,
       action: PayloadAction<IUser>
     ) => {
-      state.currentUser = action.payload;
-      state.isCurrentUserLoading = false;
+      state.singleUser = action.payload;
+      state.isSingleUserLoading = false;
     },
     [asyncGetSingleUser.rejected.type]: (state) => {
-      state.isCurrentUserLoading = false;
+      state.isSingleUserLoading = false;
     },
   },
 });

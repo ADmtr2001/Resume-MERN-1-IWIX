@@ -1,28 +1,34 @@
 import styled from "styled-components";
+
 import {
   setFlex,
   setShadowForSection,
 } from "../../styles/mixins/mixins.styles";
 
 export const Wrapper = styled.main`
-  .top-info {
-    margin-top: 2rem;
-    width: 100%;
+  .top-content {
     ${setFlex({ justify: "space-between" })}
 
-    .left {
+    width: 100%;
+    margin-top: 2rem;
+
+    .top-left-content {
       background-color: ${(props) => props.theme.light2};
+
       width: 50%;
       min-height: 10rem;
       max-height: 55rem;
+
       ${setShadowForSection()};
 
-      .announcement-image {
+      .left-announcement-image {
+        ${setFlex({ justify: "center", align: "center" })}
+
         width: 100%;
         height: 100%;
         max-height: 100%;
+
         padding: 1rem;
-        ${setFlex({ justify: "center", align: "center" })}
 
         img {
           width: 100%;
@@ -32,57 +38,64 @@ export const Wrapper = styled.main`
       }
     }
 
-    .right {
-      width: 48%;
+    .top-right-content {
       ${setFlex({ direction: "column" })};
+      width: 48%;
 
-      .user {
+      .right-user {
+        ${setFlex({ align: "center" })}
+
         background-color: ${(props) => props.theme.light2};
+
         height: 10rem;
         margin-bottom: 2rem;
-        ${setShadowForSection()};
-        ${setFlex({ align: "center" })}
         padding: 1rem;
+
+        ${setShadowForSection()};
       }
 
-      .description {
+      .right-description {
         background-color: ${(props) => props.theme.light2};
+
         min-height: 20rem;
         height: 100%;
-        ${setShadowForSection()};
+
         padding: 1rem;
 
-        .publish-time {
+        ${setShadowForSection()};
+
+        .right-publish-time {
           font-weight: 300;
         }
 
-        .title {
+        .right-title {
           font-size: 3rem;
-          margin: 0;
           word-break: break-all;
+
+          margin: 0;
         }
 
-        .price {
+        .right-price {
           font-size: 2.5rem;
         }
       }
     }
   }
 
-  .announcements {
+  .announcements-list {
     padding: 0;
   }
 
   @media (max-width: 700px) {
-    .top-info {
+    .top-content {
       ${setFlex({ direction: "column" })};
 
-      .left {
+      .top-left-content {
         width: 100%;
         max-height: 100%;
       }
 
-      .right {
+      .top-right-content {
         width: 100%;
         margin-top: 2rem;
       }

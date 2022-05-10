@@ -1,15 +1,15 @@
-import AnnouncementPage from "./SingleAnnouncement/SingleAnnouncementPage";
+import SingleAnnouncementPage from "./SingleAnnouncement/SingleAnnouncementPage";
 import AuthPage from "./Auth/AuthPage";
 import CreationPage from "./Creation/CreationPage";
 import HomePage from "./Home/HomePage";
 import UserPage from "./User/UserPage";
-import CategoryAnnouncementsPage from "./Announcements/AnnouncementsPage";
+import AnnouncementsPage from "./Announcements/AnnouncementsPage";
 
 export {
-  AnnouncementPage,
+  SingleAnnouncementPage,
   AuthPage,
   CreationPage,
   HomePage,
   UserPage,
-  CategoryAnnouncementsPage,
+  AnnouncementsPage,
 };

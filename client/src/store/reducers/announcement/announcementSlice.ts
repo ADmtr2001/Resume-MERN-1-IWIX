@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GetAnnouncementsResponse, IAnnouncement, IUser } from "../../../types";
+
+import { GetAnnouncementsResponse, IAnnouncement } from "../../../types";
+
 import {
   asyncCreateAnnouncement,
-  asyncFetchAnnouncements,
+  asyncGetAnnouncements,
   asyncGetSingleAnnouncement,
   asyncGetUserAnnouncements,
   asyncGetVipAnnouncements,
@@ -12,10 +14,10 @@ import {
 interface AnnouncementState {
   announcements: IAnnouncement[];
   isAnnouncementsLoading: boolean;
-  currentAnnouncement: IAnnouncement | null;
-  isCurrentAnnouncementLoading: boolean;
-  currentUserAnnouncements: IAnnouncement[];
-  isCurrentUserAnnouncementsLoading: boolean;
+  singleAnnouncement: IAnnouncement | null;
+  isSingleAnnouncementLoading: boolean;
+  singleUserAnnouncements: IAnnouncement[];
+  isSingleUserAnnouncementsLoading: boolean;
   vipAnnouncements: IAnnouncement[];
   isVipAnnouncementsLoading: boolean;
   createdAnnouncement: IAnnouncement | null;
@@ -29,10 +31,10 @@ interface AnnouncementState {
 const initialState: AnnouncementState = {
   announcements: [],
   isAnnouncementsLoading: false,
-  currentAnnouncement: null,
-  isCurrentAnnouncementLoading: false,
-  currentUserAnnouncements: [],
-  isCurrentUserAnnouncementsLoading: false,
+  singleAnnouncement: null,
+  isSingleAnnouncementLoading: false,
+  singleUserAnnouncements: [],
+  isSingleUserAnnouncementsLoading: false,
   vipAnnouncements: [],
   isVipAnnouncementsLoading: false,
   createdAnnouncement: null,
@@ -53,8 +55,8 @@ export const announcementSlice = createSlice({
       state.numberOfPages = 0;
     },
     clearCurrentAnnouncement(state) {
-      state.currentAnnouncement = null;
-      state.currentUserAnnouncements = [];
+      state.singleAnnouncement = null;
+      state.singleUserAnnouncements = [];
     },
     setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload;
@@ -75,10 +77,10 @@ export const announcementSlice = createSlice({
     },
   },
   extraReducers: {
-    [asyncFetchAnnouncements.pending.type]: (state) => {
+    [asyncGetAnnouncements.pending.type]: (state) => {
       state.isAnnouncementsLoading = true;
     },
-    [asyncFetchAnnouncements.fulfilled.type]: (
+    [asyncGetAnnouncements.fulfilled.type]: (
       state,
       action: PayloadAction<GetAnnouncementsResponse>
     ) => {
@@ -87,13 +89,10 @@ export const announcementSlice = createSlice({
       state.numberOfPages = action.payload.numberOfPages;
       state.isAnnouncementsLoading = false;
     },
-    [asyncFetchAnnouncements.rejected.type]: (state) => {
+    [asyncGetAnnouncements.rejected.type]: (state) => {
       state.isAnnouncementsLoading = false;
     },
-    [asyncCreateAnnouncement.pending.type]: (
-      state,
-      action: PayloadAction<IAnnouncement>
-    ) => {
+    [asyncCreateAnnouncement.pending.type]: (state) => {
       state.isAnnouncementCreating = true;
       state.createdAnnouncement = null;
     },
@@ -104,50 +103,35 @@ export const announcementSlice = createSlice({
       state.isAnnouncementCreating = false;
       state.createdAnnouncement = action.payload;
     },
-    [asyncCreateAnnouncement.rejected.type]: (
-      state,
-      action: PayloadAction<IAnnouncement>
-    ) => {
+    [asyncCreateAnnouncement.rejected.type]: (state) => {
       state.isAnnouncementCreating = false;
       state.createdAnnouncement = null;
     },
-    [asyncGetSingleAnnouncement.pending.type]: (
-      state,
-      action: PayloadAction<IAnnouncement>
-    ) => {
-      state.isCurrentAnnouncementLoading = true;
+    [asyncGetSingleAnnouncement.pending.type]: (state) => {
+      state.isSingleAnnouncementLoading = true;
     },
     [asyncGetSingleAnnouncement.fulfilled.type]: (
       state,
       action: PayloadAction<IAnnouncement>
     ) => {
-      state.currentAnnouncement = action.payload;
-      state.isCurrentAnnouncementLoading = false;
+      state.singleAnnouncement = action.payload;
+      state.isSingleAnnouncementLoading = false;
     },
-    [asyncGetSingleAnnouncement.rejected.type]: (
-      state,
-      action: PayloadAction<IAnnouncement>
-    ) => {
-      state.isCurrentAnnouncementLoading = false;
+    [asyncGetSingleAnnouncement.rejected.type]: (state) => {
+      state.isSingleAnnouncementLoading = false;
     },
-    [asyncGetUserAnnouncements.pending.type]: (
-      state,
-      action: PayloadAction<IAnnouncement[]>
-    ) => {
-      state.isCurrentUserAnnouncementsLoading = true;
+    [asyncGetUserAnnouncements.pending.type]: (state) => {
+      state.isSingleUserAnnouncementsLoading = true;
     },
     [asyncGetUserAnnouncements.fulfilled.type]: (
       state,
       action: PayloadAction<IAnnouncement[]>
     ) => {
-      state.currentUserAnnouncements = action.payload;
-      state.isCurrentUserAnnouncementsLoading = false;
+      state.singleUserAnnouncements = action.payload;
+      state.isSingleUserAnnouncementsLoading = false;
     },
-    [asyncGetUserAnnouncements.rejected.type]: (
-      state,
-      action: PayloadAction<IAnnouncement[]>
-    ) => {
-      state.isCurrentUserAnnouncementsLoading = false;
+    [asyncGetUserAnnouncements.rejected.type]: (state) => {
+      state.isSingleUserAnnouncementsLoading = false;
     },
     [asyncGetVipAnnouncements.pending.type]: (state) => {
       state.isVipAnnouncementsLoading = true;

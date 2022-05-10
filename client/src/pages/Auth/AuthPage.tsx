@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+
 import Button from "../../components/UI/Button/Button";
 import FormInput from "../../components/UI/Input/FormInput";
 import Loader from "../../components/UI/Loader/Loader";
+
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import {
   asyncLogin,
   asyncRegister,
 } from "../../store/reducers/user/userActionCreators";
-import { IAuthFormData } from "../../types";
 import { scrollToTop } from "../../utils";
 
 import { Wrapper } from "./AuthPage.styles";
 
-const initialState: IAuthFormData = {
-  name: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-};
+import { IAuthFormData } from "../../types";
 
 const AuthPage = () => {
-  const [formData, setFormData] = useState(initialState);
   const [isSignupForm, setIsSignupForm] = useState(false);
-  const dispatch = useAppDispatch();
+
   const { isLogin, isSignup, loginError, signupError } = useAppSelector(
     (state) => state.user
   );
@@ -32,16 +27,19 @@ const AuthPage = () => {
     handleSubmit,
     formState: { errors, isValid },
     getValues,
+    reset,
   } = useForm<IAuthFormData>({ mode: "onChange" });
 
-  const switchMode = () => {
-    setFormData(initialState);
-    setIsSignupForm((prev) => !prev);
-  };
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     scrollToTop();
   }, []);
+
+  const switchMode = () => {
+    reset();
+    setIsSignupForm((prev) => !prev);
+  };
 
   const onSubmit: SubmitHandler<IAuthFormData> = (data) => {
     if (isSignupForm) {
@@ -54,11 +52,12 @@ const AuthPage = () => {
   return (
     <Wrapper>
       <h2>{isSignupForm ? "Signup" : "Login"}</h2>
+
       <form onSubmit={handleSubmit(onSubmit)}>
         {isSignupForm && (
           <FormInput<IAuthFormData>
-            label='Name'
-            name='name'
+            label="Name"
+            name="name"
             register={register}
             options={{
               required: "Please provide name",
@@ -69,10 +68,11 @@ const AuthPage = () => {
             fullWidth
           />
         )}
+
         <FormInput<IAuthFormData>
-          label='Email'
-          type='email'
-          name='email'
+          label="Email"
+          type="email"
+          name="email"
           register={register}
           options={{
             required: "Please provide email",
@@ -85,10 +85,11 @@ const AuthPage = () => {
           error={errors.email?.message}
           fullWidth
         />
+
         <FormInput<IAuthFormData>
-          label='Password'
-          type='password'
-          name='password'
+          label="Password"
+          type="password"
+          name="password"
           register={register}
           options={{
             required: "Please provide password",
@@ -98,11 +99,12 @@ const AuthPage = () => {
           error={errors.password?.message}
           fullWidth
         />
+
         {isSignupForm && (
           <FormInput
-            label='Confirm Password'
-            type='password'
-            name='confirmPassword'
+            label="Confirm Password"
+            type="password"
+            name="confirmPassword"
             register={register}
             options={{
               required: "Please confirm password",
@@ -113,7 +115,9 @@ const AuthPage = () => {
             fullWidth
           />
         )}
-        <div className='request-error'>{loginError || signupError || null}</div>
+
+        <div className="request-error">{loginError || signupError || null}</div>
+
         {isLogin || isSignup ? (
           <Loader />
         ) : (
@@ -122,6 +126,7 @@ const AuthPage = () => {
           </Button>
         )}
       </form>
+
       <button onClick={switchMode}>
         {isSignupForm
           ? "Already have an account? Sign in"

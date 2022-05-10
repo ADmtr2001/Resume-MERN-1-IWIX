@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AxiosResponse } from "axios";
-import { $authHost, $host } from "../../../http";
+
+import { $host } from "../../../http";
+
 import {
   IAuthResponse,
   ILoginData,
@@ -38,7 +39,6 @@ export const asyncLogin = createAsyncThunk(
       localStorage.setItem("token", data.accessToken);
       return data.user;
     } catch (error: any) {
-      console.log(error.response.data.message);
       return rejectWithValue(error.response.data.message);
     }
   }
@@ -53,7 +53,6 @@ export const asyncLogout = createAsyncThunk(
       });
       localStorage.removeItem("token");
     } catch (error: any) {
-      console.log(error.response.data.message);
       return rejectWithValue("Failed");
     }
   }
@@ -69,7 +68,6 @@ export const asyncCheckAuth = createAsyncThunk(
       localStorage.setItem("token", data.accessToken);
       return data.user;
     } catch (error: any) {
-      console.log(error.response.data.message);
       return rejectWithValue("Failed");
     }
   }
@@ -82,7 +80,6 @@ export const asyncGetSingleUser = createAsyncThunk(
       const { data } = await $host.get<IUser>(`/user/${userId}`);
       return data;
     } catch (error: any) {
-      console.log(error.response.data.message);
       return rejectWithValue("Failed");
     }
   }

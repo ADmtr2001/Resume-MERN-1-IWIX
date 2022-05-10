@@ -4,7 +4,7 @@ import { Path, UseFormRegister } from "react-hook-form";
 
 import { Wrapper } from "./TextAra.styles";
 
-import FormInputOptions from "../../../types/IFormFieldOptions";
+import FormInputOptions from "../../../types/Data/IFormFieldOptions";
 
 interface TextAreaProps<T> {
   label: string;

@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setCurrentPage } from "../../store/reducers/announcement/announcementSlice";
 
 import { Wrapper } from "./Pagination.styles";
+import { scrollToTop } from "../../utils";
 
 const Pagination = () => {
   const { currentPage, numberOfPages } = useAppSelector(
@@ -18,6 +19,7 @@ const Pagination = () => {
 
   const step = 2;
   const handlePageChange = (page: number) => {
+    scrollToTop();
     dispatch(setCurrentPage(page));
   };
 

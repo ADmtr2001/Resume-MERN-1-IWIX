@@ -10,7 +10,7 @@ import UserInfo from "../UserInfo/UserInfo";
 
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { asyncFetchAnnouncements } from "../../store/reducers/announcement/announcementActionCreators";
+import { asyncGetAnnouncements } from "../../store/reducers/announcement/announcementActionCreators";
 import { setCurrentPage } from "../../store/reducers/announcement/announcementSlice";
 import { asyncGetSingleUser } from "../../store/reducers/user/userActionCreators";
 
@@ -45,7 +45,7 @@ const Filters = () => {
     (state) => state.category
   );
   const { currentPage } = useAppSelector((state) => state.announcement);
-  const { user, currentUser, isUserLoading, isCurrentUserLoading } =
+  const { user, singleUser, isUserLoading, isSingleUserLoading } =
     useAppSelector((state) => state.user);
 
   const location = useLocation();
@@ -56,11 +56,6 @@ const Filters = () => {
     const creator = searchParams.get("creator");
 
     dispatch(setCurrentPage(page ? +page : 1));
-    // if (page) {
-    //   dispatch(setCurrentPage(+page));
-    // } else {
-    //   dispatch(setCurrentPage(1));
-    // }
 
     if (creator) {
       dispatch(asyncGetSingleUser(creator));
@@ -98,7 +93,7 @@ const Filters = () => {
 
   useEffect(() => {
     const timer = setTimeout(
-      () => dispatch(asyncFetchAnnouncements(location.search)),
+      () => dispatch(asyncGetAnnouncements(location.search)),
       400
     );
     return () => clearTimeout(timer);
@@ -122,11 +117,11 @@ const Filters = () => {
     dispatch(setCurrentPage(1));
   };
 
-  if (isCategoriesLoading || isUserLoading || isCurrentUserLoading)
+  if (isCategoriesLoading || isUserLoading || isSingleUserLoading)
     return <Loader />;
 
   const isUserFilterVisible =
-    location.pathname !== "/user" && searchParams.get("creator") && currentUser;
+    location.pathname !== "/user" && searchParams.get("creator") && singleUser;
 
   return (
     <Wrapper>
@@ -166,7 +161,7 @@ const Filters = () => {
       </div>
       {isUserFilterVisible && (
         <div className="filter-user">
-          <UserInfo user={currentUser} short />
+          <UserInfo user={singleUser} short />
           <Button onClick={deleteCreatorFromSearch}>
             <MdDelete />
           </Button>
