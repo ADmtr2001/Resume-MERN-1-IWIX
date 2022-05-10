@@ -1,5 +1,7 @@
 import { Types } from "mongoose";
+
 import { UserDto } from "../dtos";
+
 import { UnauthorizedError } from "../errors";
 
 const checkPermission = (

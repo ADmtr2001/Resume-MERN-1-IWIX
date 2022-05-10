@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { categoryController } from "../controllers";
+
 import { authMiddleware, roleMiddleware } from "../middleware";
 
 const router = Router();
@@ -13,6 +14,7 @@ router
     roleMiddleware("admin"),
     categoryController.createCategory
   );
+
 router
   .route("/:id")
   .get(categoryController.getSingleCategory)

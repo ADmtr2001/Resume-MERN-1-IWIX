@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 import { UnauthenticatedError } from "../errors";
+
 import { tokenService } from "../services";
 
 const authMiddleware = async (

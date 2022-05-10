@@ -8,27 +8,33 @@ class UserController {
   async register(req: Request, res: Response) {
     const { name, email, password } = req.body;
     const userData = await userService.register(req, name, email, password);
+
     res.cookie("refreshToken", userData.refreshToken, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
+
     res.status(StatusCodes.CREATED).json(userData);
   }
 
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
     const userData = await userService.login(email, password);
+
     res.cookie("refreshToken", userData.refreshToken, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
+
     res.status(StatusCodes.OK).json(userData);
   }
 
   async logout(req: Request, res: Response) {
     const { refreshToken } = req.cookies;
     await userService.logout(refreshToken);
+
     res.clearCookie("refreshToken");
+
     res
       .status(StatusCodes.OK)
       .json({ success: true, message: "User logged out" });
@@ -43,10 +49,12 @@ class UserController {
   async refresh(req: Request, res: Response) {
     const { refreshToken } = req.cookies;
     const userData = await userService.refresh(refreshToken);
+
     res.cookie("refreshToken", userData.refreshToken, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
+
     res.status(StatusCodes.OK).json(userData);
   }
 

@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
+
 import { BadRequestError } from "../errors";
-import { FolderType } from "../types/local";
 
 const deleteFileFromLocalFolder = (fileName: string) => {
   const filePath = path.resolve(__dirname, "..", "public", fileName.slice(1));

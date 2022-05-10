@@ -5,6 +5,7 @@ import {
   NotFoundError,
   UnauthenticatedError,
 } from "../errors";
+
 import { User } from "../models";
 import { UserDto } from "../dtos";
 import { IUser } from "../models/User";
@@ -13,6 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import tokenService from "./tokenService";
 import mailService from "./mailService";
+
 import { getApiUrl, comparePassword } from "../utils";
 
 class UserService {

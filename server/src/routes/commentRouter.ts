@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { commentController } from "../controllers";
+
 import { authMiddleware, roleMiddleware } from "../middleware";
 
 const router = Router();
@@ -13,11 +14,13 @@ router
     commentController.getAllComments
   )
   .post(authMiddleware, commentController.createComment);
+
+router.get("/user/:id", commentController.getAllUserComments);
+
 router
   .route("/:id")
   .get(authMiddleware, commentController.getSingleComment)
   .patch(authMiddleware, commentController.updateComment)
   .delete(authMiddleware, commentController.deleteComment);
-router.get("/user/:id", commentController.getAllUserComments);
 
 export default router;

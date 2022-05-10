@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
+
 import { UserDto } from "../dtos";
 import { Token } from "../models";
+
 import { Types } from "mongoose";
 
 class TokenService {

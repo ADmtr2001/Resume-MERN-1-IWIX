@@ -1,4 +1,5 @@
 import { NotFoundError } from "../errors";
+
 import { Category } from "../models";
 
 class CategoryService {

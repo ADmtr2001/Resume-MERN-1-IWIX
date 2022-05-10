@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import { categoryService } from "../services";
+
 import { deleteFileFromLocalFolder, moveFileToLocalFolder } from "../utils";
 
 class CategoryController {
@@ -18,7 +19,6 @@ class CategoryController {
 
     const fileName = moveFileToLocalFolder(image, "categoryImages");
 
-    // ?PROBABLY CHANGE FILE NAME
     const category = await categoryService.createCategory(name, fileName);
 
     res.status(StatusCodes.CREATED).json(category);

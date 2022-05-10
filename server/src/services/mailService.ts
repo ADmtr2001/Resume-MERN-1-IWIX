@@ -19,7 +19,7 @@ class MailService {
     await this.transporter.sendMail({
       from: process.env.SMTP_USER,
       to,
-      subject: "OLVIX Account Activation",
+      subject: "WIX Account Activation",
       text: "",
       html: `
         <div>

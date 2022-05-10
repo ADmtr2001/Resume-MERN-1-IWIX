@@ -1,7 +1,9 @@
 import { Types } from "mongoose";
 
 import { NotFoundError } from "../errors";
+
 import { Announcement } from "../models";
+
 import categoryService from "./categoryService";
 
 class AnnouncementService {
@@ -92,7 +94,9 @@ class AnnouncementService {
       const anyCategory = await categoryService.getSingleCategoryByName("Any");
       data.category = anyCategory._id;
     }
+
     const announcement = await Announcement.create(data);
+
     return announcement;
   }
 
@@ -143,6 +147,7 @@ class AnnouncementService {
         runValidators: true,
       }
     );
+
     return announcement;
   }
 
