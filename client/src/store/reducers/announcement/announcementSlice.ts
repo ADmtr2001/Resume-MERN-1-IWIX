@@ -51,6 +51,7 @@ export const announcementSlice = createSlice({
   reducers: {
     clearAnnouncements(state) {
       state.announcements = [];
+      state.isAnnouncementsLoading = true;
       state.currentPage = 0;
       state.numberOfPages = 0;
     },

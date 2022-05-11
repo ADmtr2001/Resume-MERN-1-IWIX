@@ -15,6 +15,8 @@ export const Wrapper = styled(AnnouncementWrapper)`
     width: 100%;
     height: auto;
 
+    margin: 0;
+
     img {
       width: 20rem;
       height: 20rem;

@@ -49,13 +49,18 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
       filteredAnnouncements = filteredAnnouncements.slice(0, limit);
     }
 
-    const content = filteredAnnouncements.map((announcement, index) => (
-      <Announcement
-        className={announcement.isVip ? `an${index + 1} vip` : `an${index + 1}`}
-        key={announcement._id}
-        announcement={announcement}
-      />
-    ));
+    const content = filteredAnnouncements.map((announcement, index) => {
+      const classes = announcement.isVip
+        ? `vip ${limit ? `an${index + 1}` : ""}`
+        : `${limit ? `an${index + 1}` : ""}`;
+      return (
+        <Announcement
+          className={classes}
+          key={announcement._id}
+          announcement={announcement}
+        />
+      );
+    });
 
     return content;
   }, [announcements, isGridView, limit]);
@@ -63,7 +68,7 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   if (isLoading) {
     return (
       <Wrapper>
-        <h2 className="announcement-title">{title}</h2>
+        <h2 className="list-title">{title}</h2>
         <Loader />
       </Wrapper>
     );
@@ -72,16 +77,19 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   return (
     <Wrapper>
       <h2 className="list-title">{title}</h2>
-      <div className={isGridView ? "announcements-grid" : "announcements-line"}>
-        {listContent.length === 0 ? (
-          <div className="empty-message">
-            <p>No announcements yet</p>
-            <Button onClick={() => navigate("/creation")}>Create</Button>
-          </div>
-        ) : (
-          listContent
-        )}
-      </div>
+      {listContent.length === 0 ? (
+        <div className="empty-message">
+          <p>No announcements yet</p>
+          <Button onClick={() => navigate("/creation")}>Create</Button>
+        </div>
+      ) : (
+        <div
+          className={isGridView ? "announcements-grid" : "announcements-line"}
+        >
+          {listContent}
+        </div>
+      )}
+
       {isPaginationVisible && <Pagination />}
       {ListButton ? <div className="show-all-button">{ListButton}</div> : null}
     </Wrapper>

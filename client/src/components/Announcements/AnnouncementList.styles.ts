@@ -33,6 +33,7 @@ export const Wrapper = styled.section`
 
   .empty-message {
     text-align: center;
+    margin: 0 auto;
 
     button {
       margin-top: 2rem;
@@ -73,7 +74,7 @@ export const Wrapper = styled.section`
 
   @media (max-width: 500px) {
     .list-title {
-      font-size: 3rem;
+      font-size: 2.5rem;
     }
 
     .announcements-grid {

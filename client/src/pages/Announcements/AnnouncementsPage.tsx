@@ -24,6 +24,8 @@ const AnnouncementsPage = () => {
     };
   }, []);
 
+  console.log(isAnnouncementsLoading);
+
   return (
     <>
       <Search />
