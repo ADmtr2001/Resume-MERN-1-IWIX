@@ -73,7 +73,7 @@ const CreationPage = () => {
       dispatch(clearCurrentAnnouncement());
       dispatch(clearUpdatedAndCreatedAnnouncement());
     };
-  }, []);
+  }, [dispatch, announcementId, categories]);
 
   useEffect(() => {
     if (singleAnnouncement) {
@@ -88,7 +88,7 @@ const CreationPage = () => {
       });
       reset(defaultValues);
     }
-  }, [singleAnnouncement]);
+  }, [singleAnnouncement, reset]);
 
   useEffect(() => {
     if (updatedAnnouncement) {
@@ -97,13 +97,13 @@ const CreationPage = () => {
     if (createdAnnouncement) {
       navigate(`/announcement/${createdAnnouncement._id}`);
     }
-  }, [updatedAnnouncement, createdAnnouncement]);
+  }, [updatedAnnouncement, createdAnnouncement, navigate]);
 
   let selectOptions: IOption[] = useMemo(() => {
     const options = categories.map((category) => {
       return { label: category.name, value: category._id };
     });
-    return [{ label: "Any", value: "62782d01909cc2389eb9e4c5" }, ...options];
+    return [{ label: "Any", value: "627bd4cba73d8e55c13109c1" }, ...options];
   }, [categories]);
 
   if (isCategoriesLoading || isSingleAnnouncementLoading) {
@@ -229,7 +229,7 @@ const CreationPage = () => {
             required: "Please provide email",
             pattern: {
               value:
-                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
               message: "Please provide a valid email",
             },
           }}
@@ -240,6 +240,7 @@ const CreationPage = () => {
         <FormInput<ICreationFormData>
           label="Phone Number"
           name="phoneNumber"
+          type="number"
           register={register}
           options={{
             required: "Please provide phone number",

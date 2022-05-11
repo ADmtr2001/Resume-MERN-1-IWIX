@@ -17,7 +17,8 @@ const Categories = () => {
       category={{
         _id: "",
         name: "All",
-        image: "/uploads/categoryImages/all-category-icon.jpg",
+        image:
+          "https://res.cloudinary.com/dncefjklc/image/upload/v1652282571/Categories/zbxlbyilorfywl4dpssv.jpg",
       }}
     />
   );

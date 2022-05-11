@@ -51,7 +51,7 @@ export const AnnouncementWrapper = styled.article`
   }
 
   @media (max-width: 900px) {
-    .action-buttons {
+    .announcement-action-buttons {
       left: 0;
     }
   }

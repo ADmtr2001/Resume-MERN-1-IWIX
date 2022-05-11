@@ -8,6 +8,7 @@ import { errorHandlerMiddleware, notFoundMiddleware } from "./middleware";
 
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import { v2 as cloudinary } from "cloudinary";
 import helmet from "helmet";
 import cors from "cors";
 
@@ -22,6 +23,12 @@ import {
 
 const app = express();
 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+
 app.use(helmet({}));
 
 app.use(
@@ -33,8 +40,7 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(fileUpload({}));
-app.use(express.static(path.resolve(__dirname, "public")));
+app.use(fileUpload({ useTempFiles: true }));
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/comment", commentRouter);

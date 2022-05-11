@@ -3,6 +3,7 @@ import { Schema, model } from "mongoose";
 export interface ICategory {
   name: string;
   image: string;
+  imageId: string;
 }
 
 const categorySchema = new Schema<ICategory>(
@@ -14,6 +15,10 @@ const categorySchema = new Schema<ICategory>(
     image: {
       type: String,
       required: [true, "Please provide category image"],
+    },
+    imageId: {
+      type: String,
+      required: [true, "Please provide category image id"],
     },
   },
   { timestamps: true }

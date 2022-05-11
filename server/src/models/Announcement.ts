@@ -5,6 +5,7 @@ export interface IAnnouncement {
   category: Types.ObjectId;
   price: number;
   image: string;
+  imageId: string;
   description: string;
   location: string;
   email: string;
@@ -36,7 +37,11 @@ const announcementSchema = new Schema<IAnnouncement>(
     },
     image: {
       type: String,
-      default: "/uploads/placeholder.png",
+      required: [true, "Please provide image"],
+    },
+    imageId: {
+      type: String,
+      required: [true, "Please provide image id"],
     },
     description: {
       type: String,

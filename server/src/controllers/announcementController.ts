@@ -3,12 +3,11 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import { announcementService } from "../services";
+import { v2 as cloudinary } from "cloudinary";
 
-import {
-  checkPermission,
-  moveFileToLocalFolder,
-  deleteFileFromLocalFolder,
-} from "../utils";
+import fs from "fs";
+
+import { checkPermission } from "../utils";
 
 class AnnouncementController {
   async getAllAnnouncements(req: Request, res: Response) {
@@ -54,10 +53,13 @@ class AnnouncementController {
       phoneNumber,
       price,
     } = req.body;
-    // @ts-ignore
-    const { image } = req.files;
-
-    const fileName = moveFileToLocalFolder(image, "announcementImages");
+    const file = await cloudinary.uploader.upload(
+      // @ts-ignore
+      req.files.image.tempFilePath,
+      {
+        folder: "Announcements",
+      }
+    );
 
     const announcement = await announcementService.createAnnouncement(
       title,
@@ -66,10 +68,14 @@ class AnnouncementController {
       location,
       email,
       phoneNumber,
-      fileName,
+      file.secure_url,
+      file.public_id,
       price,
       req.user._id
     );
+
+    // @ts-ignore
+    fs.unlinkSync(req.files.image.tempFilePath);
 
     res.status(StatusCodes.CREATED).json(announcement);
   }
@@ -92,18 +98,27 @@ class AnnouncementController {
       price,
     } = req.body;
     let fileName = "";
+    let fileId = "";
 
     if (req.files) {
-      // @ts-ignore
-      const { image } = req.files;
-
       const previousAnnouncement =
         await announcementService.getSingleAnnouncement(id);
       checkPermission(req.user, previousAnnouncement.creator);
 
-      fileName = moveFileToLocalFolder(image, "announcementImages");
+      const file = await cloudinary.uploader.upload(
+        // @ts-ignore
+        req.files.image.tempFilePath,
+        {
+          folder: "Announcements",
+        }
+      );
+      fileName = file.secure_url;
+      fileId = file.public_id;
 
-      deleteFileFromLocalFolder(previousAnnouncement.image);
+      await cloudinary.uploader.destroy(previousAnnouncement.imageId);
+
+      // @ts-ignore
+      fs.unlinkSync(req.files.image.tempFilePath);
     }
 
     const announcement = await announcementService.updateAnnouncement(
@@ -115,7 +130,8 @@ class AnnouncementController {
       email,
       phoneNumber,
       price,
-      fileName
+      fileName,
+      fileId
     );
 
     res.status(StatusCodes.OK).json(announcement);
@@ -128,7 +144,7 @@ class AnnouncementController {
     checkPermission(req.user, announcement.creator);
     await announcementService.deleteAnnouncement(id);
 
-    deleteFileFromLocalFolder(announcement.image);
+    await cloudinary.uploader.destroy(announcement.imageId);
 
     res
       .status(StatusCodes.OK)

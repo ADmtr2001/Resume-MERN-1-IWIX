@@ -3,8 +3,9 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import { categoryService } from "../services";
+import { v2 as cloudinary } from "cloudinary";
 
-import { deleteFileFromLocalFolder, moveFileToLocalFolder } from "../utils";
+import fs from "fs";
 
 class CategoryController {
   async getAllCategories(req: Request, res: Response) {
@@ -14,12 +15,22 @@ class CategoryController {
 
   async createCategory(req: Request, res: Response) {
     const { name } = req.body;
+    const file = await cloudinary.uploader.upload(
+      // @ts-ignore
+      req.files.image.tempFilePath,
+      {
+        folder: "Categories",
+      }
+    );
+
+    const category = await categoryService.createCategory(
+      name,
+      file.secure_url,
+      file.public_id
+    );
+
     // @ts-ignore
-    const { image } = req.files;
-
-    const fileName = moveFileToLocalFolder(image, "categoryImages");
-
-    const category = await categoryService.createCategory(name, fileName);
+    fs.unlinkSync(req.files.image.tempFilePath);
 
     res.status(StatusCodes.CREATED).json(category);
   }
@@ -35,7 +46,7 @@ class CategoryController {
 
     const category = await categoryService.getSingleCategory(id);
 
-    deleteFileFromLocalFolder(category.image);
+    await cloudinary.uploader.destroy(category.imageId);
 
     await categoryService.deleteCategory(id);
     res

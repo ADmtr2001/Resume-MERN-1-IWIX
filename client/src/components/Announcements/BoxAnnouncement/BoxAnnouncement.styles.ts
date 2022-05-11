@@ -19,6 +19,8 @@ export const Wrapper = styled(AnnouncementWrapper)`
       width: 20rem;
       height: 20rem;
       object-fit: cover;
+
+      background-color: ${(props) => props.theme.dark2};
     }
   }
 

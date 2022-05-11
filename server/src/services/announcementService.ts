@@ -75,6 +75,7 @@ class AnnouncementService {
     email: string,
     phoneNumber: string,
     image: string,
+    imageId: string,
     price: number,
     creator: Types.ObjectId
   ) {
@@ -85,6 +86,7 @@ class AnnouncementService {
       email,
       phoneNumber,
       image,
+      imageId,
       price,
       creator,
     };
@@ -117,7 +119,8 @@ class AnnouncementService {
     email: string,
     phoneNumber: string,
     price: number,
-    image: string
+    image: string,
+    imageId: string
   ) {
     const data: { [index: string]: string | number | Types.ObjectId } = {
       title,
@@ -130,6 +133,7 @@ class AnnouncementService {
 
     if (image) {
       data.image = image;
+      data.imageId = imageId;
     }
 
     if (category) {

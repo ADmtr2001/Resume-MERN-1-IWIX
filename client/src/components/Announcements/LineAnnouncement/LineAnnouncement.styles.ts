@@ -17,6 +17,8 @@ export const Wrapper = styled(AnnouncementWrapper)`
     img {
       width: 100%;
       height: 100%;
+
+      background-color: ${(props) => props.theme.dark2};
     }
   }
 

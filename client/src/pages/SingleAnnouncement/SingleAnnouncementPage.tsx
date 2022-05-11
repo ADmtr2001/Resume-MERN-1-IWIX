@@ -77,11 +77,7 @@ const AnnouncementPage = () => {
       <div className="top-content">
         <div className="top-left-content">
           <div className="left-announcement-image">
-            <img
-              crossOrigin="anonymous"
-              src={`http://localhost:5000${singleAnnouncement.image}`}
-              alt="announcement"
-            />
+            <img src={`${singleAnnouncement.image}`} alt="announcement" />
           </div>
         </div>
         <div className="top-right-content">

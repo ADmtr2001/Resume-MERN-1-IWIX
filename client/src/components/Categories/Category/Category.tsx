@@ -14,11 +14,7 @@ const Category: FC<CategoryProps> = ({ category }) => {
   return (
     <Wrapper>
       <Link to={`/announcements?category=${category._id}`}>
-        <img
-          crossOrigin="anonymous"
-          src={`http://localhost:5000/${category.image}`}
-          alt="category icon"
-        />
+        <img src={`${category.image}`} alt="category icon" />
         <h3>{category.name}</h3>
       </Link>
     </Wrapper>

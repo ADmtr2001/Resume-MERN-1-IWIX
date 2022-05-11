@@ -10,8 +10,8 @@ class CategoryService {
     return categories;
   }
 
-  async createCategory(name: string, image: string) {
-    const category = await Category.create({ name, image });
+  async createCategory(name: string, image: string, imageId: string) {
+    const category = await Category.create({ name, image, imageId });
     return category;
   }
 

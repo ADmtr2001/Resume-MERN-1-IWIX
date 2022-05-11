@@ -42,11 +42,7 @@ const BoxAnnouncement: FC<AnnouncementProps> = ({
     <Wrapper className={className}>
       <Link to={`/announcement/${announcement._id}`} onClick={scrollToTop}>
         <div className="announcement-top-content">
-          <img
-            crossOrigin="anonymous"
-            src={`${process.env.REACT_APP_IMAGE_URL}${announcement.image}`}
-            alt="announcement"
-          />
+          <img src={`${announcement.image}`} alt="announcement" />
         </div>
         <div className="announcement-bot-content">
           <h3 className="announcement-title">

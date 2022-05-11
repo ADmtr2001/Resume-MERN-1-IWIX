@@ -42,11 +42,7 @@ const LineAnnouncement: FC<AnnouncementProps> = ({
     <Wrapper className={className}>
       <Link to={`/announcement/${announcement._id}`}>
         <div className="left-content">
-          <img
-            crossOrigin="anonymous"
-            src={`${process.env.REACT_APP_IMAGE_URL}${announcement.image}`}
-            alt="announcement"
-          />
+          <img src={`${announcement.image}`} alt="announcement" />
         </div>
         <div className="right-content">
           <div className="title-location">
@@ -72,7 +68,7 @@ const LineAnnouncement: FC<AnnouncementProps> = ({
         </div>
       </Link>
       {isActionButtonsVisible && (
-        <div className="action-buttons">
+        <div className="announcement-action-buttons">
           <Button onClick={moveToUpdate}>
             <GrEdit />
           </Button>
