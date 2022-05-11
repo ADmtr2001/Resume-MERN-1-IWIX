@@ -9,13 +9,11 @@ export const Wrapper = styled(AnnouncementWrapper)`
   width: 100%;
   height: 35rem;
 
-  .top-content {
+  .announcement-top-content {
     ${setFlex({ justify: "center" })};
 
     width: 100%;
     height: auto;
-
-    margin: 0;
 
     img {
       width: 20rem;
@@ -24,7 +22,7 @@ export const Wrapper = styled(AnnouncementWrapper)`
     }
   }
 
-  .bot-content {
+  .announcement-bot-content {
     ${setFlex({ direction: "column" })};
 
     height: 13rem;

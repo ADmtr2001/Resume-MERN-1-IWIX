@@ -14,4 +14,8 @@ export const Wrapper = styled.div`
   .content {
     flex: 1;
   }
+
+  @media (max-width: 600px) {
+    padding: 0;
+  }
 `;

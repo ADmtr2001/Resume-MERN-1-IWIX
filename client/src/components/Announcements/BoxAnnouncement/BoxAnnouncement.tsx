@@ -41,14 +41,14 @@ const BoxAnnouncement: FC<AnnouncementProps> = ({
   return (
     <Wrapper className={className}>
       <Link to={`/announcement/${announcement._id}`} onClick={scrollToTop}>
-        <div className="top-content">
+        <div className="announcement-top-content">
           <img
             crossOrigin="anonymous"
             src={`${process.env.REACT_APP_IMAGE_URL}${announcement.image}`}
             alt="announcement"
           />
         </div>
-        <div className="bot-content">
+        <div className="announcement-bot-content">
           <h3 className="announcement-title">
             {announcement.title.length > 25
               ? announcement.title.slice(0, 25) + "..."
