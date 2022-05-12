@@ -12,8 +12,6 @@ import { v2 as cloudinary } from "cloudinary";
 import helmet from "helmet";
 import cors from "cors";
 
-import path from "path";
-
 import {
   announcementRouter,
   categoryRouter,
@@ -34,7 +32,7 @@ app.use(helmet({}));
 app.use(
   cors({
     credentials: true,
-    origin: process.env.CLIENT_URL,
+    origin: true,
   })
 );
 
