@@ -27,9 +27,9 @@ const UserInfo: FC<UserInfoProps> = ({ user, short = false }) => {
           {user.name.length < 20 ? user.name : user.name.slice(0, 19) + "..."}
         </h3>
         <p className="user-email">
-          {user.email.length < 20
+          {user.email.length < 30
             ? user.email
-            : user.email.slice(0, 21) + "..."}
+            : user.email.slice(0, 30) + "..."}
         </p>
         {!short && (
           <p className="user-register-date">

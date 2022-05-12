@@ -17,7 +17,7 @@ export const Wrapper = styled.main`
 
       width: 50%;
       min-height: 10rem;
-      max-height: 55rem;
+      max-height: 75rem;
 
       ${setShadowForSection()};
 

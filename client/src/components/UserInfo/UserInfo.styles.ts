@@ -34,5 +34,9 @@ export const Wrapper = styled.div<WrapperProps>`
     .user-register-date {
       font-weight: 300;
     }
+
+    .user-email {
+      overflow: hidden;
+    }
   }
 `;

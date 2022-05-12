@@ -86,9 +86,12 @@ const CreationPage = () => {
         email: singleAnnouncement.email,
         phoneNumber: singleAnnouncement.phoneNumber,
       });
-      reset(defaultValues);
     }
   }, [singleAnnouncement, reset]);
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues]);
 
   useEffect(() => {
     if (updatedAnnouncement) {

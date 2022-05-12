@@ -12,6 +12,10 @@ export const AnnouncementWrapper = styled.article`
 
   transition: all ${(props) => props.theme.fastTransition};
 
+  .announcement-title {
+    text-transform: capitalize;
+  }
+
   .announcement-action-buttons {
     ${setFlex({ direction: "column" })};
 
@@ -47,12 +51,6 @@ export const AnnouncementWrapper = styled.article`
   @media (min-width: 900px) {
     &:hover {
       transform: scale(1.1);
-    }
-  }
-
-  @media (max-width: 900px) {
-    .announcement-action-buttons {
-      left: 0;
     }
   }
 `;

@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useMemo } from "react";
+import React, { FC, PropsWithChildren, useMemo, useState } from "react";
 
 import Button from "../UI/Button/Button";
 import Loader from "../UI/Loader/Loader";
@@ -33,6 +33,8 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   isGridView,
   ListButton,
 }) => {
+  const [wasLoaded, setWasLoaded] = useState(false);
+
   const navigate = useNavigate();
 
   let listContent: JSX.Element[] = useMemo(() => {
@@ -66,6 +68,9 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   }, [announcements, isGridView, limit]);
 
   if (isLoading) {
+    if (!wasLoaded) {
+      setWasLoaded(true);
+    }
     return (
       <Wrapper>
         <h2 className="list-title">{title}</h2>
@@ -77,7 +82,7 @@ const AnnouncementList: FC<PropsWithChildren<AnnouncementListProps>> = ({
   return (
     <Wrapper>
       <h2 className="list-title">{title}</h2>
-      {listContent.length === 0 ? (
+      {listContent.length === 0 && wasLoaded ? (
         <div className="empty-message">
           <p>No announcements yet</p>
           <Button onClick={() => navigate("/creation")}>Create</Button>
