@@ -6,7 +6,7 @@ An online announcement platform to buy, sell or share goods and services.
 
 ## Main Functional
 
-### Front end:
+### Front End:
 
 - Authentication with tokens (access, refresh)
 - Ability to create, update and delete announcements
@@ -14,8 +14,9 @@ An online announcement platform to buy, sell or share goods and services.
 - Forms Validation
 - Date formatting
 - Optimization with useMemo and useCallback hooks
-- Cookies
+- Error Handling
 - Pagination
+- Cookies
 - Responsive Design
 
 ![HTML](https://img.shields.io/badge/-HTML-black?style=for-the-badge&logo=html5)
@@ -31,15 +32,17 @@ An online announcement platform to buy, sell or share goods and services.
 ![Axios](https://img.shields.io/badge/-Axios-black?style=for-the-badge)
 ![Netlify](https://img.shields.io/badge/-Netlify-black?style=for-the-badge&logo=netlify)
 
-### Back end:
+### Back End:
 
-- API
+- REST API
 - CRUD
 - Authentication with tokens (access, refresh)
 - Roles
 - Email verification
 - File Upload
 - Data validation
+- Error Handling
+- Pagination
 - Cookies
 
 ![TypeScript](https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logo=typescript)
