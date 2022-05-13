@@ -8,19 +8,19 @@ const Footer = () => {
     <Wrapper>
       <div className="footer-content">
         <div className="col col1">
-          <a href="/#">Як продавати й купувати?</a>
-          <a href="/#">Правила безпеки</a>
-          <a href="/#">Популярні запити</a>
+          <a href="/#">How to sell and buy?</a>
+          <a href="/#">Safety rules</a>
+          <a href="/#">Popular queries</a>
         </div>
         <div className="col col2">
-          <a href="/#">Бізнес на OLX</a>
-          <a href="/#">Для преси</a>
-          <a href="/#">Реклама на сайті</a>
+          <a href="/#">Business on IWIX</a>
+          <a href="/#">For the press</a>
+          <a href="/#">Advertising on the site</a>
         </div>
         <div className="col col3">
-          <a href="/#">Блог OLX</a>
-          <a href="/#">Умови користування</a>
-          <a href="/#">Політика конфіденційності</a>
+          <a href="/#">IWIX Blog</a>
+          <a href="/#">Terms of use</a>
+          <a href="/#">Privacy policy</a>
         </div>
       </div>
     </Wrapper>
